@@ -29,23 +29,12 @@ jobs:
       - name: 🏗️ Terraform Init
         id: init
         run: |
-          cd subscriptions-automation  
-          terraform init -input=false
+          DIRECTORIES=("administrators" "emails" "subscriptions-automation" )
+          for directory in "${DIRECTORIES[@]}"; do
+            cd ${file} || exit 1
+            terraform init -input=false
+            terraform plan -out=tfplan -input=false
+            terraform apply -input=false -auto-approve tfplan
+            cd ..  
 
-      - name: 📋 Terraform Plan
-        id: plan
-        run: |
-          cd subscriptions-automation 
-          terraform plan -out=tfplan -input=false
 
-      - name: ✅ Terraform apply
-        id: apply
-        run: |
-          cd subscriptions-automation   
-          terraform apply -input=false -auto-approve tfplan
-
-    # - name: ✅ Terraform destroy
-    #   id: destroy
-    #   run: |
-    #     cd emails   
-    #     terraform destroy -input=false -auto-approve tfplan           
