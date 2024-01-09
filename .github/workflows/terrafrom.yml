@@ -30,6 +30,7 @@ jobs:
         id: destroy
         run: |
           cd administrators || exit 1
+          terraform init
           terraform destroy -input=false -auto-approve
 
 
