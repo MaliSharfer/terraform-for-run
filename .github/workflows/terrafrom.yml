@@ -32,6 +32,7 @@ jobs:
           DIRECTORIES=("administrators" "emails" "subscriptions-automation" )
           for directory in "${DIRECTORIES[@]}"; do
             cd ${file} || exit 1
+            ls
             terraform init -input=false
             terraform plan -out=tfplan -input=false
             terraform apply -input=false -auto-approve tfplan
