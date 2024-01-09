@@ -30,7 +30,7 @@ jobs:
         id: init
         run: |
           DIRECTORIES=("administrators" "emails" "subscriptions-automation" )
-          for directory in "${DIRECTORIES[@]}"; do
+          for directory in $DIRECTORIES; do
             cd ${file} || exit 1
             ls
             terraform init -input=false
