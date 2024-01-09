@@ -25,17 +25,24 @@ jobs:
       - name: 🔑 Login to Azure
         id : az-login
         run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
-
-      - name: 🏗️ Terraform Init
-        id: init
+      
+      - name: destroy
+        id: destroy
         run: |
-          DIRECTORIES=("administrators" "emails" "subscriptions-automation" )
-          for directory in $DIRECTORIES; do
-            cd ${directory} || exit 1
-            ls
-            terraform init -input=false
-            terraform plan -out=tfplan -input=false
-            terraform apply -input=false -auto-approve tfplan
-            cd ..  
-          done  
+          cd administrators || exit 1
+          terraform destroy -input=false -auto-approve
+
+
+      # - name: 🏗️ Terraform Init
+      #   id: init
+      #   run: |
+      #     DIRECTORIES=("administrators" "emails" "subscriptions-automation" )
+      #     for directory in $DIRECTORIES; do
+      #       cd ${directory} || exit 1
+      #       ls
+      #       terraform init -input=false
+      #       terraform plan -out=tfplan -input=false
+      #       terraform apply -input=false -auto-approve tfplan
+      #       cd ..  
+      #     done  
 
