@@ -31,7 +31,7 @@ jobs:
         run: |
           DIRECTORIES=("administrators" "emails" "subscriptions-automation" )
           for directory in $DIRECTORIES; do
-            cd ${file} || exit 1
+            cd ${directory} || exit 1
             ls
             terraform init -input=false
             terraform plan -out=tfplan -input=false
