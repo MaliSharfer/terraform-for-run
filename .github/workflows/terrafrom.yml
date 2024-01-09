@@ -26,12 +26,12 @@ jobs:
         id : az-login
         run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
       
-      # - name: destroy
-      #   id: destroy
-      #   run: |
-      #     cd administrators || exit 1
-      #     terraform init
-      #     terraform destroy -input=false -auto-approve
+      - name: destroy
+        id: destroy
+        run: |
+          cd administrators || exit 1
+          terraform init
+          terraform destroy -input=false -auto-approve
 
 
 
@@ -42,9 +42,10 @@ jobs:
           for directory in $DIRECTORIES; do
             cd ${directory} || exit 1
             ls
-            terraform init -input=false
-            terraform plan -out=tfplan -input=false
-            terraform apply -input=false -auto-approve tfplan
+            echo ${directory}
+            # terraform init -input=false
+            # terraform plan -out=tfplan -input=false
+            # terraform apply -input=false -auto-approve tfplan
             cd ..  
           done  
 
