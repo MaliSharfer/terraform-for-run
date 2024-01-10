@@ -83,7 +83,6 @@ variable table_name {
 }
 
 variable function_app_name {
-
   type = string
-  default = "func-key-vault"
+  default = "func-role-assignment"
 }
