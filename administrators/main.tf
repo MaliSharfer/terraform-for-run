@@ -16,46 +16,18 @@ provider "azurerm" {
   subscription_id = var.subscription_id
 }
 
-resource "azurerm_resource_group" "vnet_resource_group" {
-  name     = var.rg_name
-  location = var.rg_location
+data "azurerm_storage_account" "myfirsttrail"{
+  name = "myfirsttrail"
+  resource_group_name = "NetworkWatcherRG"
 }
 
-resource "azurerm_virtual_network" "virtual_network" {
-  name                = var.vnet_name
-  location            = azurerm_resource_group.vnet_resource_group.location
-  resource_group_name = azurerm_resource_group.vnet_resource_group.name
-  address_space       = var.address_space
-  dns_servers         = var.dns_servers
-}
-
-resource "azurerm_subnet" "vnet_subnet" {
-  name                 = var.subnet_name
-  resource_group_name  = azurerm_resource_group.vnet_resource_group.name
-  virtual_network_name = azurerm_virtual_network.virtual_network.name
-  address_prefixes     = var.subnet_address_prefix
-  service_endpoints    = ["Microsoft.Storage"]
-}
-
-resource "azurerm_storage_account" "vnet_storage_account" {
-  name                     = var.vnet_storage_account_name
-  resource_group_name      = azurerm_resource_group.vnet_resource_group.name
-  location                 = azurerm_resource_group.vnet_resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-
-  # network_rules {
-  #   default_action             = "Deny"
-  #   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
-  # }
-}
 
 data "azurerm_client_config" "current_client" {}
 
 resource "azurerm_key_vault" "key_vault" {
   name                        = var.key_vault_name
   location                    = "West Europe"
-  resource_group_name         = azurerm_storage_account.vnet_storage_account.resource_group_name
+  resource_group_name         = data.azurerm_storage_account.myfirsttrail.resource_group_name
   soft_delete_retention_days  = 7
   tenant_id                   = data.azurerm_client_config.current_client.tenant_id
   sku_name                    = var.key_vault_sku_name
@@ -76,11 +48,81 @@ resource "azurerm_key_vault" "key_vault" {
 
 resource "azurerm_key_vault_secret" "key_vault_secret" {
   name         = var.key_vault_secret_name
-  value        = azurerm_storage_account.vnet_storage_account.primary_connection_string
+  value        = "12345"
   key_vault_id = azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_storage_table" "storage_table" {
-  name                 = var.table_name
-  storage_account_name = azurerm_storage_account.vnet_storage_account.name
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                = var.app_service_plan_name
+  location            = "West Europe"
+  resource_group_name = data.azurerm_storage_account.myfirsttrail.resource_group_name
+  kind                = "Linux"
+  reserved            = true
+  sku {
+    tier = "Premium"
+    size = "P1V2"
+  }
 }
+
+resource "azurerm_function_app" "function_app" {
+  name                       = var.function_app_name
+  location                   = "West Europe"
+  resource_group_name        =  data.azurerm_storage_account.myfirsttrail.resource_group_name
+  app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
+  storage_account_name       = data.azurerm_storage_account.myfirsttrail.name
+  storage_account_access_key = data.azurerm_storage_account.myfirsttrail.primary_access_key
+  os_type                    = "linux"
+  version                    = "~4"
+
+  app_settings = {
+    FUNCTIONS_WORKER_RUNTIME = "python"
+  }
+  
+  site_config {
+    always_on         = true
+    linux_fx_version  = var.linux_fx_version
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+  
+}
+
+resource "azurerm_key_vault_access_policy" "example" {
+  key_vault_id = azurerm_key_vault.key_vault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  key_permissions = [
+    "Get",
+  ]
+
+  secret_permissions = [
+    "Get",
+  ]
+}
+
+# data "azuread_service_principal" "example" {
+#   display_name = "example-app"
+# }
+
+resource "azurerm_key_vault_access_policy" "example-principal" {
+  key_vault_id = azurerm_key_vault.key_vault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  application_id = azurerm_function_app.example.identity.application_id
+
+  key_permissions = [
+    "Get", "List", "Encrypt", "Decrypt"
+  ]
+}
+
+
+ 
+#   principal_id         = azurerm_function_app.example.identity[0].principal_id
+
+
+# resource "azurerm_storage_table" "storage_table" {
+#   name                 = var.table_name
+#   storage_account_name = azurerm_storage_account.vnet_storage_account.name
+# }

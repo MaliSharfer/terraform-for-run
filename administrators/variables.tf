@@ -4,7 +4,7 @@ variable subscription_id {
 
 variable rg_name {
   type     = string
-  default  = "rg-administrators"
+  default  = "rg-try"
 }
 
 variable rg_location {  
@@ -14,7 +14,7 @@ variable rg_location {
 
 variable vnet_name {
   type      = string
-  default   = "vnet-administrators"
+  default   = "vnet-try"
 }
 
 variable address_space {
@@ -29,7 +29,7 @@ variable dns_servers {
 
 variable subnet_name {
   type     = string
-  default  = "snet-administrators"
+  default  = "snet-try"
 }
 
 variable subnet_address_prefix {
@@ -39,12 +39,12 @@ variable subnet_address_prefix {
 
 variable vnet_storage_account_name {
   type     = string
-  default  =  "stadministrators"
+  default  =  "try"
 }
 
 variable key_vault_name {
   type     = string
-  default  = "kv-connection-string1"
+  default  = "kv-connection-try"
 }
 
 variable key_vault_sku_name {
@@ -74,10 +74,16 @@ variable key_vault_storage_permissions {
 
 variable key_vault_secret_name {
   type        = string
-  default     = "ADMINISTRATORS-SECRET"
+  default     = "TRY-SECRET"
 }
 
 variable table_name {
   type     = string
   default  =  "managers"
+}
+
+variable function_app_name {
+
+  type = string
+  default = "func-key-vault"
 }
