@@ -89,23 +89,20 @@ resource "azurerm_function_app" "function_app" {
   
 }
 
-resource "azurerm_key_vault_access_policy" "example" {
-  key_vault_id = azurerm_key_vault.key_vault.id
-  tenant_id    = data.azurerm_client_config.current_client.tenant_id
-  object_id    = data.azurerm_client_config.current_client.object_id
+# resource "azurerm_key_vault_access_policy" "example" {
+#   key_vault_id = azurerm_key_vault.key_vault.id
+#   tenant_id    = data.azurerm_client_config.current_client.tenant_id
+#   object_id    = data.azurerm_client_config.current_client.object_id
 
-  key_permissions = [
-    "Get",
-  ]
+#   key_permissions = [
+#     "Get",
+#   ]
 
-  secret_permissions = [
-    "Get",
-  ]
-}
-
-# data "azuread_service_principal" "example" {
-#   display_name = "example-app"
+#   secret_permissions = [
+#     "Get",
+#   ]
 # }
+
 
 resource "azurerm_key_vault_access_policy" "example-principal" {
   key_vault_id = azurerm_key_vault.key_vault.id
