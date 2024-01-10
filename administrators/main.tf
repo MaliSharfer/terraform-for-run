@@ -132,10 +132,10 @@ resource "azurerm_key_vault_access_policy" "example-principal" {
   ]
 }
 
-resource "azurerm_role_assignment" "example" {
-  scope                = azurerm_key_vault.key_vault.id
-  principal_id         = azurerm_function_app.function_app.identity[0].principal_id
-  role_definition_name = "Key Vault Secrets Officer"
+# resource "azurerm_role_assignment" "example" {
+#   scope                = azurerm_key_vault.key_vault.id
+#   principal_id         = azurerm_function_app.function_app.identity[0].principal_id
+#   role_definition_name = "Key Vault Secrets Officer"
 
-  depends_on = [azurerm_key_vault.key_vault, azurerm_function_app.function_app]
-}
+#   # depends_on = [azurerm_key_vault.key_vault, azurerm_function_app.function_app]
+# }
