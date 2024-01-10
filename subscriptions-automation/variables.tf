@@ -71,7 +71,7 @@ variable logic_app_workflow_name {
 
 variable key_vault_name {
   type        = string
-  default = "kv-connection-string1"
+  default = "kv-connection-string"
 }
 
 variable key_vault_uri {
