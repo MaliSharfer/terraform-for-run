@@ -132,17 +132,6 @@ resource "azurerm_key_vault_access_policy" "example-principal" {
   ]
 }
 
-
-resource "azurerm_key_vault_access_policy" "example-principal" {
-  key_vault_id = azurerm_key_vault.key_vault.id
-  tenant_id    = data.azurerm_client_config.current_client.tenant_id
-  object_id  = azurerm_function_app.function_app.identity[0].principal_id
-
-  key_permissions = [
-    "Get", "List", "Encrypt", "Decrypt"
-  ]
-}
-
 resource "azurerm_role_assignment" "example" {
   scope                = azurerm_key_vault.key_vault.id
   principal_id         = azurerm_function_app.function_app.identity[0].principal_id
