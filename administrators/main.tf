@@ -65,7 +65,7 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 }
 
 resource "azurerm_function_app" "function_app" {
-  name                       = "function-app-name"
+  name                       = "func-secret"
   location                   = "West Europe"
   resource_group_name        =  data.azurerm_storage_account.myfirsttrail.resource_group_name
   app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
