@@ -53,7 +53,7 @@ resource "azurerm_key_vault_secret" "key_vault_secret" {
 }
 
 resource "azurerm_app_service_plan" "app_service_plan" {
-  name                = var.app_service_plan_name
+  name                = "service-plan-name"
   location            = "West Europe"
   resource_group_name = data.azurerm_storage_account.myfirsttrail.resource_group_name
   kind                = "Linux"
@@ -65,7 +65,7 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 }
 
 resource "azurerm_function_app" "function_app" {
-  name                       = var.function_app_name
+  name                       = "function-app-name"
   location                   = "West Europe"
   resource_group_name        =  data.azurerm_storage_account.myfirsttrail.resource_group_name
   app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
@@ -80,7 +80,7 @@ resource "azurerm_function_app" "function_app" {
   
   site_config {
     always_on         = true
-    linux_fx_version  = var.linux_fx_version
+    linux_fx_version  = "DOCKER|mcr.microsoft.com/azure-functions/dotnet:4-appservice-quickstart"
   }
 
   identity {
