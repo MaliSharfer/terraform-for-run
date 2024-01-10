@@ -109,8 +109,8 @@ resource "azurerm_key_vault_access_policy" "example" {
 
 resource "azurerm_key_vault_access_policy" "example-principal" {
   key_vault_id = azurerm_key_vault.key_vault.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  application_id = azurerm_function_app.example.identity.application_id
+  tenant_id    = data.azurerm_client_config.current_client.tenant_id
+  application_id = azurerm_function_app.function_app.identity.application_id
 
   key_permissions = [
     "Get", "List", "Encrypt", "Decrypt"
