@@ -99,7 +99,7 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 resource "azurerm_function_app" "function_app" {
   name                       = var.function_app_name
   location                   = "West Europe"
-  resource_group_name        = ata.azurerm_storage_account.myfirsttrail.resource_group_name
+  resource_group_name        = data.azurerm_storage_account.myfirsttrail.resource_group_name
   app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
   storage_account_name       = data.azurerm_storage_account.myfirsttrail.name
   storage_account_access_key = data.azurerm_storage_account.myfirsttrail.primary_access_key
