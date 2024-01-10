@@ -44,7 +44,7 @@ variable vnet_storage_account_name {
 
 variable key_vault_name {
   type     = string
-  default  = "kv-connection-try"
+  default  = "kv-premmisions"
 }
 
 variable key_vault_sku_name {
