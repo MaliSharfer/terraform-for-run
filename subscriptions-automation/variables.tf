@@ -54,7 +54,7 @@ variable vnet_storage_account_name {
   default =  "stmanageaubscriptions"
 }
 
-variable app_service_plan_name{
+variable service_plan_name{
   type    = list(string)
   default =  ["app-subscriptions-automation","app-subscriptions-list"]
 }
@@ -74,11 +74,6 @@ variable key_vault_name {
   default = "kv-connection-string"
 }
 
-variable key_vault_uri {
-  type        = string
-  default     = "https://kv-manage-automation.vault.azure.net"
-}
-
 variable key_vault_resource_group_name {
   type     = string
   default  = "rg-administrators"
@@ -89,12 +84,17 @@ variable key_vault_secret_name {
   default     = "SUBSCRIPTION-SECRET"
 }
 
-variable linux_fx_version {
-  type = string
-  default = "DOCKER|mcr.microsoft.com/azure-functions/dotnet:4-appservice-quickstart"
+variable IMAGE_NAME {
+  type     = string
+  default  = "mcr.microsoft.com/azure-functions/dotnet"
+}
+
+variable IMAGE_TAG {
+  type     = string
+  default  = "4-appservice-quickstart"
 }
 
 variable table_name {
-  type     = list(string)
+  type    = list(string)
   default =  ["deletedSubscriptions","subscriptionsToDelete","emails"]
 }

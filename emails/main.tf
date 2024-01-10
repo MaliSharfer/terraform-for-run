@@ -44,10 +44,10 @@ resource "azurerm_storage_account" "vnet_storage_account" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  # network_rules {
-  #   default_action             = "Deny"
-  #   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
-  # }
+  network_rules {
+    default_action             = "Deny"
+    virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
+  }
 }
 
 data "azurerm_key_vault" "key_vault" {
@@ -61,27 +61,22 @@ resource "azurerm_key_vault_secret" "key_vault_secret" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_app_service_plan" "app_service_plan" {
-  name                = var.app_service_plan_name
+resource "azurerm_service_plan" "service_plan" {
+  name                = var.service_plan_name
   location            = azurerm_storage_account.vnet_storage_account.location
   resource_group_name = azurerm_storage_account.vnet_storage_account.resource_group_name
-  kind                = "Linux"
-  reserved            = true
-  sku {
-    tier = "Premium"
-    size = "P1V2"
-  }
+  os_type             = "Linux"
+  sku_name            = "P1v2"
 }
 
-resource "azurerm_function_app" "function_app" {
+resource "azurerm_linux_function_app" "linux_function_app" {
   name                       = var.function_app_name
   location                   = azurerm_storage_account.vnet_storage_account.location
   resource_group_name        = azurerm_storage_account.vnet_storage_account.resource_group_name
-  app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
+  service_plan_id        = azurerm_service_plan.service_plan.id
   storage_account_name       = azurerm_storage_account.vnet_storage_account.name
   storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
-  os_type                    = "linux"
-  version                    = "~4"
+  functions_extension_version = "~4"
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME = "python"
@@ -100,17 +95,38 @@ resource "azurerm_function_app" "function_app" {
   
   site_config {
     always_on         = true
-    linux_fx_version  = var.linux_fx_version
+    application_stack {
+      docker {
+        registry_url = var.DOCKER_REGISTRY_SERVER_URL
+        image_name = var.IMAGE_NAME
+        image_tag = var.IMAGE_TAG
+        registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
+        registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
+      }
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
   }
   
 }
 
-resource "azurerm_function_app_slot" "example" {
+resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
   name                       = "development"
-  location                   = azurerm_storage_account.vnet_storage_account.location
-  resource_group_name        = azurerm_storage_account.vnet_storage_account.resource_group_name
-  app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
-  function_app_name          = azurerm_function_app.function_app.name
+  function_app_id            = azurerm_linux_function_app.linux_function_app.id
   storage_account_name       = azurerm_storage_account.vnet_storage_account.name
   storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+   site_config {
+    always_on         = true
+    application_stack {
+      docker {
+        registry_url = var.DOCKER_REGISTRY_SERVER_URL
+        image_name = var.IMAGE_NAME
+        image_tag = var.IMAGE_TAG
+        registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
+        registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
+      }
+    }
+  }
 }

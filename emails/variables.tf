@@ -54,7 +54,7 @@ variable vnet_storage_account_name {
   default   =  "stemails"
 }
 
-variable app_service_plan_name{
+variable service_plan_name{
   type     = string
   default  = "app-emails"
 }
@@ -71,7 +71,7 @@ variable key_vault_resource_group_name {
 
 variable key_vault_name {
   type     = string
-  default  = "kv-connection-string1"
+  default  = "kv-connection-string"
 } 
 
 variable key_vault_secret_name {
@@ -79,7 +79,12 @@ variable key_vault_secret_name {
   default   = "EMAILS-SECRET"
 }
 
-variable linux_fx_version {
-  type     = string
-  default  = "DOCKER|mcr.microsoft.com/azure-functions/dotnet:4-appservice-quickstart"
+variable IMAGE_NAME {
+  type        = string
+  default     = "mcr.microsoft.com/azure-functions/dotnet"
+}
+
+variable IMAGE_TAG {
+  type        = string
+  default     = "4-appservice-quickstart"
 }
