@@ -52,30 +52,68 @@ resource "azurerm_key_vault_secret" "key_vault_secret" {
   key_vault_id = azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_service_plan" "service_plan" {
-  name                = "service-plan-name"
-  location            = "West Europe"
+# resource "azurerm_service_plan" "service_plan" {
+#   name                = "service-plan-name"
+#   location            = "West Europe"
+#   resource_group_name = data.azurerm_storage_account.myfirsttrail.resource_group_name
+#   os_type             = "Linux"
+#   sku_name            = "P1v2"
+# }
+
+# resource "azurerm_linux_function_app" "function_app" {
+#   name                       = "func-secret"
+#   location                   = "West Europe"
+#   resource_group_name        =  data.azurerm_storage_account.myfirsttrail.resource_group_name
+#   service_plan_id            = azurerm_service_plan.service_plan.id
+#   storage_account_name       = data.azurerm_storage_account.myfirsttrail.name
+#   storage_account_access_key = data.azurerm_storage_account.myfirsttrail.primary_access_key
+#   functions_extension_version = "~4"
+
+#   app_settings = {
+#     FUNCTIONS_WORKER_RUNTIME = "python"
+#   }
+
+#   site_config {
+#     always_on         = true
+#   } 
+
+#   identity {
+#     type = "SystemAssigned"
+#   }
+  
+# }
+
+
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                ="servise-kv"
+  location            ="West Europe"
   resource_group_name = data.azurerm_storage_account.myfirsttrail.resource_group_name
-  os_type             = "Linux"
-  sku_name            = "P1v2"
+  kind                = "Linux"
+  reserved            = true
+  sku {
+    tier = "Premium"
+    size = "P1V2"
+  }
 }
 
-resource "azurerm_linux_function_app" "function_app" {
-  name                       = "func-secret"
+resource "azurerm_function_app" "function_app" {
+  name                       = var.function_app_name
   location                   = "West Europe"
-  resource_group_name        =  data.azurerm_storage_account.myfirsttrail.resource_group_name
-  service_plan_id            = azurerm_service_plan.service_plan.id
+  resource_group_name        = ata.azurerm_storage_account.myfirsttrail.resource_group_name
+  app_service_plan_id        = azurerm_app_service_plan.app_service_plan.id
   storage_account_name       = data.azurerm_storage_account.myfirsttrail.name
   storage_account_access_key = data.azurerm_storage_account.myfirsttrail.primary_access_key
-  functions_extension_version = "~4"
+  os_type                    = "linux"
+  version                    = "~4"
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME = "python"
   }
-
+  
   site_config {
     always_on         = true
-  } 
+    linux_fx_version  ="python|3.11"
+  }
 
   identity {
     type = "SystemAssigned"
@@ -83,25 +121,11 @@ resource "azurerm_linux_function_app" "function_app" {
   
 }
 
-# resource "azurerm_key_vault_access_policy" "example" {
-#   key_vault_id = azurerm_key_vault.key_vault.id
-#   tenant_id    = data.azurerm_client_config.current_client.tenant_id
-#   object_id    = data.azurerm_client_config.current_client.object_id
-
-#   key_permissions = [
-#     "Get",
-#   ]
-
-#   secret_permissions = [
-#     "Get",
-#   ]
-# }
-
 
 resource "azurerm_key_vault_access_policy" "example-principal" {
   key_vault_id = azurerm_key_vault.key_vault.id
   tenant_id    = data.azurerm_client_config.current_client.tenant_id
-  object_id  = azurerm_linux_function_app.function_app.identity[0].principal_id
+  object_id  = azurerm_function_app.function_app.identity[0].principal_id
 
   key_permissions = [
     "Get", "List", "Encrypt", "Decrypt"
