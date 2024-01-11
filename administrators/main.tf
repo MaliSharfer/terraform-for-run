@@ -132,7 +132,7 @@ resource "azurerm_key_vault_access_policy" "example-principal" {
   ]
 
   secret_permissions = [
-    "Get",
+    "Get"
   ]
 
 }

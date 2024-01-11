@@ -1,8 +1,8 @@
 name: '🌍 Terraform Automation'
 
-on:
-  push:
-    branches: [ "feature/keyvult-acsses" ]
+# on:
+#   push:
+#     branches: [ "feature/keyvult-acsses" ]
 
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
