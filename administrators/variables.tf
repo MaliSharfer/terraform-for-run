@@ -4,7 +4,7 @@ variable subscription_id {
 
 variable rg_name {
   type     = string
-  default  = "rg-try"
+  default  = "rg-success"
 }
 
 variable rg_location {  
@@ -14,7 +14,7 @@ variable rg_location {
 
 variable vnet_name {
   type      = string
-  default   = "vnet-try"
+  default   = "vnet-success"
 }
 
 variable address_space {
@@ -29,7 +29,7 @@ variable dns_servers {
 
 variable subnet_name {
   type     = string
-  default  = "snet-try"
+  default  = "snet-success"
 }
 
 variable subnet_address_prefix {
@@ -39,12 +39,12 @@ variable subnet_address_prefix {
 
 variable vnet_storage_account_name {
   type     = string
-  default  =  "try"
+  default  =  "success"
 }
 
 variable key_vault_name {
   type     = string
-  default  = "kv-premmisions"
+  default  = "kv-sucsses"
 }
 
 variable key_vault_sku_name {
@@ -79,10 +79,10 @@ variable key_vault_secret_name {
 
 variable table_name {
   type     = string
-  default  =  "managers"
+  default  =  "success"
 }
 
 variable function_app_name {
   type = string
-  default = "func-role-assignment"
+  default = "func-full-success"
 }
