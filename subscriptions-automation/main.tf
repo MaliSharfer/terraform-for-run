@@ -109,8 +109,8 @@ resource "azurerm_linux_function_app" "function_app" {
     TABLE_SUBSCRIPTIONS_TO_DELETE = " "
     TABLE_SUBSCRIPTIONS_MANAGERS = " "
     TABLE_SUBSCRIPTIONS_TO_DELETE = " "
-    SECRET = var.key_vault_secret_name
-    KEYVAULT_URI = var.key_vault_uri
+    SECRET = " "
+    KEYVAULT_URI = " "
     https_only                          = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
