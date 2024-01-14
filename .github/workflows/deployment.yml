@@ -3,9 +3,7 @@ name: 🚀 Build and deploy to Azure Function App
 on:
   push:
     branches:
-      - main
-      - development
-      - feature/ci-cd
+      - feature/deploy-from-git
     paths:
       - 'services/emails/**'
       - 'services/subscriptions/**'
