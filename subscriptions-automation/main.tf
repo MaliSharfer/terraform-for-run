@@ -87,11 +87,16 @@ resource "azurerm_linux_function_app" "function_app" {
 
   app_settings = count.index==0 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
-    TABLE_SUBSCRIPTIONS_TO_DELETE =" "
+    COST = " "
+    EMAILS-SECRET = " "
     HTTP_TRIGGER_URL = " "
-    SHELIS_EMAIL = " "
-    TAG_NAME = " "
-    SECRET = azurerm_key_vault_secret.key_vault_secret.name
+    NUM_OF_MONTHS = " "
+    RECIPIENT_EMAIL	 = " "
+    TABLE_DELETED_SUBSCRIPTIONS = " "
+    TABLE_EMAILS = " "
+    TABLE_SUBSCRIPTIONS_MANAGERS = " "
+    TABLE_SUBSCRIPTIONS_TO_DELETE = " "
+    SUBSCRIPTION_SECRET = azurerm_key_vault_secret.key_vault_secret.name
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
     https_only                          = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
@@ -100,17 +105,14 @@ resource "azurerm_linux_function_app" "function_app" {
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   } : count.index==1 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
-    NUM_OF_MONTHS = " "
-    COST = " "
+    CLOUD_EMAIL = " "
+    EMAILS-SECRET = " "
     HTTP_TRIGGER_URL = " "
-    RECIPIENT_EMAIL = " "
+    HTTP_TRIGGER_URL_SUBSCRIPTION_AUTOMATION = " "
+    SUBSCRIPTION_SECRET = azurerm_key_vault_secret.key_vault_secret.name
+    KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
+    TABLE_SUBSCRIPTIONS_TO_DELETE = " "
     TAG_NAME = " "
-    TABLE_DELETED_SUBSCRIPTIONS = " "
-    TABLE_SUBSCRIPTIONS_TO_DELETE = " "
-    TABLE_SUBSCRIPTIONS_MANAGERS = " "
-    TABLE_SUBSCRIPTIONS_TO_DELETE = " "
-    SECRET = " "
-    KEYVAULT_URI = " "
     https_only                          = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME

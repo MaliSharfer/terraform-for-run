@@ -80,13 +80,13 @@ resource "azurerm_linux_function_app" "linux_function_app" {
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME = "python"
-    EMAIL_SENDER = " "
-    SENDER_EMAIL_PASSWORD =" "
-    SMTP_HOST = " "
-    SMTP_PORT = " "
-    SECRET = azurerm_key_vault_secret.key_vault_secret.name
+    EMAILS_SECRET = azurerm_key_vault_secret.key_vault_secret.name
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
     https_only                                = true
+    GRAPH_URL = " "
+    CLIENT_ID	= " "
+    CLIENT_SECRET = " "
+    TENANT_ID = " "
     DOCKER_REGISTRY_SERVER_URL                = var.DOCKER_REGISTRY_SERVER_URL 
     DOCKER_REGISTRY_SERVER_USERNAME           = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD           = var.DOCKER_REGISTRY_SERVER_PASSWORD 
