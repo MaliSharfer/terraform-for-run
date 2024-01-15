@@ -89,9 +89,9 @@ jobs:
       matrix:
         directory: ${{fromJson(needs.set-up.outputs.MATRIX)}}
 
-    environment:
-      name: 'development'
-      url: ${{ steps.deploy-to-functions.outputs.app-url }}
+    # environment:
+    #   name: 'development'
+    #   url: ${{ steps.deploy-to-functions.outputs.app-url }}
       
     steps:
       - name: 📂 Checkout repository
