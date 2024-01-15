@@ -8,6 +8,7 @@ on:
       - 'services/emails/**'
       - 'services/subscriptions/**'
 
+
 jobs:
   set-up:
     runs-on: 'ubuntu-latest'
