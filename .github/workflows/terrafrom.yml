@@ -1,7 +1,10 @@
 name: '🌍 Terraform Automation'
 
+# on:
+#   workflow_dispatch:
 on:
-  workflow_dispatch:
+  push:
+    branches: [ "feature/terrafrom-with-exist-storage" ]
 
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}

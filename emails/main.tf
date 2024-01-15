@@ -2,7 +2,7 @@ terraform {
   backend "azurerm" {
     resource_group_name      = "NetworkWatcherRG"
     storage_account_name     = "myfirsttrail"
-    container_name           = "terraformstate-emails"
+    container_name           = "terraformstate-try"
     key                      = "terraform.tfstate"
   }
 }
@@ -16,66 +16,71 @@ provider "azurerm" {
   subscription_id = var.subscription_id
 }
 
-resource "azurerm_resource_group" "vnet_resource_group" {
-  name     = var.rg_name
-  location = var.rg_location
-}
+# resource "azurerm_resource_group" "vnet_resource_group" {
+#   name     = var.rg_name
+#   location = var.rg_location
+# }
 
-resource "azurerm_virtual_network" "virtual_network" {
-  name                = var.vnet_name
-  location            = azurerm_resource_group.vnet_resource_group.location
-  resource_group_name = azurerm_resource_group.vnet_resource_group.name
-  address_space       = var.address_space
-  dns_servers         = var.dns_servers
-}
+# resource "azurerm_virtual_network" "virtual_network" {
+#   name                = var.vnet_name
+#   location            = azurerm_resource_group.vnet_resource_group.location
+#   resource_group_name = azurerm_resource_group.vnet_resource_group.name
+#   address_space       = var.address_space
+#   dns_servers         = var.dns_servers
+# }
 
-resource "azurerm_subnet" "vnet_subnet" {
-  name                 = var.subnet_name
-  resource_group_name  = azurerm_resource_group.vnet_resource_group.name
-  virtual_network_name = azurerm_virtual_network.virtual_network.name
-  address_prefixes     = var.subnet_address_prefix
-  service_endpoints    = ["Microsoft.Storage"]
-}
+# resource "azurerm_subnet" "vnet_subnet" {
+#   name                 = var.subnet_name
+#   resource_group_name  = azurerm_resource_group.vnet_resource_group.name
+#   virtual_network_name = azurerm_virtual_network.virtual_network.name
+#   address_prefixes     = var.subnet_address_prefix
+#   service_endpoints    = ["Microsoft.Storage"]
+# }
 
-resource "azurerm_storage_account" "vnet_storage_account" {
-  name                     = var.vnet_storage_account_name
-  resource_group_name      = azurerm_resource_group.vnet_resource_group.name
-  location                 = azurerm_resource_group.vnet_resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+# resource "azurerm_storage_account" "vnet_storage_account" {
+#   name                     = var.vnet_storage_account_name
+#   resource_group_name      = azurerm_resource_group.vnet_resource_group.name
+#   location                 = azurerm_resource_group.vnet_resource_group.location
+#   account_tier             = "Standard"
+#   account_replication_type = "LRS"
 
   # network_rules {
   #   default_action             = "Deny"
   #   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
   # }
+# }
+
+data "azurerm_storage_account" "vnet_storage_account"{
+  name = "myfirsttrail"
+  resource_group_name = "NetworkWatcherRG"
 }
 
-data "azurerm_key_vault" "key_vault" {
-  name                = var.key_vault_name
-  resource_group_name = var.key_vault_resource_group_name
-}
+# data "azurerm_key_vault" "key_vault" {
+#   name                = var.key_vault_name
+#   resource_group_name = var.key_vault_resource_group_name
+# }
 
-resource "azurerm_key_vault_secret" "key_vault_secret" {
-  name         = var.key_vault_secret_name
-  value        = azurerm_storage_account.vnet_storage_account.primary_connection_string
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
+# resource "azurerm_key_vault_secret" "key_vault_secret" {
+#   name         = var.key_vault_secret_name
+#   value        = data.azurerm_storage_account.vnet_storage_account.primary_connection_string
+#   key_vault_id = data.azurerm_key_vault.key_vault.id
+# }
 
 resource "azurerm_service_plan" "service_plan" {
-  name                = var.service_plan_name
-  location            = azurerm_storage_account.vnet_storage_account.location
-  resource_group_name = azurerm_storage_account.vnet_storage_account.resource_group_name
+  name                = "exist-storage"
+  location            = data.azurerm_storage_account.vnet_storage_account.location
+  resource_group_name = data.azurerm_storage_account.vnet_storage_account.resource_group_name
   os_type             = "Linux"
   sku_name            = "P1v2"
 }
 
 resource "azurerm_linux_function_app" "linux_function_app" {
-  name                       = var.function_app_name
-  location                   = azurerm_storage_account.vnet_storage_account.location
-  resource_group_name        = azurerm_storage_account.vnet_storage_account.resource_group_name
+  name                       = "func-exist-storage"
+  location                   = data.azurerm_storage_account.vnet_storage_account.location
+  resource_group_name        = data.azurerm_storage_account.vnet_storage_account.resource_group_name
   service_plan_id        = azurerm_service_plan.service_plan.id
-  storage_account_name       = azurerm_storage_account.vnet_storage_account.name
-  storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+  storage_account_name       = data.azurerm_storage_account.vnet_storage_account.name
+  storage_account_access_key = data.azurerm_storage_account.vnet_storage_account.primary_access_key
   functions_extension_version = "~4"
 
   app_settings = {
@@ -115,8 +120,8 @@ resource "azurerm_linux_function_app" "linux_function_app" {
 resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
   name                       = "development"
   function_app_id            = azurerm_linux_function_app.linux_function_app.id
-  storage_account_name       = azurerm_storage_account.vnet_storage_account.name
-  storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+  storage_account_name       = data.azurerm_storage_account.vnet_storage_account.name
+  storage_account_access_key = data.azurerm_storage_account.vnet_storage_account.primary_access_key
    site_config {
     always_on         = true
     application_stack {
