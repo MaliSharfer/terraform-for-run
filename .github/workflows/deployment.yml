@@ -3,7 +3,7 @@ name: 🚀 Build and deploy to Azure Function App
 on:
   push:
     branches:
-      - feature/deploy-from-git
+      - feature/deploy-with-exist-stroge-with-terrafrom
     paths:
       - 'services/emails/**'
       - 'services/subscriptions/**'
