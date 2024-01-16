@@ -79,16 +79,31 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+    # - name: 🔄 Extract last directory level
+    #   run: |
+    #     LAST_LEVEL=$(basename ${{ matrix.directory }})
+    #     echo "${LAST_LEVEL}"
+    #   id: get-last-level
+
+    # - name: 🚀 Deploy to Azure Functions
+    #   id: deploy-to-functions
+    #   uses: Azure/functions-container-action@v1
+    #   with:
+    #     app-name: ${{ steps.get-last-level.outputs.last_level }}
+    #     image: 'ghcr.io/${{ env.REPO }}-${{ steps.get-last-level.outputs.last_level }}:latest'
+
+
+
+
     - name: 🔄 Extract last directory level
       run: |
         LAST_LEVEL=$(basename ${{ matrix.directory }})
-        echo "${LAST_LEVEL}"
+        echo "LAST_LEVEL=${LAST_LEVEL}" >> "$GITHUB_ENV"
       id: get-last-level
-
+    
     - name: 🚀 Deploy to Azure Functions
       id: deploy-to-functions
       uses: Azure/functions-container-action@v1
       with:
-        app-name: ${{ steps.get-last-level.outputs.last_level }}
-        image: 'ghcr.io/${{ env.REPO }}-${{ steps.get-last-level.outputs.last_level }}:latest'
-         
+        app-name: ${{ env.LAST_LEVEL }}
+        image: ghcr.io/${{ env.REPO }}-${{ env.LAST_LEVEL }}:latest
