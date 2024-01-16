@@ -12,7 +12,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: function_apps
+        working-directory: terraform-for-run
 
     environment:
       name: 'production'

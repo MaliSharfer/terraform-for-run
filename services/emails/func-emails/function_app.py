@@ -36,3 +36,4 @@ def send_email_function(req: func.HttpRequest) -> func.HttpResponse:
         "This HTTP triggered function executed successfully.",
         status_code = 200
     )
+
