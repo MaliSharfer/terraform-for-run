@@ -1,4 +1,5 @@
 azure-cli
+azure-functions
 azure-identity
 azure-mgmt-monitor
 azure-mgmt-consumption
@@ -12,6 +13,5 @@ python-dateutil
 pytest-cov
 python-dotenv
 pytz
-azure-functions
 requests
 openpyxl
