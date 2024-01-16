@@ -3,7 +3,7 @@ name: Build and deploy container app to Azure Web App - func-try-container11
 on:
   push:
     branches:
-      - feature/deploy-with-exist-stroge-with-terrafrom
+      - main
 
 jobs:
   build:
