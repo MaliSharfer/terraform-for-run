@@ -7,5 +7,5 @@ app = func.FunctionApp()
 @app.route(route="")
 def test_function(req: func.HttpRequest) -> func.HttpResponse:
      logging.info('Python HTTP trigger function processed a request.')
-     logging.info('!!!!!!!!!!rrrwow111o') 
+     logging.info('!!!!!!333!!!!rrrwow111o') 
 

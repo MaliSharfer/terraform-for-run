@@ -27,7 +27,7 @@ jobs:
       with:
         context: ./services/emails/func-now-succsess
         push: true
-        tags: ghcr.io/MaliSharfer/func-now-succsess:${{ github.sha }}
+        tags: ghcr.io/malisharfer/func-now-succsess:${{ github.sha }}
         file:  ./services/emails/func-now-succsess/Dockerfile
     
 
@@ -50,5 +50,5 @@ jobs:
       uses: Azure/functions-container-action@v1
       with:
         app-name: func-now-succsess
-        image: 'ghcr.io/MaliSharfer/terraform-for-run-func-now-succsess:${{ github.sha }}'
+        image: 'ghcr.io/malisharfer/terraform-for-run-func-now-succsess:${{ github.sha }}'
 # 
