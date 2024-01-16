@@ -12,7 +12,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: terraform-for-run
+        working-directory: services
 
     environment:
       name: 'production'
@@ -21,8 +21,9 @@ jobs:
     strategy:
       matrix:
         directory:
-          - 'services/emails/**'
-          - 'services/subscriptions/**'
+          # - emails/**'
+          # - subscriptions/**'
+          - func-emails
 
     steps:
     - name: 📂 Checkout repository
