@@ -78,7 +78,6 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-      if: env.DIRECTORY == matrix.directory
 
     - name: 🔄 Extract last directory level
       run: |
