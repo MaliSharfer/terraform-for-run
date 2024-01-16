@@ -20,8 +20,10 @@ jobs:
     strategy:
       matrix:
         directory:
-          - 'services/emails/**'
-          - 'services/subscriptions/**'
+          - services/emails/func-emails
+          - services/subscriptions/func-subscriptions-automation
+          - services/subscriptions/func-subscriptions-list
+
     steps:
     - name: 📂 Checkout repository
       uses: actions/checkout@v4
