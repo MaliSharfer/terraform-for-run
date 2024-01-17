@@ -21,9 +21,10 @@ jobs:
     # outputs:
     #   MATRIX: ${{ steps.determine_directories.outputs.changed_directories }}
 
-    strategy:
-      matrix:
-        directory: ${{ needs.determine_directories.outputs.changed_directories }}
+    # strategy:
+    #   matrix:
+    #     directory: ${{ needs.determine_directories.outputs.changed_directories }}
+    
     # strategy:
     #   matrix:
     #     directory:
@@ -64,16 +65,17 @@ jobs:
         json_array="[${json_array%,}]" 
         echo "Changed directories: $json_array"
         echo "::set-output name=changed_directories::$json_array"
+        echo "MATRIXD=changed_directories::$json_array" >> "$GITHUB_ENV"
 
-    # - run: |
-    #     echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
+    - run: |
+        echo "DIRECTORY=${{ MATRIXD }}" >> "$GITHUB_ENV"
 
-    # - run: |
-    #     echo "WORKING_DIRECTORY=trraform-for-run" >> "$GITHUB_ENV"
+    - run: |
+        echo "WORKING_DIRECTORY=trraform-for-run" >> "$GITHUB_ENV"
 
     - name: 🛠️ Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
       
 
     - name: 🔑 Log in to registry
@@ -82,7 +84,7 @@ jobs:
         registry:  ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
 
     - name: 🔖 Get release tag name
       id: get_release
@@ -91,7 +93,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         latest: true
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
 
     
 
@@ -100,7 +102,7 @@ jobs:
       id: downcase
       with:
           string: ${{ github.repository }}
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
 
     - name: ♻️ Set correct environment
       run: |
@@ -108,22 +110,22 @@ jobs:
         echo "TAG=$TAG" >> "$GITHUB_ENV"
         REPO=${{ steps.downcase.outputs.lowercase }}
         echo "REPO=$REPO" >> "$GITHUB_ENV"
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
 
     - name: 🐳 Docker metadata
       id: docker_meta
       uses: docker/metadata-action@v5
       with:
-        images: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}
+        images: ghcr.io/${{ env.REPO }}-${{ MATRIXD }}
         tags: |
           type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ env.TAG }}
           type=semver,pattern={{major}}.{{minor}},value=${{ env.TAG }}
           type=semver,pattern={{major}},value=${{ env.TAG }}
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
     
     - name: 🧰 Check and copy necessary files
       run: |
-        DIRECTORY=${{ matrix.directory }}
+        DIRECTORY=${{ MATRIXD }}
         REQUIRED_FILES=(".funcignore" ".gitignore" "host.json" "local.settings.json" "requirements.txt" "Dockerfile")
         ROOT_DIRECTORY=$(pwd)
         FILES_PATH="$ROOT_DIRECTORY"
@@ -135,30 +137,30 @@ jobs:
             cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
           fi
         done
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
 
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
-        context: ./services/${{ matrix.directory }}
+        context: ./services/${{ MATRIXD }}
         push: true
-        tags: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}
+        tags: ghcr.io/${{ env.REPO }}-${{ MATRIXD }}:${{ steps.get_release.outputs.tag_name }}
         labels: ${{ steps.docker_meta.outputs.labels }}
         file: ./services/Dockerfile
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
 
     - name: 🔑 Login to Azure
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
 
     - name: 🔄 Extract last directory level
       run: |
-        LAST_LEVEL=$(basename ${{ matrix.directory }})
+        LAST_LEVEL=$(basename ${{ MATRIXD }})
         echo "LAST_LEVEL=${LAST_LEVEL}" >> "$GITHUB_ENV"
       id: get-last-level
-      # if: env.DIRECTORY == matrix.directory
+      # if: env.DIRECTORY == MATRIXD
     
     - name: 🚀 Deploy to Azure Functions
       id: deploy-to-functions
@@ -166,6 +168,6 @@ jobs:
       with:
         app-name: ${{ env.LAST_LEVEL }}
         image: 'ghcr.io/${{ env.REPO }}-${{ env.LAST_LEVEL }}:${{ steps.get_release.outputs.tag_name }}'   
-      # if: env.DIRECTORY == matrix.directory  
+      # if: env.DIRECTORY == MATRIXD  
 
 
