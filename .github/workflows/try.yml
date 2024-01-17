@@ -23,8 +23,8 @@ jobs:
         directory:
           # - emails/**'
           # - subscriptions/**'
-          # - func-emails
-          # - func-subscriptions-automation
+          - emails/func-emails
+          - subscriptions/func-subscriptions-automation
           - subscriptions/func-subscriptions-list
 
     steps:
@@ -33,18 +33,18 @@ jobs:
       with:
         fetch-depth: 0
 
-    # - name: 🔎 Determine modified directory
-    #   id: determine_directory
-    #   run: |
-    #     git diff --name-only HEAD~1 ${{ github.sha }} > changes.txt
-    #     if grep -q '^${{ matrix.directory }}' changes.txt; then
-    #       echo "${{ matrix.directory }} has changes"
-    #       # echo "::set-output name=directory::${{ matrix.directory }}"
-    #       echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
-    #     else
-    #       echo "No changes in ${{ matrix.directory }}"
-    #       exit 0
-    #     fi
+    - name: 🔎 Determine modified directory
+      id: determine_directory
+      run: |
+        git diff --name-only HEAD~1 ${{ github.sha }} > changes.txt
+        if grep -q '^${{ matrix.directory }}' changes.txt; then
+          echo "${{ matrix.directory }} has changes"
+          # echo "::set-output name=directory::${{ matrix.directory }}"
+          echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
+        else
+          echo "No changes in ${{ matrix.directory }}"
+          exit 0
+        fi
 
 
     - run: |
@@ -133,14 +133,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
       if: env.DIRECTORY == matrix.directory
- 
-    # - name: 🚀 Deploy to Azure Functions
-    #   id: deploy-to-functions
-    #   uses: Azure/functions-container-action@v1
-    #   with:
-    #     app-name: ${{ matrix.directory }}
-    #     image: 'ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}'
-    #   if: env.DIRECTORY == matrix.directory
+
     - name: 🔄 Extract last directory level
       run: |
         LAST_LEVEL=$(basename ${{ matrix.directory }})
