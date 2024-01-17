@@ -17,12 +17,17 @@ jobs:
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-functions.outputs.app-url }}
-
+    
     strategy:
       matrix:
-        directory:
-          ${{ fromJson(steps.determine_directories.outputs.changed_directories) }}
-          # # - emails/**'
+        directory: ${{ fromJson(steps.determine_directories.outputs.changed_directories) }}
+
+
+    # strategy:
+    #   matrix:
+    #     directory:
+    #       ${{ fromJson(steps.determine_directories.outputs.changed_directories) }}
+          # - emails/**'
           # # - subscriptions/**'
           # # - emails/func-emails
           # - subscriptions/func-subscriptions-automation
