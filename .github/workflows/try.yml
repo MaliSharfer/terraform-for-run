@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        directory: ${{fromJson(needs.determine_directories.outputs.changed_directories)}}
+        directory: ${{ needs.determine_directories.outputs.changed_directories }}
     # strategy:
     #   matrix:
     #     directory:
