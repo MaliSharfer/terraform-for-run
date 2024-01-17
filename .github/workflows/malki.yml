@@ -3,7 +3,7 @@ name: Build and deploy container app to Azure Function App
 on:
   push:
     branches:
-      - main
+      - feature/deploy-with-exist-stroge-with-terrafrom
 
 jobs:
   build-and-deploy:
@@ -24,6 +24,7 @@ jobs:
           # - emails/**'
           # - subscriptions/**'
           - func-emails
+          - 
 
     steps:
     - name: 📂 Checkout repository
