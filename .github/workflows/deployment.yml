@@ -134,11 +134,11 @@ jobs:
             fi
           done
 
-      - name: 🔄 Extract Last Directory Level
-        id: get-last-level
-        run: |
-          LAST_LEVEL=$(echo ${{ matrix.directory }} | xargs -n 1 basename)
-          echo "::set-output name=last_level::$LAST_LEVEL"
+      # - name: 🔄 Extract Last Directory Level
+      #   id: get-last-level
+      #   run: |
+      #     LAST_LEVEL=$(echo ${{ matrix.directory }} | xargs -n 1 basename)
+      #     echo "::set-output name=last_level::$LAST_LEVEL"
 
       - name: 🔑 Log in to registry
         uses: docker/login-action@v2
@@ -161,10 +161,23 @@ jobs:
           labels: ${{ env.LABELS }}
           file: ./${{ matrix.directory }}/Dockerfile
 
-      - name: 🚀 Deploy to Azure Functions
-        id: deploy-to-functions
-        uses: Azure/functions-container-action@v1
-        with:
-          app-name: ${{ steps.get-last-level.outputs.last_level }}
-          image: 'ghcr.io/${{ env.REPO }}-${{ steps.get-last-level.outputs.last_level }}:${{ env.TAG }}'
+      # - name: 🚀 Deploy to Azure Functions
+      #   id: deploy-to-functions
+      #   uses: Azure/functions-container-action@v1
+      #   with:
+      #     app-name: ${{ steps.get-last-level.outputs.last_level }}
+      #     image: 'ghcr.io/${{ env.REPO }}-${{ steps.get-last-level.outputs.last_level }}:${{ env.TAG }}'
 
+    - name: 🔄 Extract last directory level
+      run: |
+        LAST_LEVEL=$(basename ${{ matrix.directory }})
+        echo "LAST_LEVEL=${LAST_LEVEL}" >> "$GITHUB_ENV"
+      id: get-last-level
+      # if: env.DIRECTORY == matrix.directory
+    
+    - name: 🚀 Deploy to Azure Functions
+      id: deploy-to-functions
+      uses: Azure/functions-container-action@v1
+      with:
+        app-name: ${{ env.LAST_LEVEL }}
+        image: 'ghcr.io/${{ env.REPO }}-${{ env.LAST_LEVEL }}:${{ steps.get_release.outputs.tag_name }}' 
