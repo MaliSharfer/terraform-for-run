@@ -18,13 +18,12 @@ jobs:
       name: 'production'
       url: ${{ steps.deploy-to-functions.outputs.app-url }}
     
-    outputs:
-      MATRIX: ${{ steps.determine_directories.outputs.changed_directories }}
+    # outputs:
+    #   MATRIX: ${{ steps.determine_directories.outputs.changed_directories }}
 
     strategy:
       matrix:
-        directory: ${{ fromJson(outputs.MATRIX) }}
-
+        directory: ${{fromJson(needs.determine_directories.outputs.changed_directories)}}
     # strategy:
     #   matrix:
     #     directory:
