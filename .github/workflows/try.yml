@@ -116,11 +116,24 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
       if: env.DIRECTORY == matrix.directory
- 
+    
+    - name: 🔄 Extract last directory level
+      run: |
+        LAST_LEVEL=$(basename ${{ matrix.directory }})
+        echo "LAST_LEVEL=${LAST_LEVEL}" >> "$GITHUB_ENV"
+      id: get-last-level
+    
     - name: 🚀 Deploy to Azure Functions
       id: deploy-to-functions
       uses: Azure/functions-container-action@v1
       with:
-        app-name: ${{ matrix.directory }}
-        image: 'ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}'
-      if: env.DIRECTORY == matrix.directory
+        app-name: ${{ env.LAST_LEVEL }}
+        image: ghcr.io/${{ env.REPO }}-${{ env.LAST_LEVEL }}:latest
+        
+    # - name: 🚀 Deploy to Azure Functions
+    #   id: deploy-to-functions
+    #   uses: Azure/functions-container-action@v1
+    #   with:
+    #     app-name: ${{ matrix.directory }}
+    #     image: 'ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}'
+    #   if: env.DIRECTORY == matrix.directory
