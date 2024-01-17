@@ -23,7 +23,8 @@ jobs:
         directory:
           # - emails/**'
           # - subscriptions/**'
-          - func-emails
+          # - func-emails
+          - func-subscriptions-automation
 
     steps:
     - name: 📂 Checkout repository
@@ -101,8 +102,6 @@ jobs:
           type=semver,pattern={{major}},value=${{ env.TAG }}
       if: env.DIRECTORY == matrix.directory
     
-
-  
     - name: 🧰 Check and copy necessary files
       run: |
         DIRECTORY=${{ matrix.directory }}
@@ -114,14 +113,14 @@ jobs:
             echo "${file} not found in ${FILES_PATH}, cannot copy"
           else
             echo "${file} found in ${FILES_PATH}, copying from there"
-            cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/emails/${DIRECTORY}/"
+            cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/subscriptions/${DIRECTORY}/"
           fi
         done
 
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
-        context: ./services/emails/${{ matrix.directory }}
+        context: ./services/subscriptions/${{ matrix.directory }}
         push: true
         tags: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}
         labels: ${{ steps.docker_meta.outputs.labels }}
