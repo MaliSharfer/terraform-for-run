@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      MATRIX: ${{ steps.determine_directories.outputs.changed_directories }}
+      MATRIX: ''
 
     defaults:
       run:
@@ -67,7 +67,8 @@ jobs:
         json_array="[${json_array%,}]" 
         echo "Changed directories: $json_array"
         echo "::set-output name=changed_directories::$json_array"
-      
+        echo "MATRIX=$json_array" >> $GITHUB_ENV
+
     - run: |
         echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
 
