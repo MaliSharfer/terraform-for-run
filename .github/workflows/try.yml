@@ -24,7 +24,8 @@ jobs:
           # - emails/**'
           # - subscriptions/**'
           # - func-emails
-          - func-subscriptions-automation
+          # - func-subscriptions-automation
+          - func-subscriptions-list
 
     steps:
     - name: 📂 Checkout repository
