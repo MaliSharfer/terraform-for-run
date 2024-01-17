@@ -23,7 +23,7 @@ jobs:
         directory:
           # - emails/**'
           # - subscriptions/**'
-          - emails/func-emails
+          # - emails/func-emails
           - subscriptions/func-subscriptions-automation
           - subscriptions/func-subscriptions-list
 
@@ -44,7 +44,7 @@ jobs:
         else
           echo "No changes in ${{ matrix.directory }}"
           exit 0
-        fi
+        fii
 
 
     - run: |
@@ -117,6 +117,7 @@ jobs:
             cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
           fi
         done
+      if: env.DIRECTORY == matrix.directory
 
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
@@ -139,6 +140,7 @@ jobs:
         LAST_LEVEL=$(basename ${{ matrix.directory }})
         echo "LAST_LEVEL=${LAST_LEVEL}" >> "$GITHUB_ENV"
       id: get-last-level
+      if: env.DIRECTORY == matrix.directory
     
     - name: 🚀 Deploy to Azure Functions
       id: deploy-to-functions
@@ -146,3 +148,4 @@ jobs:
       with:
         app-name: ${{ env.LAST_LEVEL }}
         image: 'ghcr.io/${{ env.REPO }}-${{ env.LAST_LEVEL }}:${{ steps.get_release.outputs.tag_name }}'   
+      if: env.DIRECTORY == matrix.directory  
