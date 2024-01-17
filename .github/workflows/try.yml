@@ -25,7 +25,7 @@ jobs:
           # - subscriptions/**'
           # - func-emails
           # - func-subscriptions-automation
-          - func-subscriptions-list
+          - subscriptions/func-subscriptions-list
 
     steps:
     - name: 📂 Checkout repository
@@ -114,14 +114,14 @@ jobs:
             echo "${file} not found in ${FILES_PATH}, cannot copy"
           else
             echo "${file} found in ${FILES_PATH}, copying from there"
-            cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/subscriptions/${DIRECTORY}/"
+            cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
           fi
         done
 
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
-        context: ./services/subscriptions/${{ matrix.directory }}
+        context: ./services/${{ matrix.directory }}
         push: true
         tags: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}
         labels: ${{ steps.docker_meta.outputs.labels }}
@@ -134,10 +134,22 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
       if: env.DIRECTORY == matrix.directory
  
+    # - name: 🚀 Deploy to Azure Functions
+    #   id: deploy-to-functions
+    #   uses: Azure/functions-container-action@v1
+    #   with:
+    #     app-name: ${{ matrix.directory }}
+    #     image: 'ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}'
+    #   if: env.DIRECTORY == matrix.directory
+    - name: 🔄 Extract last directory level
+      run: |
+        LAST_LEVEL=$(basename ${{ matrix.directory }})
+        echo "LAST_LEVEL=${LAST_LEVEL}" >> "$GITHUB_ENV"
+      id: get-last-level
+    
     - name: 🚀 Deploy to Azure Functions
       id: deploy-to-functions
       uses: Azure/functions-container-action@v1
       with:
-        app-name: ${{ matrix.directory }}
-        image: 'ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}'
-      if: env.DIRECTORY == matrix.directory
+        app-name: ${{ env.LAST_LEVEL }}
+        image: 'ghcr.io/${{ env.REPO }}-${{ env.LAST_LEVEL }}:${{ steps.get_release.outputs.tag_name }}'   
