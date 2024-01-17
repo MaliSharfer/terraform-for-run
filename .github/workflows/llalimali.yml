@@ -51,20 +51,20 @@ jobs:
         REPO=${{ steps.downcase.outputs.lowercase }}
         echo "REPO=$REPO" >> "$GITHUB_ENV"
 
-    # - name: 🧰 Check and copy necessary files
-    #   run: |
-    #     DIRECTORY=${{ matrix.directory }}
-    #     REQUIRED_FILES=(".funcignore" ".gitignore" "host.json" "local.settings.json" "requirements.txt" "Dockerfile")
-    #     ROOT_DIRECTORY=$(pwd)
-    #     FILES_PATH="$ROOT_DIRECTORY/services"
-    #     for file in "${REQUIRED_FILES[@]}"; do
-    #       if [ ! -f "${FILES_PATH}/${file}" ]; then
-    #         echo "${file} not found in ${FILES_PATH}, cannot copy"
-    #       else
-    #         echo "${file} found in ${FILES_PATH}, copying from there"
-    #         cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
-    #       fi
-    #     done
+    - name: 🧰 Check and copy necessary files
+      run: |
+        DIRECTORY=${{ matrix.directory }}
+        REQUIRED_FILES=(".funcignore" ".gitignore" "host.json" "local.settings.json" "requirements.txt" "Dockerfile")
+        ROOT_DIRECTORY=$(pwd)
+        FILES_PATH="$ROOT_DIRECTORY/services"
+        for file in "${REQUIRED_FILES[@]}"; do
+          if [ ! -f "${FILES_PATH}/${file}" ]; then
+            echo "${file} not found in ${FILES_PATH}, cannot copy"
+          else
+            echo "${file} found in ${FILES_PATH}, copying from there"
+            cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
+          fi
+        done
 
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
