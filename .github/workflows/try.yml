@@ -44,7 +44,7 @@ jobs:
         else
           echo "No changes in ${{ matrix.directory }}"
           exit 0
-        fii
+        fi
 
 
     - run: |
