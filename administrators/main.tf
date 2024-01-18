@@ -46,7 +46,7 @@ resource "azurerm_storage_account" "vnet_storage_account" {
   account_replication_type = "LRS"
 
   network_rules {
-    default_action             = "Deny"
+    # default_action             = "Deny"
     virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
   }
 }
