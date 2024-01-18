@@ -31,7 +31,7 @@ def func_subscriptions_list(req: func.HttpRequest) -> func.HttpResponse:
             })  
     
     return func.HttpResponse(
-            "This HTTP triggered function executed successfully. ",
+            "This HTTP triggered function executed successfully!!!!! ",
             status_code = 200
         )
 
