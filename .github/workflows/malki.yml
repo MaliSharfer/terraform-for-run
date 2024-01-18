@@ -3,8 +3,8 @@ name: Build and deploy container app to Azure Function App
 on:
   push:
     branches:
-      # - feature/deploy-with-exist-stroge-with-terrafrom
-      - main
+      - feature/deploy-with-exist-stroge-with-terrafrom
+      # - main
  
 jobs:
   build-and-deploy:
@@ -45,7 +45,6 @@ jobs:
     #       exit 0
     #     fi
 
-
     - run: |
         echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
 
@@ -73,8 +72,6 @@ jobs:
       with:
         latest: true
       if: env.DIRECTORY == matrix.directory
-
-    
 
     - name: 🔄 downcase REPO
       uses: ASzc/change-string-case-action@v1
