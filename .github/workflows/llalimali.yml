@@ -3,8 +3,8 @@ name: 🚀 Build and deploy container app to Azure Function App
 on:
   push:
     branches:
-      # - feature/deploy-with-exist-stroge-with-terrafrom
-      - main
+      - feature/deploy-with-exist-stroge-with-terrafrom
+      # - main
 
 
 jobs:
@@ -77,6 +77,22 @@ jobs:
         echo "REPO=$REPO" >> "$GITHUB_ENV"
       if: env.DIRECTORY == matrix.directory
 
+    - name: 🧰 Check and copy necessary files
+      run: |
+        DIRECTORY=${{ matrix.directory }}
+        REQUIRED_FILES=(".funcignore" ".gitignore" "host.json" "local.settings.json" "requirements.txt" "Dockerfile")
+        ROOT_DIRECTORY=$(pwd)
+        FILES_PATH="$ROOT_DIRECTORY"
+        for file in "${REQUIRED_FILES[@]}"; do
+          if [ ! -f "${FILES_PATH}/${file}" ]; then
+            echo "${file} not found in ${FILES_PATH}, cannot copy"
+          else
+            echo "${file} found in ${FILES_PATH}, copying from there"
+            cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
+          fi
+        done
+      if: env.DIRECTORY == matrix.directory
+  
     - name: 🐳 Docker metadata
       id: docker_meta
       uses: docker/metadata-action@v5
