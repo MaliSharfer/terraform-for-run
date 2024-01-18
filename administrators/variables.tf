@@ -4,7 +4,7 @@ variable subscription_id {
 
 variable rg_name {
   type     = string
-  default  = "rg-chooooo"
+  default  = "rg-netmali"
 }
 
 variable rg_location {  
@@ -14,7 +14,7 @@ variable rg_location {
 
 variable vnet_name {
   type      = string
-  default   = "vnet-wow"
+  default   = "vnet-net"
 }
 
 variable address_space {
@@ -29,7 +29,7 @@ variable dns_servers {
 
 variable subnet_name {
   type     = string
-  default  = "snet-wow"
+  default  = "snet-net"
 }
 
 variable subnet_address_prefix {
@@ -39,12 +39,12 @@ variable subnet_address_prefix {
 
 variable vnet_storage_account_name {
   type     = string
-  default  =  "stchyachaya"
+  default  =  "stmaliandchaya"
 }
 
 
 
 variable table_name {
   type     = string
-  default  =  "chayayaya"
+  default  =  "malichaya"
 }

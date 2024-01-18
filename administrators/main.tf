@@ -1,11 +1,12 @@
-# terraform {
-#   backend "azurerm" {
-#     resource_group_name      = "NetworkWatcherRG"
-#     storage_account_name     = "myfirsttrail"
-#     container_name           = "terraformstate-networking"
-#     key                      = "terraform.tfstate"
-#   }
-# }
+terraform {
+  backend "azurerm" {
+    resource_group_name      = "NetworkWatcherRG"
+    storage_account_name     = "myfirsttrail"
+    container_name           = "terraformstate-malichaya"
+    key                      = "terraform.tfstate"
+  }
+}
+
 
 provider "azurerm" {
   features {
@@ -38,7 +39,7 @@ resource "azurerm_subnet" "vnet_subnet" {
 }
 
 resource "azurerm_storage_account" "vnet_storage_account" {
-  name                     = "stchyacll"
+  name                     = var.vnet_storage_account_name
   resource_group_name      = azurerm_resource_group.vnet_resource_group.name
   location                 = azurerm_resource_group.vnet_resource_group.location
   account_tier             = "Standard"
@@ -49,6 +50,9 @@ resource "azurerm_storage_account" "vnet_storage_account" {
     virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
   }
 }
+
+data "azurerm_client_config" "current_client" {}
+
 
 resource "azurerm_storage_table" "storage_table" {
   name                 = var.table_name
