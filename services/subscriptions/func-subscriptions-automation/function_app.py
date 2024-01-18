@@ -43,6 +43,6 @@ def func_subscriptions_automation(req: func.HttpRequest) -> func.HttpResponse:
         write_to_excel(subscriptions_to_excel)
    
     return func.HttpResponse(
-        "This HTTP triggered function executed successfully work.",
+        "This HTTP triggered function executed successfully work!!!!!!!",
         status_code = 200
     )
