@@ -38,7 +38,7 @@ jobs:
       - name: 🏗️ Terraform 
         id: init
         run: |
-          DIRECTORIES=( "administrators" "emails" "subscriptions-automation" )
+          DIRECTORIES=( "administrators" )
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
             terraform init -input=false
@@ -48,4 +48,6 @@ jobs:
 
             cd ..  
           done  
+
+
 
