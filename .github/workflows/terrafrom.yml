@@ -1,8 +1,7 @@
 name: '🌍 Terraform Automation'
 
 on:
-  push:
-    branches: [ "networking" ]
+  workflow_dispatch:
 
 
 env:
