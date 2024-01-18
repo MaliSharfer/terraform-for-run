@@ -18,8 +18,8 @@ jobs:
     strategy:
       matrix:
         directory:
-          # - services/emails/func-emails
-          - subscriptions/func-subscriptions-automation
+          - services/emails/func-emails
+          # - subscriptions/func-subscriptions-automation
           # - subscriptions/func-subscriptions-list
 
     steps:
