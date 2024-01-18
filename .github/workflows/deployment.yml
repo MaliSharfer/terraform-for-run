@@ -49,7 +49,6 @@ jobs:
           json_array="[${json_array%,}]" 
           echo "Changed directories: $json_array"
           echo "::set-output name=changed_directories::$json_array"
-
       
   build-and-deploy:
     runs-on: 'ubuntu-latest'
