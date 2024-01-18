@@ -3,8 +3,11 @@ name: 🚀 Build and deploy to Azure Function App
 on:
   push:
     branches:
-      # - feature/deploy-with-exist-stroge-with-terrafrom
-      - main 
+      # - main
+      # - development
+      # - feature/ci-cd
+      - feature/deploy-with-exist-stroge-with-terrafrom
+
     paths:
       - 'services/emails/**'
       - 'services/subscriptions/**'
@@ -49,40 +52,9 @@ jobs:
           json_array="[${json_array%,}]" 
           echo "Changed directories: $json_array"
           echo "::set-output name=changed_directories::$json_array"
-      
-  build-and-deploy:
-    runs-on: 'ubuntu-latest'
-    needs: set-up
-    env:
-      REPO: ${{ needs.set-up.outputs.REPO }}
-      TAG: ${{ needs.set-up.outputs.TAG }}
-      MATRIX: ${{ needs.set-up.outputs.MATRIX }}
-      LABELS: ${{ needs.set-up.outputs.LABELS }}
 
-    strategy:
-      matrix:
-        directory: ${{fromJson(needs.set-up.outputs.MATRIX)}}
-
-    # environment:
-    #   name: 'development'
-    #   url: ${{ steps.deploy-to-functions.outputs.app-url }}
-      
-    steps:
-      - name: 📂 Checkout repository
-        uses: actions/checkout@v4
-
-      
       - name: 🛠️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      # if: env.DIRECTORY == matrix.directory
-      
-      - name: 🔑 Log in to registry
-        uses: docker/login-action@v2
-        with:
-          registry:  ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-        # if: env.DIRECTORY == matrix.directory
 
       - name: 🔖 Get release tag name
         id: get_release
@@ -91,32 +63,43 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           latest: true
-        # if: env.DIRECTORY == matrix.directory
 
       - name: 🔄 downcase REPO
         uses: ASzc/change-string-case-action@v1
         id: downcase
         with:
-            string: ${{ github.repository }}
-        # if: env.DIRECTORY == matrix.directory
-
-      - name: ♻️ Set correct environment
-        run: |
-          TAG=${{ steps.get_release.outputs.tag_name }}
-          echo "TAG=$TAG" >> "$GITHUB_ENV"
-          REPO=${{ steps.downcase.outputs.lowercase }}
-          echo "REPO=$REPO" >> "$GITHUB_ENV"
-        # if: env.DIRECTORY == matrix.directory
+          string: ${{ github.repository }}
 
       - name: 🐳 Docker metadata
         id: docker_meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}
+          images: ghcr.io/${{ env.REPO }}/${{ matrix.directory }}
           tags: |
-            type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ env.TAG }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ env.TAG }}
-            type=semver,pattern={{major}},value=${{ env.TAG }} 
+            type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ steps.get_release.outputs.tag_name }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.get_release.outputs.tag_name }}
+            type=semver,pattern={{major}},value=${{ steps.get_release.outputs.tag_name }}
+
+  build-and-deploy:
+    runs-on: 'ubuntu-latest'
+    needs: set-up
+    env:
+      REPO: ${{ needs.set-up.outputs.REPO }}
+      TAG: ${{ needs.set-up.outputs.TAG }}
+      MATRIX: ${{ needs.set-up.outputs.MATRIX }}
+      LABELS: ${{ needs.set-up.outputs.LABELS }}
+    
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-functions.outputs.app-url }}
+
+    strategy:
+      matrix:
+        directory: ${{fromJson(needs.set-up.outputs.MATRIX)}}
+
+    steps:
+      - name: 📂 Checkout repository
+        uses: actions/checkout@v4
 
       - name: 🧰 Check and copy necessary files
         run: |
@@ -133,11 +116,11 @@ jobs:
             fi
           done
 
-      # - name: 🔄 Extract Last Directory Level
-      #   id: get-last-level
-      #   run: |
-      #     LAST_LEVEL=$(echo ${{ matrix.directory }} | xargs -n 1 basename)
-      #     echo "::set-output name=last_level::$LAST_LEVEL"
+      - name: 🔄 Extract Last Directory Level
+        id: get-last-level
+        run: |
+          LAST_LEVEL=$(echo ${{ matrix.directory }} | xargs -n 1 basename)
+          echo "::set-output name=last_level::$LAST_LEVEL"
 
       - name: 🔑 Log in to registry
         uses: docker/login-action@v2
@@ -160,23 +143,9 @@ jobs:
           labels: ${{ env.LABELS }}
           file: ./${{ matrix.directory }}/Dockerfile
 
-      # - name: 🚀 Deploy to Azure Functions
-      #   id: deploy-to-functions
-      #   uses: Azure/functions-container-action@v1
-      #   with:
-      #     app-name: ${{ steps.get-last-level.outputs.last_level }}
-      #     image: 'ghcr.io/${{ env.REPO }}-${{ steps.get-last-level.outputs.last_level }}:${{ env.TAG }}'
-
-      - name: 🔄 Extract last directory level
-        run: |
-          LAST_LEVEL=$(basename ${{ matrix.directory }})
-          echo "LAST_LEVEL=${LAST_LEVEL}" >> "$GITHUB_ENV"
-        id: get-last-level
-        # if: env.DIRECTORY == matrix.directory
-
       - name: 🚀 Deploy to Azure Functions
         id: deploy-to-functions
         uses: Azure/functions-container-action@v1
         with:
-          app-name: ${{ env.LAST_LEVEL }}
-          image: 'ghcr.io/${{ env.REPO }}-${{ env.LAST_LEVEL }}:${{ steps.get_release.outputs.tag_name }}' 
+          app-name: ${{ steps.get-last-level.outputs.last_level }}
+          image: 'ghcr.io/${{ env.REPO }}-${{ steps.get-last-level.outputs.last_level }}:${{ env.TAG }}'
