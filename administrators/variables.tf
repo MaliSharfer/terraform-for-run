@@ -39,7 +39,7 @@ variable subnet_address_prefix {
 
 variable vnet_storage_account_name {
   type     = string
-  default  =  "stwow"
+  default  =  "stchyachaya"
 }
 
 variable table_name {
