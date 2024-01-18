@@ -82,13 +82,13 @@ jobs:
         DIRECTORY=${{ matrix.directory }}
         REQUIRED_FILES=(".funcignore" ".gitignore" "host.json" "local.settings.json" "requirements.txt" "Dockerfile")
         ROOT_DIRECTORY=$(pwd)
-        FILES_PATH="{$ROOT_DIRECTORY}/services"
+        FILES_PATH="$ROOT_DIRECTORY"
         for file in "${REQUIRED_FILES[@]}"; do
-          if [ ! -f "${FILES_PATH}/${file}" ]; then
-            echo "${file} not found in ${FILES_PATH}, cannot copy"
+          if [ ! -f "${FILES_PATH}/services/${file}" ]; then
+            echo "${file} not found in ${FILES_PATH}/services, cannot copy"
           else
             echo "${file} found in ${FILES_PATH}, copying from there"
-            cp "${FILES_PATH}/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
+            cp "${FILES_PATH}/services/${file}" "${ROOT_DIRECTORY}/${DIRECTORY}/"
           fi
         done
       if: env.DIRECTORY == matrix.directory
