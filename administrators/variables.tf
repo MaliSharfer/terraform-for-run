@@ -4,7 +4,7 @@ variable subscription_id {
 
 variable rg_name {
   type     = string
-  default  = "rg-chaycycycy"
+  default  = "rg-chooooo"
 }
 
 variable rg_location {  
@@ -46,5 +46,5 @@ variable vnet_storage_account_name {
 
 variable table_name {
   type     = string
-  default  =  "wowowow"
+  default  =  "chayayaya"
 }
