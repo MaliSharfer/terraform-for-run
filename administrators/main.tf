@@ -38,7 +38,7 @@ resource "azurerm_subnet" "vnet_subnet" {
 }
 
 resource "azurerm_storage_account" "vnet_storage_account" {
-  name                     = "stchyachaya"
+  name                     = "stchyac"
   resource_group_name      = azurerm_resource_group.vnet_resource_group.name
   location                 = azurerm_resource_group.vnet_resource_group.location
   account_tier             = "Standard"
