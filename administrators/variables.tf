@@ -42,6 +42,11 @@ variable vnet_storage_account_name {
   default  =  "stchyachaya"
 }
 
+
+
+
+
+
 variable table_name {
   type     = string
   default  =  "wowowow"
