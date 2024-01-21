@@ -38,13 +38,13 @@ jobs:
       - name: 🏗️ Terraform 
         id: init
         run: |
-          DIRECTORIES=( "subscriptions-automation" "emails" "administrators" )
+          DIRECTORIES=( "administrators" "emails" "subscriptions-automation" )
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
             terraform init -input=false
-            # terraform plan -out=tfplan -input=false
-            # terraform apply -input=false -auto-approve tfplan
-            terraform destroy -input=false -auto-approve 
+            terraform plan -out=tfplan -input=false
+            terraform apply -input=false -auto-approve tfplan
+            # terraform destroy -input=false -auto-approve 
 
             cd ..  
           done  
