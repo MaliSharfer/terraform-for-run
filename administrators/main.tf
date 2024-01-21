@@ -52,6 +52,7 @@ resource "azurerm_storage_account" "vnet_storage_account" {
   }
 }
 
+
 data "azurerm_client_config" "current_client" {}
 
 resource "azurerm_key_vault" "key_vault" {
