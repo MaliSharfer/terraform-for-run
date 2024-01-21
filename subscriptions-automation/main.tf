@@ -43,10 +43,12 @@ resource "azurerm_storage_account" "vnet_storage_account" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  # network_rules {
-  #   default_action             = "Deny"
-  #   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
-  # }
+  network_rules {
+    default_action             = "Deny"
+    virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
+    ip_rules                   = "84.110.136.18"
+  }
+
 }
 
 data "azurerm_key_vault" "key_vault" {
