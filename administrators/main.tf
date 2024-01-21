@@ -38,7 +38,7 @@ resource "azurerm_subnet" "vnet_subnet" {
   service_endpoints    = ["Microsoft.Storage"]
 }
 
-resource "azurerm_storage_account" "azurerm_storage_account" {
+resource "azurerm_storage_account" "vnet_storage_account" {
   name                     = var.vnet_storage_account_name
   resource_group_name      = azurerm_resource_group.vnet_resource_group.name
   location                 = azurerm_resource_group.vnet_resource_group.location
@@ -53,7 +53,7 @@ resource "azurerm_storage_account" "azurerm_storage_account" {
 }
 
 resource "azurerm_storage_account_network_rules" "network_rules" {
-  storage_account_id    = azurerm_storage_accountץazurerm_storage_account.id
+  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
   default_action             = "Deny"
   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
   ip_rules                   = ["84.110.136.18"]
