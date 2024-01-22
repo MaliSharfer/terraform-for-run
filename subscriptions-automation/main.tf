@@ -34,6 +34,7 @@ resource "azurerm_subnet" "vnet_subnet" {
   resource_group_name  = azurerm_resource_group.vnet_resource_group.name
   virtual_network_name = azurerm_virtual_network.virtual_network.name
   address_prefixes     = var.subnet_address_prefix
+  service_endpoints    = ["Microsoft.Storage"]
 }
 
 resource "azurerm_storage_account" "vnet_storage_account" {
