@@ -41,7 +41,7 @@ variable dns_servers {
 
 variable subnet_name {
   type     = string
-  default  = "snet-administrators"
+  default  = "snet-emails"
 }
 
 variable subnet_address_prefix {
