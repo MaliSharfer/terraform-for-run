@@ -79,5 +79,5 @@ variable key_vault_secret_name {
 
 variable table_name {
   type     = string
-  default  =  "managers"
+  default  =  "administrators"
 }
