@@ -1,4 +1,6 @@
-
+variable subscription_id {
+  type = string
+}
 
 variable rg_name {
   type    = list(string)
