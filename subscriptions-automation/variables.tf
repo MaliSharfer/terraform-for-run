@@ -24,10 +24,10 @@ variable rg_location {
   default = "West Europe"
 }
 
-variable vnet_name {
-  type        = string
-  default = "vnet-manage-subscriptions"
-}
+# variable vnet_name {
+#   type        = string
+#   default = "vnet-manage-subscriptions"
+# }
 
 variable address_space {
   type        = list
