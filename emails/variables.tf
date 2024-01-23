@@ -24,29 +24,45 @@ variable rg_location {
   default  = "West Europe"
 }
 
-variable vnet_name {
+# variable vnet_name {
+#   type     = string
+#   default  = "vnet-emails"
+# }
+
+# variable address_space {
+#   type     = list
+#   default  = ["10.1.0.0/16"]
+# }
+
+# variable dns_servers {
+#   type     = list
+#   default  = []
+# }
+
+# variable subnet_name {
+#   type     = string
+#   default  = "snet-emails"
+# }
+
+# variable subnet_address_prefix {
+#   type     = list
+#   default  = ["10.1.1.0/24"]
+# }
+
+
+variable vnet_rg_name {
   type     = string
-  default  = "vnet-emails"
-}
-
-variable address_space {
-  type     = list
-  default  = ["10.1.0.0/16"]
-}
-
-variable dns_servers {
-  type     = list
-  default  = []
+  default  = "rg-administrators"
 }
 
 variable subnet_name {
   type     = string
-  default  = "snet-emails"
+  default  = "snet-administrators"
 }
 
-variable subnet_address_prefix {
-  type     = list
-  default  = ["10.1.1.0/24"]
+variable vnet_name {
+  type      = string
+  default   = "vnet-administrators"
 }
 
 variable vnet_storage_account_name {

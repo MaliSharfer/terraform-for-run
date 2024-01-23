@@ -39,14 +39,19 @@ variable dns_servers {
   default = []
 }
 
-variable subnet_name {
-  type        = string
-  default = "snet-manage-subscriptions"
+variable vnet_rg_name {
+  type     = string
+  default  = "rg-administrators"
 }
 
-variable subnet_address_prefix {
-  type    = list
-  default = ["10.1.1.0/24"]
+variable subnet_name {
+  type     = string
+  default  = "snet-administrators"
+}
+
+variable vnet_name {
+  type      = string
+  default   = "vnet-administrators"
 }
 
 variable vnet_storage_account_name {
@@ -98,3 +103,5 @@ variable table_name {
   type    = list(string)
   default =  ["deletedSubscriptions","subscriptionsToDelete","emails"]
 }
+
+
