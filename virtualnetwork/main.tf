@@ -44,6 +44,7 @@ resource "azurerm_virtual_hub" "example" {
   location            = azurerm_resource_group.example[count.index].location
   virtual_wan_id      = azurerm_virtual_wan.example.id
   address_prefix      = "10.0.1.0/24"
+  
   count = length(var.rg_name)
 }
 
