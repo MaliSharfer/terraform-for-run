@@ -30,6 +30,10 @@ module emails{
     vnet_subnet_id = module.administrators.subnet_id_emails
     key_vault_name = module.administrators.key_vault_name
     key_vault_resource_group_name = module.administrators.key_vault_resource_group_name
+
+    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
 }
 
 module subscriptions {
@@ -40,6 +44,11 @@ module subscriptions {
     vnet_subnet_id = module.administrators.subnet_id_subscription_automation
     key_vault_name = module.administrators.key_vault_name
     key_vault_resource_group_name = module.administrators.key_vault_resource_group_name
+
+    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
+
 }
 
 module storages{
@@ -51,5 +60,9 @@ module storages{
   key_vault_name = module.administrators.key_vault_name
   key_vault_resource_group_name = module.administrators.key_vault_resource_group_name
   key_vault_secret_excel_name = module.administrators.secret_administrators_name
+
+  DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+  DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVERUSERNAME
+  DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
   
 }
