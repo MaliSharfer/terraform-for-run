@@ -55,7 +55,7 @@ resource "azurerm_storage_account" "vnet_storage_account" {
 resource "azurerm_storage_account_network_rules" "network_rules" {
   storage_account_id    = azurerm_storage_account.vnet_storage_account.id
   default_action             = "Deny"
-  virtual_network_subnet_ids = [var.vnet_subnet[0].name]
+  virtual_network_subnet_ids = [var.virtual_networks_and_subnets_properties[0].snet_name]
   ip_rules                   = ["84.110.136.18"]
 }
 
