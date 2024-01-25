@@ -1,46 +1,18 @@
-variable subscription_id {
-  type        = string
-}
-
 variable rg_name {
   type     = string
   default  = "rg-administrators"
 }
 
-variable rg_location {  
+variable vnet_storage_account_name {
+  type        = string
+  default     = "stadministrators"
+}
+
+variable location {  
   type     = string
   default  = "West Europe"
 }
 
-variable vnet_name {
-  type      = string
-  default   = "vnet-administrators"
-}
-
-variable address_space {
-  type     = list
-  default  = ["10.1.0.0/16"]
-}
-
-variable dns_servers {
-  type     = list
-  default  = []
-}
-
-variable subnet_name {
-  type     = string
-  default  = "snet-administrators"
-}
-
-variable subnet_address_prefix {
-  type     = list
-  default  = ["10.1.1.0/24"]
-}
-
-variable vnet_storage_account_name {
-  type     = string
-  default  =  "stadministrators"
-}
 
 variable key_vault_name {
   type     = string
@@ -81,3 +53,52 @@ variable table_name {
   type     = string
   default  =  "administrators"
 }
+
+variable virtual_networks {
+  default = [
+    {
+      name                = "vnet-administrators"
+      resource_group_name = "rg-administrators"
+      address_space       = ["10.1.0.0/16"]
+    },
+    {
+      name                = "vnet-emails"
+      resource_group_name = "rg-emails"
+      address_space       = ["10.2.0.0/16"]
+    },
+    {
+      name                = "vnet-manage-subscriptions"
+      resource_group_name = "rg-manage-subscrioptions"
+      address_space       = ["10.3.0.0/16"]
+    },
+    {
+      name                = "vnet-storages"
+      resource_group_name = "rg-storages"
+      address_space       = ["10.4.0.0/16"]
+    },
+  ]
+}
+
+
+variable vnet_subnet {
+  default = [
+    {
+      name                 = "snet-administrators"
+      address_prefixes     =  ["10.1.1.0/24"]
+    },
+    {
+      name                 = "snet-emails"
+      address_prefixes     =  ["10.1.1.0/24"]
+    },
+    {
+      name                 = "snet-manage-subscriptions"
+      address_prefixes     = ["10.1.1.0/24"]
+    },
+    {
+      name                 = "snet-storages"
+      address_prefixes     = ["10.1.1.0/24"]
+    },
+  ]
+}
+
+

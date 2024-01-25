@@ -1,68 +1,16 @@
-terraform {
-  backend "azurerm" {
-    resource_group_name      = "NetworkWatcherRG"
-    storage_account_name     = "myfirsttrail"
-    container_name           = "terraformstate-subscriptions"
-    key                      = "terraform.tfstate"
-  }
-}
-
-provider "azurerm" {
-  features {
-    resource_group {
-      prevent_deletion_if_contains_resources = false
-    }
-  }
-  subscription_id = var.subscription_id
-}
-
-resource "azurerm_resource_group" "vnet_resource_group" {
-  name     = var.rg_name
-  location = var.rg_location
-}
-
-# resource "azurerm_virtual_network" "virtual_network" {
-#   name                = var.vnet_name
-#   location            = azurerm_resource_group.vnet_resource_group.location
-#   resource_group_name = azurerm_resource_group.vnet_resource_group.name
-#   address_space       = var.address_space
-#   dns_servers         = var.dns_servers
-# }
-
-# resource "azurerm_subnet" "vnet_subnet" {
-#   name                 = var.subnet_name
-#   resource_group_name  = azurerm_resource_group.vnet_resource_group.name
-#   virtual_network_name = azurerm_virtual_network.virtual_network.name
-#   address_prefixes     = var.subnet_address_prefix
-#   service_endpoints    = ["Microsoft.Storage"]
-# }
-
 resource "azurerm_storage_account" "vnet_storage_account" {
   name                = var.vnet_storage_account_name
-  resource_group_name = azurerm_resource_group.vnet_resource_group.name
-  location                 = azurerm_resource_group.vnet_resource_group.location
+  resource_group_name = var.rg_name
+  location                 = var.rg_location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-
-  # network_rules {
-  #   default_action             = "Deny"
-  #   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet.id]
-  #   ip_rules                   = ["84.110.136.18"]
-  # }
-
-}
-
-data "azurerm_subnet" "vnet_subnet" {
-  name                 = var.subnet_name
-  virtual_network_name = var.vnet_name
-  resource_group_name  = var.vnet_rg_name
 }
 
 
 resource "azurerm_storage_account_network_rules" "network_rules" {
   storage_account_id    = azurerm_storage_account.vnet_storage_account.id
   default_action             = "Deny"
-  virtual_network_subnet_ids = [data.azurerm_subnet.vnet_subnet.id]
+  virtual_network_subnet_ids = [var.vnet_subnet_id]
   ip_rules                   = ["84.110.136.18"]
 }
 
@@ -70,6 +18,7 @@ data "azurerm_key_vault" "key_vault" {
   name                = var.key_vault_name
   resource_group_name = var.key_vault_resource_group_name
 }
+
 
 resource "azurerm_key_vault_secret" "key_vault_secret" {
   name         = var.key_vault_secret_name
@@ -79,8 +28,8 @@ resource "azurerm_key_vault_secret" "key_vault_secret" {
 
 resource "azurerm_logic_app_workflow" "logic_app_workflow" {
   name                =  var.logic_app_workflow_name
-  location            = azurerm_resource_group.vnet_resource_group.location
-  resource_group_name = azurerm_resource_group.vnet_resource_group.name
+  location            = azurerm_storage_account.vnet_storage_account.location
+  resource_group_name = azurerm_storage_account.vnet_storage_account.resource_group_name
 }
 
 resource "azurerm_service_plan" "service_plan" {
@@ -105,7 +54,8 @@ resource "azurerm_linux_function_app" "function_app" {
   app_settings = count.index==0 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
     COST = " "
-    EMAILS-SECRET = " "
+    EMAILS_SECRET = " "
+    ADMINISTRATORS_SECRET = " "
     HTTP_TRIGGER_URL = " "
     NUM_OF_MONTHS = " "
     RECIPIENT_EMAIL	 = " "
@@ -123,7 +73,7 @@ resource "azurerm_linux_function_app" "function_app" {
   } : count.index==1 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
     CLOUD_EMAIL = " "
-    EMAILS-SECRET = " "
+    EMAILS_SECRET = " "
     HTTP_TRIGGER_URL = " "
     HTTP_TRIGGER_URL_SUBSCRIPTION_AUTOMATION = " "
     SUBSCRIPTION_SECRET = azurerm_key_vault_secret.key_vault_secret.name

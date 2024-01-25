@@ -16,47 +16,27 @@ variable DOCKER_REGISTRY_SERVER_URL {
 
 variable rg_name {
   type        = string
-  default = "rg-manage-subscrioptions"
 }
 
 variable rg_location {  
   type        = string
-  default = "West Europe"
 }
 
-# variable vnet_name {
-#   type        = string
-#   default = "vnet-manage-subscriptions"
-# }
-
-variable address_space {
-  type        = list
-  default = ["10.1.0.0/16"]
-}
-
-variable dns_servers {
-  type        = list
-  default = []
-}
-
-variable vnet_rg_name {
-  type     = string
-  default  = "rg-administrators"
-}
-
-variable subnet_name {
-  type     = string
-  default  = "snet-administrators"
-}
-
-variable vnet_name {
-  type      = string
-  default   = "vnet-administrators"
+variable vnet_subnet_id {  
+  type        = string
 }
 
 variable vnet_storage_account_name {
   type    = string
   default =  "stmanageaubscriptions"
+}
+
+variable key_vault_name {
+  type        = string
+}
+
+variable key_vault_resource_group_name{
+  type        = string
 }
 
 variable service_plan_name{
@@ -74,19 +54,14 @@ variable logic_app_workflow_name {
   default = "logic-app-subscription-management"
 }
 
-variable key_vault_name {
-  type        = string
-  default = "kv-connection-string1"
-}
-
-variable key_vault_resource_group_name {
-  type     = string
-  default  = "rg-administrators"
-}
-
 variable key_vault_secret_name {
   type        = string
   default     = "SUBSCRIPTION-SECRET"
+}
+
+variable table_name {
+  type    = list(string)
+  default =  ["deletedSubscriptions","subscriptionsToDelete","emails"]
 }
 
 variable IMAGE_NAME {
@@ -98,10 +73,4 @@ variable IMAGE_TAG {
   type     = string
   default  = "4-appservice-quickstart"
 }
-
-variable table_name {
-  type    = list(string)
-  default =  ["deletedSubscriptions","subscriptionsToDelete","emails"]
-}
-
 

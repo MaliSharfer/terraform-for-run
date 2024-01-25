@@ -1,8 +1,8 @@
 name: '🌍 Terraform Automation'
 
 on:
-  workflow_dispatch:
-
+  push: 
+    branches: ["modules"]
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
   TF_VAR_DOCKER_REGISTRY_SERVER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
@@ -38,13 +38,13 @@ jobs:
       - name: 🏗️ Terraform 
         id: init
         run: |
-          DIRECTORIES=( "subscriptions-automation" "emails" "administrators")
+          DIRECTORIES=( "main-project" )
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
             terraform init -input=false
-            # terraform plan -out=tfplan -input=false
-            # terraform apply -input=false -auto-approve tfplan
-            terraform destroy -input=false -auto-approve 
+            terraform plan -out=tfplan -input=false
+            terraform apply -input=false -auto-approve tfplan
+            # terraform destroy -input=false -auto-approve 
 
             cd ..  
           done  
