@@ -30,7 +30,7 @@ resource "azurerm_subnet" "vnet_subnet" {
 }
 
 locals {
-  unique_pairs = toset(flatten([for vnet1 in var.virtual_networks_and_subnets_properties : [for vnet2 in var.virtual_networks_and_subnets_properties : "${vnet1.name}_${vnet2.name}" if vnet1.name != vnet2.name]]))
+  unique_pairs = toset(flatten([for vnet1 in var.virtual_networks_and_subnets_properties : [for vnet2 in var.virtual_networks_and_subnets_properties : "${vnet1.vnet_name}_${vnet2.vnet_name}" if vnet1.vnet_name != vnet2.vnet_name]]))
 }
 
 resource "azurerm_virtual_network_peering" "vnets_peering" {
@@ -55,7 +55,7 @@ resource "azurerm_storage_account" "vnet_storage_account" {
 resource "azurerm_storage_account_network_rules" "network_rules" {
   storage_account_id    = azurerm_storage_account.vnet_storage_account.id
   default_action             = "Deny"
-  virtual_network_subnet_ids = [var.virtual_networks_and_subnets_properties[0].snet_name]
+  virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[0].snet_name].id]
   ip_rules                   = ["84.110.136.18"]
 }
 
