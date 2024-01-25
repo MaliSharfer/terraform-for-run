@@ -54,51 +54,59 @@ variable table_name {
   default  =  "administrators"
 }
 
-variable virtual_networks {
+variable virtual_networks_and_subnets_properties{
   default = [
     {
-      name                = "vnet-administrators"
-      resource_group_name = "rg-administrators"
-      address_space       = ["10.1.0.0/16"]
+      vnet_name            = "vnet-administrators"
+      resource_group_name  = "rg-administrators"
+      address_space        = ["10.1.0.0/16"]
+      snet_name            = "snet-administrators"
+      address_prefixes     =  ["10.1.1.0/24"]
     },
     {
-      name                = "vnet-emails"
-      resource_group_name = "rg-emails"
-      address_space       = ["10.2.0.0/16"]
+      vnet_name            = "vnet-emails"
+      resource_group_name  = "rg-emails"
+      address_space        = ["10.2.0.0/16"]
+      snet_name            = "snet-emails"
+      address_prefixes     =  ["10.2.1.0/24"]
     },
     {
-      name                = "vnet-manage-subscriptions"
+      vnet_name           = "vnet-manage-subscriptions"
       resource_group_name = "rg-manage-subscrioptions"
       address_space       = ["10.3.0.0/16"]
+      snet_name           = "snet-manage-subscriptions"
+      address_prefixes    = ["10.3.1.0/24"]
     },
     {
-      name                = "vnet-storages"
+      vnet_name           = "vnet-storages"
       resource_group_name = "rg-storages"
       address_space       = ["10.4.0.0/16"]
+      snet_name           = "snet-storages"
+      address_prefixes    = ["10.4.1.0/24"]
     },
   ]
 }
 
 
-variable vnet_subnet {
-  default = [
-    {
-      name                 = "snet-administrators"
-      address_prefixes     =  ["10.1.1.0/24"]
-    },
-    {
-      name                 = "snet-emails"
-      address_prefixes     =  ["10.1.1.0/24"]
-    },
-    {
-      name                 = "snet-manage-subscriptions"
-      address_prefixes     = ["10.1.1.0/24"]
-    },
-    {
-      name                 = "snet-storages"
-      address_prefixes     = ["10.1.1.0/24"]
-    },
-  ]
-}
+# variable vnet_subnet {
+#   default = [
+#     {
+#       name                 = "snet-administrators"
+#       address_prefixes     =  ["10.1.1.0/24"]
+#     },
+#     {
+#       name                 = "snet-emails"
+#       address_prefixes     =  ["10.1.1.0/24"]
+#     },
+#     {
+#       name                 = "snet-manage-subscriptions"
+#       address_prefixes     = ["10.1.1.0/24"]
+#     },
+#     {
+#       name                 = "snet-storages"
+#       address_prefixes     = ["10.1.1.0/24"]
+#     },
+#   ]
+# }
 
 

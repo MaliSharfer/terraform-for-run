@@ -1,14 +1,14 @@
 resource "azurerm_resource_group" "vnet_resource_group" {
 
-  name     = var.virtual_networks[count.index].resource_group_name
+  name     = var.virtual_networks_and_subnets_properties[count.index].resource_group_name
   location = var.location
-  count = length(var.virtual_networks)  
+  count = length(var.virtual_networks_and_subnets_properties)  
 }
 
 resource "azurerm_virtual_network" "vnets" {
-  for_each = { for vnet in var.virtual_networks : vnet.name => vnet }
+  for_each = { for vnet in var.virtual_networks_and_subnets_properties : vnet.vnet_name => vnet }
 
-  name                = each.value.name
+  name                = each.value.vnet_name
   resource_group_name = each.value.resource_group_name
   address_space       = each.value.address_space
   location            = var.location
@@ -20,17 +20,17 @@ resource "azurerm_virtual_network" "vnets" {
 
 
 resource "azurerm_subnet" "vnet_subnet" {
-  for_each = { for snet in var.vnet_subnet : snet.name => snet }
+  for_each = { for snet in var.virtual_networks_and_subnets_properties : snet.snet_name => snet }
 
-  name                 = each.value.name
-  resource_group_name  = azurerm_virtual_network.vnets[var.virtual_networks[index(var.vnet_subnet, each.key)]].resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnets[var.virtual_networks[index(var.vnet_subnet, each.key)]].name
+  name                 = each.value.snet_name
+  resource_group_name  = azurerm_virtual_network.vnets[var.virtual_networks_and_subnets_properties[each.value.vnet_name]].resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnets[var.virtual_networks_and_subnets_properties[each.value.vnet_name]].name
   address_prefixes     = each.value.address_prefixes
   service_endpoints    = ["Microsoft.Storage"]
 }
 
 locals {
-  unique_pairs = toset(flatten([for vnet1 in var.virtual_networks : [for vnet2 in var.virtual_networks : "${vnet1.name}_${vnet2.name}" if vnet1.name != vnet2.name]]))
+  unique_pairs = toset(flatten([for vnet1 in var.virtual_networks_and_subnets_properties : [for vnet2 in var.virtual_networks_and_subnets_properties : "${vnet1.name}_${vnet2.name}" if vnet1.name != vnet2.name]]))
 }
 
 resource "azurerm_virtual_network_peering" "vnets_peering" {
