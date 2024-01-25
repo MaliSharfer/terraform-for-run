@@ -18,7 +18,7 @@ provider "azurerm" {
 }
 
 module administrators {
-    source = "../administrators/"
+  source = "../administrators/"
 
 }
 
@@ -34,6 +34,10 @@ module emails{
     DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
+
+    depends_on = [
+      module.administrators
+    ]
 }
 
 module subscriptions {
@@ -48,7 +52,9 @@ module subscriptions {
     DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
-
+    depends_on = [
+      module.emails
+    ]
 }
 
 module storages{
@@ -64,5 +70,7 @@ module storages{
   DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
   DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
   DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
-  
+  depends_on = [
+    module.emails
+  ]
 }
