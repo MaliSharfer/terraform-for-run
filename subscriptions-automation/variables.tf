@@ -1,7 +1,3 @@
-variable subscription_id {
-  type        = string
-}
-
 variable DOCKER_REGISTRY_SERVER_PASSWORD {
   type        = string
 }
