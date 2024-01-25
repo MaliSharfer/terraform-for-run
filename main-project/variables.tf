@@ -9,3 +9,6 @@ variable DOCKER_REGISTRY_SERVER_USERNAME {
 variable DOCKER_REGISTRY_SERVER_PASSWORD {
   type        = string
 }
+variable subscription_id {
+  type        = string
+}
