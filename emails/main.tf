@@ -100,7 +100,7 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
 data "azurerm_client_config" "current_client" {}
 
 resource "azurerm_key_vault_access_policy" "principal" {
-  key_vault_id = var.key_vault_id
+  key_vault_id = data.azurerm_key_vault.key_vault.id
   tenant_id    = data.azurerm_client_config.current_client.tenant_id
   object_id    = azurerm_linux_function_app.linux_function_app.identity[0].principal_id
 
