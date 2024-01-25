@@ -16,15 +16,15 @@ output resource_group_storages_automation {
 
 
 output subnet_id_emails {
-  value       = azurerm_subnet.vnet_subnet[var.vnet_subnet[1]].id
+  value       = azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[1]].id
 }
 
 output subnet_id_subscription_automation {
-  value       = azurerm_subnet.vnet_subnet[var.vnet_subnet[2]].id
+  value       = azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[2]].id
 }
 
 output subnet_id_storages_automation {
-  value       = azurerm_subnet.vnet_subnet[var.vnet_subnet[3]].id
+  value       = azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[3]].id
 }
 
 output key_vault_name {
