@@ -41,7 +41,6 @@ variable key_vault_secret_name {
   default   = "EMAILS-SECRET"
 }
 
-
 variable service_plan_name{
   type     = string
   default  = "app-emails"

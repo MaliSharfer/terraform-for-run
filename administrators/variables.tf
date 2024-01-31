@@ -72,7 +72,7 @@ variable virtual_networks_and_subnets_properties{
     },
     {
       vnet_name           = "vnet-manage-subscriptions"
-      resource_group_name = "rg-manage-subscrioptions"
+    resource_group_name = "rg-manage-subscrioptions"
       address_space       = ["10.3.0.0/16"]
       snet_name           = "snet-manage-subscriptions"
       address_prefixes    = ["10.3.1.0/24"]
