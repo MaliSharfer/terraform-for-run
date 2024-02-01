@@ -24,9 +24,9 @@ jobs:
         directory:
           # - emails/**'
           # - subscriptions/**'
-          # - func-emails
-          - func-subscriptions-automation
-          - func-subscriptions-list
+          - func-emails
+          # - func-subscriptions-automation
+          # - func-subscriptions-list
 
     steps:
     - name: 📂 Checkout repository
@@ -52,9 +52,6 @@ jobs:
     #       echo "No changes in ${{ matrix.directory }}"
     #       exit 0
     #     fi
-
-
-    
 
     - run: |
         echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
@@ -113,7 +110,7 @@ jobs:
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
-        context: ./services/subscriptions/${{ matrix.directory }}
+        context: ./services/emails/${{ matrix.directory }}
         push: true
         tags: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}
         labels: ${{ steps.docker_meta.outputs.labels }}
