@@ -106,27 +106,27 @@ resource "azurerm_linux_function_app" "function_app" {
   count= length(var.function_app_name)
 }
 
-resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
-  name                       = "development"
-  function_app_id          = azurerm_linux_function_app.function_app[count.index].id
-  storage_account_name       = azurerm_storage_account.vnet_storage_account.name
-  storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+# resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
+#   name                       = "development"
+#   function_app_id          = azurerm_linux_function_app.function_app[count.index].id
+#   storage_account_name       = azurerm_storage_account.vnet_storage_account.name
+#   storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
 
-  site_config {
-    always_on         = true
-    application_stack {
-      docker {
-        registry_url = var.DOCKER_REGISTRY_SERVER_URL
-        image_name = var.IMAGE_NAME
-        image_tag = var.IMAGE_TAG
-        registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
-        registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
-      }
-    }
-  }
+#   site_config {
+#     always_on         = true
+#     application_stack {
+#       docker {
+#         registry_url = var.DOCKER_REGISTRY_SERVER_URL
+#         image_name = var.IMAGE_NAME
+#         image_tag = var.IMAGE_TAG
+#         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
+#         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
+#       }
+#     }
+#   }
 
-  count = length(var.function_app_name)
-}
+#   count = length(var.function_app_name)
+# }
 
 # resource "azurerm_storage_table" "example" {
 #   name                 = var.table_name[count.index]
