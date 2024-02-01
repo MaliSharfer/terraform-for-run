@@ -15,9 +15,9 @@ jobs:
       run:
         working-directory: services
 
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-functions.outputs.app-url }}
+    # environment:
+    #   name: 'production'
+    #   url: ${{ steps.deploy-to-functions.outputs.app-url }}
 
     strategy:
       matrix:
