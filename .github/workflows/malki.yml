@@ -28,6 +28,8 @@ jobs:
           # - func-subscriptions-automation
           # - func-subscriptions-list
 
+
+
     steps:
     - name: 📂 Checkout repository
       uses: actions/checkout@v4
