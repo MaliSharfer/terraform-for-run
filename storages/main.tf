@@ -89,7 +89,7 @@ resource "azurerm_linux_function_app" "linux_function_app" {
     DOCUMENTATION_TABLE =" "
     HTTP_TRIGGER_URL=" "
     ALERTS_DOCUMENTATION=" "
-    DOCUMENTATION_STORAGE_NAME=" "
+    DOCUMENTATION_STORAGE_NAME= azurerm_storage_account.vnet_storage_account.name
     SECRET = azurerm_key_vault_secret.key_vault_secret.name
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
     https_only                          = true
@@ -191,3 +191,15 @@ resource "azurerm_key_vault_access_policy" "principal" {
   count = length(var.function_app_name)
 
 }
+
+# resource "azurerm_storage_table" "storage_table" {
+#   name                 = var.table_name[count.index]
+#   storage_account_name = azurerm_storage_account.vnet_storage_account.name
+
+#   depends_on = [
+#     azurerm_storage_account_network_rules.network_rules
+#   ]
+
+#   count = length(var.table_name)
+
+# }

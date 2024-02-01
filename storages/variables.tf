@@ -89,3 +89,8 @@ variable logic_app_workflow_name {
   type        = string
   default = "logic-app-storage-management"
 }
+
+variable "table_name" {
+  type = list(string)
+  default = [ "documentation","deletedStoragesAcounts","alertsDocumentation" ]
+}
