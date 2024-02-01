@@ -34,6 +34,8 @@ jobs:
       with:
         fetch-depth: 0
 
+
+
     # - name: 🔎 Determine modified directory
     #   id: determine_directory
     #   run: |

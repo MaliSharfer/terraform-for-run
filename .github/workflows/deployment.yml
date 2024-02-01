@@ -7,7 +7,6 @@ on:
       # - development
       # - feature/ci-cd
       # - feature/deploy-with-exist-stroge-with-terrafrom
-
     paths:
       - 'services/emails/**'
       - 'services/subscriptions/**'
