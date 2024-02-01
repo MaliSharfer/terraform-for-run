@@ -24,7 +24,7 @@ jobs:
         directory:
           # - emails/**'
           # - subscriptions/**'
-          - func-emails
+          - func-try
           # - func-subscriptions-automation
           # - func-subscriptions-list
 
