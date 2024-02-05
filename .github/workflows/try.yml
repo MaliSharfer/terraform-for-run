@@ -3,8 +3,8 @@ name: Build and deploy container app to Azure Function App
 on:
   push:
     branches:
-      # - feature/deploy-with-exist-stroge-with-terrafrom
-      - main
+      - feature/deploy-with-exist-stroge-with-terrafrom
+      # - main
 
 jobs:
   build-and-deploy:
@@ -22,8 +22,8 @@ jobs:
     strategy:
       matrix:
         directory:
-          # - emails/func-emails
-          - subscriptions/func-subscriptions-automation
+          - emails/func-try
+          # - subscriptions/func-subscriptions-automation
           # - subscriptions/func-subscriptions-list
 
     steps:
@@ -44,6 +44,11 @@ jobs:
     #       echo "No changes in ${{ matrix.directory }}"
     #       exit 0
     #     fi
+
+
+
+
+
 
     - run: |
         echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"

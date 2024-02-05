@@ -37,3 +37,10 @@ def send_email_function(req: func.HttpRequest) -> func.HttpResponse:
         status_code = 200
     )
 
+
+
+
+
+
+
+
