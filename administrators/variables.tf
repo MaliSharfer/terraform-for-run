@@ -5,7 +5,7 @@ variable rg_name {
 
 variable vnet_storage_account_name {
   type        = string
-  default     = "rimon"
+  default     = "rimon2"
 }
 
 variable location {  
