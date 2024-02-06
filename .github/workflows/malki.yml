@@ -3,8 +3,8 @@ name: Build and deploy container app to Azure Function App
 on:
   push:
     branches:
-      # - feature/deploy-with-exist-stroge-with-terrafrom
-      - main
+      - feature/deploy-with-exist-stroge-with-terrafrom
+      # - main
  
 jobs:
   build-and-deploy:
@@ -25,7 +25,7 @@ jobs:
           # - emails/**'
           # - subscriptions/**'
           # - func-try
-          - func-subscriptions-automation
+          - func-try2
           # - func-subscriptions-list
 
 
@@ -115,7 +115,7 @@ jobs:
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
-        context: ./services/subscriptions/${{ matrix.directory }}
+        context: ./services/emails/${{ matrix.directory }}
         push: true
         tags: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}
         labels: ${{ steps.docker_meta.outputs.labels }}
