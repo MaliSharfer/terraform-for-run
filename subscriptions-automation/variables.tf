@@ -52,7 +52,7 @@ variable logic_app_workflow_name {
 
 variable key_vault_secret_name {
   type        = string
-  default     = "TRY2-SECRET"
+  default     = "TRY3-SECRET"
 }
 
 variable table_name {
