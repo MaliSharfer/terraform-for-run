@@ -33,22 +33,22 @@ variable key_vault_resource_group_name{
 
 variable vnet_storage_account_name {
   type      = string
-  default   =  "stemails"
+  default   =  "sttry2"
 }
 
 variable key_vault_secret_name {
   type      = string
-  default   = "EMAILS-SECRET"
+  default   = "TRY2-SECRET"
 }
 
 variable service_plan_name{
   type     = string
-  default  = "app-emails"
+  default  = "app-try2"
 }
 
 variable function_app_name {
   type     = string
-  default  = "func-emails"
+  default  = "func-try2"
 }
 
 

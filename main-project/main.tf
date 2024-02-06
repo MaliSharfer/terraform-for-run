@@ -2,7 +2,7 @@ terraform {
   backend "azurerm" {
     resource_group_name      = "NetworkWatcherRG"
     storage_account_name     = "myfirsttrail"
-    container_name           = "terraformstate-modules"
+    container_name           = "terraformstate-try123"
     key                      = "terraform.tfstate"
   }
 }
@@ -57,20 +57,20 @@ module subscriptions {
     ]
 }
 
-module storages{
-  source = "../storages/"
+# module storages{
+#   source = "../storages/"
 
-  rg_name = module.administrators.resource_group_storages_automation
-  rg_location = module.administrators.location
-  vnet_subnet_id = module.administrators.subnet_id_storages_automation
-  key_vault_name = module.administrators.key_vault_name
-  key_vault_resource_group_name = module.administrators.key_vault_resource_group_name
-  key_vault_secret_excel_name = module.administrators.secret_administrators_name
+#   rg_name = module.administrators.resource_group_storages_automation
+#   rg_location = module.administrators.location
+#   vnet_subnet_id = module.administrators.subnet_id_storages_automation
+#   key_vault_name = module.administrators.key_vault_name
+#   key_vault_resource_group_name = module.administrators.key_vault_resource_group_name
+#   key_vault_secret_excel_name = module.administrators.secret_administrators_name
 
-  DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
-  DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
-  DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
-  depends_on = [
-    module.emails
-  ]
-}
+#   DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+#   DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
+#   DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
+#   depends_on = [
+#     module.emails
+#   ]
+# }

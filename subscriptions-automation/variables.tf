@@ -24,7 +24,7 @@ variable vnet_subnet_id {
 
 variable vnet_storage_account_name {
   type    = string
-  default =  "stmanageaubscriptions"
+  default =  "sttry2"
 }
 
 variable key_vault_name {
@@ -37,27 +37,27 @@ variable key_vault_resource_group_name{
 
 variable service_plan_name{
   type    = list(string)
-  default =  ["app-subscriptions-automation","app-subscriptions-list"]
+  default =  ["app-try1","app-ty2"]
 }
 
 variable function_app_name {
   type    = list(string)
-  default =  ["func-subscriptions-automation" , "func-subscriptions-list" ]
+  default =  ["func-try1" , "func-try2" ]
 }
 
 variable logic_app_workflow_name {
   type        = string
-  default = "logic-app-subscription-management"
+  default = "logic-app-try"
 }
 
 variable key_vault_secret_name {
   type        = string
-  default     = "SUBSCRIPTION-SECRET"
+  default     = "TRY2-SECRET"
 }
 
 variable table_name {
   type    = list(string)
-  default =  ["deletedSubscriptions","subscriptionsToDelete","emails"]
+  default =  ["deletedSubscriptionstry","subscriptionsToDeletetry","emailstry"]
 }
 
 variable IMAGE_NAME {
