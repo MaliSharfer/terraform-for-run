@@ -25,7 +25,7 @@ jobs:
           # - emails/**'
           # - subscriptions/**'
           # - func-try
-          - func-try3
+          - func-try2
           # - func-subscriptions-list
 
 
