@@ -37,12 +37,12 @@ variable key_vault_resource_group_name{
 
 variable service_plan_name{
   type    = list(string)
-  default =  ["app-try1","app-ty2"]
+  default =  ["app-try1","app-ty3"]
 }
 
 variable function_app_name {
   type    = list(string)
-  default =  ["func-try1" , "func-try2" ]
+  default =  ["func-try1" , "func-try3" ]
 }
 
 variable logic_app_workflow_name {
