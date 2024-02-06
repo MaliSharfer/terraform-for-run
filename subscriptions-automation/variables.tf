@@ -24,7 +24,7 @@ variable vnet_subnet_id {
 
 variable vnet_storage_account_name {
   type    = string
-  default =  "sttry2"
+  default =  "stchangenames1"
 }
 
 variable key_vault_name {

@@ -33,7 +33,7 @@ variable key_vault_resource_group_name{
 
 variable vnet_storage_account_name {
   type      = string
-  default   =  "sttry2"
+  default   =  "stchangenames"
 }
 
 variable key_vault_secret_name {
