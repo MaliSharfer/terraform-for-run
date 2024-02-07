@@ -99,8 +99,8 @@ resource "azurerm_storage_account_network_rules" "network_rules" {
   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[0].snet_name].id]
   ip_rules                   = ["84.110.136.18"]
 
-#   depends_on = [
-#     azurerm_storage_table.storage_table
-#  ]
+  depends_on = [
+    azurerm_storage_table.storage_table
+ ]
 
 }
