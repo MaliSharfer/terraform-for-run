@@ -77,24 +77,24 @@ resource "azurerm_linux_function_app" "linux_function_app" {
   
 }
 
-# resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
-#   name                       = "development"
-#   function_app_id            = azurerm_linux_function_app.linux_function_app.id
-#   storage_account_name       = azurerm_storage_account.vnet_storage_account.name
-#   storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
-#    site_config {
-#     always_on         = true
-#     application_stack {
-#       docker {
-#         registry_url = var.DOCKER_REGISTRY_SERVER_URL
-#         image_name = var.IMAGE_NAME
-#         image_tag = var.IMAGE_TAG
-#         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
-#         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
-#       }
-#     }
-#   }
-# }
+resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
+  name                       = "development"
+  function_app_id            = azurerm_linux_function_app.linux_function_app.id
+  storage_account_name       = azurerm_storage_account.vnet_storage_account.name
+  storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+   site_config {
+    always_on         = true
+    application_stack {
+      docker {
+        registry_url = var.DOCKER_REGISTRY_SERVER_URL
+        image_name = var.IMAGE_NAME
+        image_tag = var.IMAGE_TAG
+        registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
+        registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
+      }
+    }
+  }
+}
 
 
 data "azurerm_client_config" "current_client" {}
