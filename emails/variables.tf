@@ -43,12 +43,12 @@ variable key_vault_secret_name {
 
 variable service_plan_name{
   type     = string
-  default  = "app-emails"
+  default  = "app-emails-try"
 }
 
 variable function_app_name {
   type     = string
-  default  = "func-emails"
+  default  = "func-emails-try"
 }
 
 
