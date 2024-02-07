@@ -112,4 +112,7 @@ resource "azurerm_storage_account_network_rules" "network_rules" {
   default_action             = "Deny"
   virtual_network_subnet_ids = [var.vnet_subnet_id]
   ip_rules                   = ["84.110.136.18"]
+  depends_on = [
+    azurerm_linux_function_app_slot.linux_function_app_slot
+  ]
 }
