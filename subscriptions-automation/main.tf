@@ -128,9 +128,9 @@ resource "azurerm_storage_table" "example" {
   storage_account_name = azurerm_storage_account.vnet_storage_account.name
   count = length(var.table_name)
 
-  depends_on = [
-    azurerm_storage_account_network_rules.network_rules
- ]
+#   depends_on = [
+#     azurerm_storage_account_network_rules.network_rules
+#  ]
 
 }
 
@@ -160,6 +160,9 @@ resource "azurerm_storage_account_network_rules" "network_rules" {
   virtual_network_subnet_ids = [var.vnet_subnet_id]
   ip_rules                   = ["84.110.136.18"]
   depends_on = [
-    azurerm_linux_function_app_slot.linux_function_app_slot
+    azurerm_linux_function_app_slot.linux_function_app_slot,
+    azurerm_storage_table.example,
+    azurerm_key_vault_access_policy.principal,
+    azurerm_logic_app_workflow.logic_app_workflow
   ]
 }

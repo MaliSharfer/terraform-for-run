@@ -216,6 +216,9 @@ resource "azurerm_storage_account_network_rules" "network_rules" {
   virtual_network_subnet_ids = [var.vnet_subnet_id]
   ip_rules                   = ["84.110.136.18"]
   depends_on = [
-    azurerm_linux_function_app_slot.linux_function_app_slot
+    azurerm_linux_function_app_slot.linux_function_app_slot,
+    azurerm_logic_app_workflow.logic_app_workflow,
+    azurerm_key_vault_access_policy.principal,
+    azurerm_storage_table.storage_table
   ]
 }
