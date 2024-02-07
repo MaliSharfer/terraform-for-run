@@ -96,7 +96,6 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
   }
 }
 
-
 data "azurerm_client_config" "current_client" {}
 
 resource "azurerm_key_vault_access_policy" "principal" {
