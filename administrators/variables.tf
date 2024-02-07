@@ -51,7 +51,7 @@ variable key_vault_secret_name {
 
 variable table_name {
   type     = string
-  default  =  "administrators111"
+  default  =  "administrators2"
 }
 
 variable virtual_networks_and_subnets_properties{
