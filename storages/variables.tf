@@ -39,12 +39,12 @@ variable key_vault_secret_name {
 
 variable app_service_plan_name{
   type = list(string)
-  default = ["app-get-last-fetch-time-for-each-storage-account","app-get-subscription-list","app-get-storage-list-by-subscription","app-test-storage","app-send-excel-mark-delete"]
+  default = ["app-get-last-fetch-time-for-each-storage-account1","app-get-subscription-list1","app-get-storage-list-by-subscription1","app-test-storage1","app-send-excel-mark-delete1"]
 }
 
 variable function_app_name {
   type        = list(string)
-  default = ["func-get-last-fetch-time-for-each-storage-account","func-get-subscription-list","func-get-storage-list-by-subscription","func-test-storage","func-send-excel-mark-delete"]
+  default = ["func-get-last-fetch-time-for-each-storage-account1","func-get-subscription-list1","func-get-storage-list-by-subscription1","func-test-storage1","func-send-excel-mark-delete1"]
 }
 
 variable DOCKER_REGISTRY_SERVER_PASSWORD {
@@ -87,10 +87,10 @@ variable FREQ_AUTOMATION_TEST_NUMBER {
 
 variable logic_app_workflow_name {
   type        = string
-  default = "logic-app-storage-management"
+  default = "logic-app-storage-management1"
 }
 
-variable "table_name" {
+variable table_name {
   type = list(string)
   default = [ "documentation","deletedStoragesAcounts","alertsDocumentation" ]
 }

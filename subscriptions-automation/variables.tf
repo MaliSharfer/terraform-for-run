@@ -37,17 +37,17 @@ variable key_vault_resource_group_name{
 
 variable service_plan_name{
   type    = list(string)
-  default =  ["app-subscriptions-automation","app-subscriptions-list"]
+  default =  ["app-subscriptions-automation1","app-subscriptions-list1"]
 }
 
 variable function_app_name {
   type    = list(string)
-  default =  ["func-subscriptions-automation" , "func-subscriptions-list" ]
+  default =  ["func-subscriptions-automation1" , "func-subscriptions-list1" ]
 }
 
 variable logic_app_workflow_name {
   type        = string
-  default = "logic-app-subscription-management"
+  default = "logic-app-subscription-management1"
 }
 
 variable key_vault_secret_name {
