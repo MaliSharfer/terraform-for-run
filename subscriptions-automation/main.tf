@@ -123,16 +123,16 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
   count = length(var.function_app_name)
 }
 
-resource "azurerm_storage_table" "example" {
-  name                 = var.table_name[count.index]
-  storage_account_name = azurerm_storage_account.vnet_storage_account.name
-  count = length(var.table_name)
+# resource "azurerm_storage_table" "example" {
+#   name                 = var.table_name[count.index]
+#   storage_account_name = azurerm_storage_account.vnet_storage_account.name
+#   count = length(var.table_name)
 
-#   depends_on = [
-#     azurerm_storage_account_network_rules.network_rules
-#  ]
+# #   depends_on = [
+# #     azurerm_storage_account_network_rules.network_rules
+# #  ]
 
-}
+# }
 
 
 data "azurerm_client_config" "current_client" {}
