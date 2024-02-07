@@ -52,12 +52,6 @@ resource "azurerm_storage_account" "vnet_storage_account" {
 
 }
 
-resource "azurerm_storage_account_network_rules" "network_rules" {
-  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
-  default_action             = "Deny"
-  virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[0].snet_name].id]
-  ip_rules                   = ["84.110.136.18"]
-}
 
 data "azurerm_client_config" "current_client" {}
 
@@ -93,8 +87,16 @@ resource "azurerm_storage_table" "storage_table" {
   name                 = var.table_name
   storage_account_name = azurerm_storage_account.vnet_storage_account.name
 
-  depends_on = [
-    azurerm_storage_account_network_rules.network_rules
- ]
+#   depends_on = [
+#     azurerm_storage_account_network_rules.network_rules
+#  ]
+
+}
+
+resource "azurerm_storage_account_network_rules" "network_rules" {
+  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
+  default_action             = "Deny"
+  virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[0].snet_name].id]
+  ip_rules                   = ["84.110.136.18"]
 
 }

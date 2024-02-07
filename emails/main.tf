@@ -7,12 +7,6 @@ resource "azurerm_storage_account" "vnet_storage_account" {
 
 }
 
-resource "azurerm_storage_account_network_rules" "network_rules" {
-  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
-  default_action             = "Deny"
-  virtual_network_subnet_ids = [var.vnet_subnet_id]
-  ip_rules                   = ["84.110.136.18"]
-}
 
 data "azurerm_key_vault" "key_vault" {
   name                = var.key_vault_name
@@ -111,4 +105,11 @@ resource "azurerm_key_vault_access_policy" "principal" {
     "Get",
   ]
 
+}
+
+resource "azurerm_storage_account_network_rules" "network_rules" {
+  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
+  default_action             = "Deny"
+  virtual_network_subnet_ids = [var.vnet_subnet_id]
+  ip_rules                   = ["84.110.136.18"]
 }
