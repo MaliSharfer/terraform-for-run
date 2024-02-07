@@ -202,14 +202,14 @@ resource "azurerm_key_vault_access_policy" "principal" {
 
 }
 
-resource "azurerm_storage_table" "storage_table" {
-  name                 = var.table_name[count.index]
-  storage_account_name = azurerm_storage_account.vnet_storage_account.name
+# resource "azurerm_storage_table" "storage_table" {
+#   name                 = var.table_name[count.index]
+#   storage_account_name = azurerm_storage_account.vnet_storage_account.name
 
-  depends_on = [
-    azurerm_storage_account_network_rules.network_rules
-  ]
+#   depends_on = [
+#     azurerm_storage_account_network_rules.network_rules
+#   ]
 
-  count = length(var.table_name)
+#   count = length(var.table_name)
 
-}
+# }

@@ -89,12 +89,12 @@ resource "azurerm_key_vault_secret" "key_vault_secret" {
   key_vault_id = azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_storage_table" "storage_table" {
-  name                 = var.table_name
-  storage_account_name = azurerm_storage_account.vnet_storage_account.name
+# resource "azurerm_storage_table" "storage_table" {
+#   name                 = var.table_name
+#   storage_account_name = azurerm_storage_account.vnet_storage_account.name
 
-  depends_on = [
-    azurerm_storage_account_network_rules.network_rules
- ]
+#   depends_on = [
+#     azurerm_storage_account_network_rules.network_rules
+#  ]
 
-}
+# }
