@@ -40,10 +40,6 @@ jobs:
 
 
 
-
-
-
-
     # - name: 🔎 Determine modified directory
     #   id: determine_directory
     #   run: |
@@ -56,9 +52,6 @@ jobs:
     #       echo "No changes in ${{ matrix.directory }}"
     #       exit 0
     #     fi
-
-
-
 
     - run: |
         echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
