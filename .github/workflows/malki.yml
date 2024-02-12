@@ -28,7 +28,7 @@ jobs:
           # - func-emails-try
           # - func-subscriptions-list1
           # - func-subscriptions-automation1
-          - func-try-Gitty
+          - func-try-g
 
 
 
