@@ -23,7 +23,7 @@ def func_subscriptions_automation(req: func.HttpRequest) -> func.HttpResponse:
     low_price = is_lower_than_the_set_price(subscription_id)
     logging.info(f"{activity} + {low_price}")
     if activity == False or low_price == True:
-        logging.info("if activity")
+        logging.info("if activity    ")
         body = build_email_body(
                 subscription_name, subscription_id, activity, low_price
             )
