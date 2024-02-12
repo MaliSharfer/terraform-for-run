@@ -7,6 +7,7 @@ from project.sub_manager_email import get_email_manager_by_sub_name
 from project.write_to_excel import write_to_excel
 import config.config_variables 
 import azure.functions as func
+import logging
 
 app = func.FunctionApp()
 
@@ -15,15 +16,19 @@ app = func.FunctionApp()
 def func_subscriptions_automation(req: func.HttpRequest) -> func.HttpResponse:
     subscriptions_to_excel={}
     req_body = req.get_json()
+    logging.info(f"req_body + {req_body}")
     subscription_name = req_body['subscription_name']
     subscription_id = req_body['subscription_id']
     activity = check_subscription_activity(subscription_id)
     low_price = is_lower_than_the_set_price(subscription_id)
+    logging.info(f"{activity} + {low_price}")
     if activity == False or low_price == True:
+        logging.info("if activity")
         body = build_email_body(
                 subscription_name, subscription_id, activity, low_price
             )
-        recipient_email = get_email_manager_by_sub_name(subscription_name)
+        recipient_email = get_email_manager_by_sub_name(subscription_name) 
+        logging.info(f"{recipient_email}")
         if not recipient_email.__contains__('@'):
             recipient_email = config.config_variables.recipient_email
         if body != "":
