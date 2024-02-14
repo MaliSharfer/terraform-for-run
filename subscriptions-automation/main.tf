@@ -1,17 +1,14 @@
-resource "azurerm_storage_account" "vnet_storage_account" {
-  name                = var.vnet_storage_account_name
-  resource_group_name = var.rg_name
-  location                 = var.rg_location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+resource "azurerm_resource_group" "resource_group" {
+  name     = var.rg_name
+  location = var.rg_location
 }
 
-
-resource "azurerm_storage_account_network_rules" "network_rules" {
-  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
-  default_action             = "Deny"
-  virtual_network_subnet_ids = [var.vnet_subnet_id]
-  ip_rules                   = ["84.110.136.18"]
+resource "azurerm_storage_account" "storage_account" {
+  name                     = var.storage_account_name
+  resource_group_name      = azurerm_resource_group.resource_group.name
+  location                 = azurerm_resource_group.resource_group.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
 }
 
 data "azurerm_key_vault" "key_vault" {
@@ -19,23 +16,22 @@ data "azurerm_key_vault" "key_vault" {
   resource_group_name = var.key_vault_resource_group_name
 }
 
-
 resource "azurerm_key_vault_secret" "key_vault_secret" {
   name         = var.key_vault_secret_name
-  value        = azurerm_storage_account.vnet_storage_account.primary_connection_string
+  value        = azurerm_storage_account.storage_account.primary_connection_string
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 resource "azurerm_logic_app_workflow" "logic_app_workflow" {
   name                =  var.logic_app_workflow_name
-  location            = azurerm_storage_account.vnet_storage_account.location
-  resource_group_name = azurerm_storage_account.vnet_storage_account.resource_group_name
+  location            = azurerm_storage_account.storage_account.location
+  resource_group_name = azurerm_storage_account.storage_account.resource_group_name
 }
 
 resource "azurerm_service_plan" "service_plan" {
   name                = var.service_plan_name[count.index]
-  location            = azurerm_storage_account.vnet_storage_account.location
-  resource_group_name = azurerm_storage_account.vnet_storage_account.resource_group_name
+  location            = azurerm_storage_account.storage_account.location
+  resource_group_name = azurerm_storage_account.storage_account.resource_group_name
   os_type             = "Linux"
   sku_name            = "P1v2"
 
@@ -43,12 +39,12 @@ resource "azurerm_service_plan" "service_plan" {
 }
 
 resource "azurerm_linux_function_app" "function_app" {
-  name                      = var.function_app_name[count.index]
-  location                  = azurerm_storage_account.vnet_storage_account.location
-  resource_group_name       = azurerm_storage_account.vnet_storage_account.resource_group_name
-  service_plan_id       = azurerm_service_plan.service_plan[count.index].id
-  storage_account_name      = azurerm_storage_account.vnet_storage_account.name
-  storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+  name                        = var.function_app_name[count.index]
+  location                    = azurerm_storage_account.storage_account.location
+  resource_group_name         = azurerm_storage_account.storage_account.resource_group_name
+  service_plan_id             = azurerm_service_plan.service_plan[count.index].id
+  storage_account_name        = azurerm_storage_account.storage_account.name
+  storage_account_access_key  = azurerm_storage_account.storage_account.primary_access_key
   functions_extension_version = "~4"
 
   app_settings = count.index==0 ? {
@@ -65,10 +61,10 @@ resource "azurerm_linux_function_app" "function_app" {
     TABLE_SUBSCRIPTIONS_TO_DELETE = " "
     SUBSCRIPTION_SECRET = azurerm_key_vault_secret.key_vault_secret.name
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
-    https_only                          = true
-    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
-    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    https_only = true
+    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   } : count.index==1 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
@@ -80,15 +76,15 @@ resource "azurerm_linux_function_app" "function_app" {
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
     TABLE_SUBSCRIPTIONS_TO_DELETE = " "
     TAG_NAME = " "
-    https_only                          = true
-    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
-    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    https_only = true
+    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }: {}
   
   site_config {
-    always_on         = true
+    always_on = true
     application_stack {
       docker {
         registry_url = var.DOCKER_REGISTRY_SERVER_URL
@@ -106,39 +102,34 @@ resource "azurerm_linux_function_app" "function_app" {
   count= length(var.function_app_name)
 }
 
-# resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
-#   name                       = "development"
-#   function_app_id          = azurerm_linux_function_app.function_app[count.index].id
-#   storage_account_name       = azurerm_storage_account.vnet_storage_account.name
-#   storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
+  name                       = "development"
+  function_app_id            = azurerm_linux_function_app.function_app[count.index].id
+  storage_account_name       = azurerm_storage_account.storage_account.name
+  storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
 
-#   site_config {
-#     always_on         = true
-#     application_stack {
-#       docker {
-#         registry_url = var.DOCKER_REGISTRY_SERVER_URL
-#         image_name = var.IMAGE_NAME
-#         image_tag = var.IMAGE_TAG
-#         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
-#         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
-#       }
-#     }
-#   }
+  site_config {
+    always_on = true
+    application_stack {
+      docker {
+        registry_url = var.DOCKER_REGISTRY_SERVER_URL
+        image_name = var.IMAGE_NAME
+        image_tag = var.IMAGE_TAG
+        registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
+        registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
+      }
+    }
+  }
 
-#   count = length(var.function_app_name)
-# }
+  count = length(var.function_app_name)
+}
 
-# resource "azurerm_storage_table" "example" {
-#   name                 = var.table_name[count.index]
-#   storage_account_name = azurerm_storage_account.vnet_storage_account.name
-#   count = length(var.table_name)
-
-#   depends_on = [
-#     azurerm_storage_account_network_rules.network_rules
-#  ]
-
-# }
-
+resource "azurerm_storage_table" "example" {
+  name                 = var.table_name[count.index]
+  storage_account_name = azurerm_storage_account.storage_account.nam
+  
+  count = length(var.table_name)
+}
 
 data "azurerm_client_config" "current_client" {}
 

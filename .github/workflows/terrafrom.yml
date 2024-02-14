@@ -1,8 +1,10 @@
 name: '🌍 Terraform Automation'
 
 on:
-  push: 
-    branches: ["feature/change-names"]
+  push:
+    branches:
+      - feature/change-names
+
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
   TF_VAR_DOCKER_REGISTRY_SERVER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
@@ -25,15 +27,6 @@ jobs:
       - name: 🔑 Login to Azure
         id : az-login
         run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
-      
-      # - name: destroy
-      #   id: destroy
-      #   run: |
-      #     cd administrators || exit 1
-      #     terraform init
-      #     terraform destroy -input=false -auto-approve
-
-
  
       - name: 🏗️ Terraform 
         id: init
@@ -44,9 +37,5 @@ jobs:
             terraform init -input=false
             terraform plan -out=tfplan -input=false
             terraform apply -input=false -auto-approve tfplan
-            # terraform destroy -input=false -auto-approve 
-
             cd ..  
           done  
-
-

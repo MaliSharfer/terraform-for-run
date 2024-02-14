@@ -1,14 +1,14 @@
 variable DOCKER_REGISTRY_SERVER_URL {
-  type        = string
+  type = string
 }
 
 variable DOCKER_REGISTRY_SERVER_USERNAME {
-  type        = string
+  type = string
 }
 
 variable DOCKER_REGISTRY_SERVER_PASSWORD {
-  type        = string
+  type = string
 }
 variable subscription_id {
-  type        = string
+  type = string
 }

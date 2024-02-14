@@ -1,50 +1,44 @@
-
-
-variable rg_name {
-  type        = string
-}
-
-variable rg_location {  
-  type        = string
-}
-
 variable key_vault_name {
-  type        = string
+  type = string
 }
 
 variable key_vault_resource_group_name {
-  type        = string
+  type = string
 }
-
-variable vnet_subnet_id {
-  type        = string
-}
-
 
 variable key_vault_secret_excel_name {
-  type        = string
+  type = string
 }
 
+variable rg_name{
+  type    = string
+  default ="rg-three"
+}
 
-variable vnet_storage_account_name {
+variable rg_location {  
+  type     = string
+  default  = "West Europe"
+}
+
+variable storage_account_name {
   type        = string
-  default =  "ststorages"
+  default =  "stthree"
 }
 
 variable key_vault_secret_name {
   type        = string
-  default     = "CONNECTION-STRING-MANAGEMENT-STORAGES"
+  default     = "CONNECTION-STRING-THREE"
 }
 
 
 variable app_service_plan_name{
   type = list(string)
-  default = ["app-get-last-fetch-time-for-each-storage-account","app-get-subscription-list","app-get-storage-list-by-subscription","app-test-storage","app-send-excel-mark-delete"]
+  default = ["app-three-01","app-three-02","app-three-03","app-three-04","app-three-05"]
 }
 
 variable function_app_name {
   type        = list(string)
-  default = ["func-get-last-fetch-time-for-each-storage-account","func-get-subscription-list","func-get-storage-list-by-subscription","func-test-storage","func-send-excel-mark-delete"]
+  default = ["func-three-01","func-three-02","func-three-03","func-three-04","func-three-05"]
 }
 
 variable DOCKER_REGISTRY_SERVER_PASSWORD {
@@ -87,10 +81,10 @@ variable FREQ_AUTOMATION_TEST_NUMBER {
 
 variable logic_app_workflow_name {
   type        = string
-  default = "logic-app-storage-management"
+  default = "logic-app-three"
 }
 
-variable "table_name" {
+variable table_name {
   type = list(string)
-  default = [ "documentation","deletedStoragesAcounts","alertsDocumentation" ]
+  default = [ "three1","three2","three3" ]
 }
