@@ -1,12 +1,11 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "rg-automation"
-    storage_account_name = "stterraformautomation"
-    container_name       = "terraform-state"
-    key                  = "terraform.tfstate"
+    resource_group_name      = "NetworkWatcherRG"
+    storage_account_name     = "myfirsttrail"
+    container_name           = "terraformstate-modules-try"
+    key                      = "terraform.tfstate"
   }
 }
-
 provider "azurerm" {
   features {
     resource_group {
