@@ -55,7 +55,7 @@ variable key_vault_secret_name {
 
 variable table_name {
   type    = list(string)
-  default = ["four-deletedSubscriptions","four-subscriptionsToDelete","four-emails"]
+  default = ["deletedSubscriptions4","subscriptionsToDelete4","emails4"]
 }
 
 variable IMAGE_NAME {

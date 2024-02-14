@@ -86,5 +86,5 @@ variable logic_app_workflow_name {
 
 variable table_name {
   type = list(string)
-  default = [ "three1","three2","three3" ]
+  default = [ "table1","table2","table3" ]
 }
