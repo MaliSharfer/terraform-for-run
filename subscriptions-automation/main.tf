@@ -126,7 +126,7 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
 
 resource "azurerm_storage_table" "example" {
   name                 = var.table_name[count.index]
-  storage_account_name = azurerm_storage_account.storage_account.nam
+  storage_account_name = azurerm_storage_account.storage_account.name
   
   count = length(var.table_name)
 }
