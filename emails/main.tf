@@ -86,6 +86,10 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
       }
     }
   }
+  
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 data "azurerm_client_config" "current_client" {}
