@@ -22,7 +22,7 @@ variable rg_location {
 
 variable storage_account_name {
   type        = string
-  default =  "stthree"
+  default =  "stchaya3"
 }
 
 variable key_vault_secret_name {
