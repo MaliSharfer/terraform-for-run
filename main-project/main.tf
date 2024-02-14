@@ -28,7 +28,7 @@ module emails{
     DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
 
     depends_on = [
-      module.administrators
+      module.administrator
     ]
 }
 
