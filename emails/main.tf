@@ -66,6 +66,9 @@ resource "azurerm_linux_function_app" "linux_function_app" {
       }
     }
   }
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
@@ -85,10 +88,6 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
     }
-  }
-  
-  identity {
-    type = "SystemAssigned"
   }
 }
 
