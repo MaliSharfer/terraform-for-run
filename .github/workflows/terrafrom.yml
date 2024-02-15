@@ -1,16 +1,17 @@
-name: '🧩 Terraform Automation'
+name: '🌍 Terraform Automation'
 
-on: workflow_dispatch
-    # inputs:
-    #   logLevel:
-    #     description: 'Log level'
-    #     required: true
-    #     default: 'warning'
-    #     type: choice
-    #     options:
-    #       - info
-    #       - warning
-    #       - debug
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
 
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
