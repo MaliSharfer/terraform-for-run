@@ -1,17 +1,11 @@
 name: '🌍 Terraform Automation'
 
 on:
-  workflow_dispatch
-    # inputs:
-    #   logLevel:
-    #     description: 'Log level'
-    #     required: true
-    #     default: 'warning'
-    #     type: choice
-    #     options:
-    #       - info
-    #       - warning
-    #       - debug
+  workflow_dispatch:
+    inputs:
+      branchName:
+        description: 'branch name'
+        required: true
 
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
@@ -27,7 +21,9 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branchName }}
 
       - name: 🧩 HashiCorp - Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.0
@@ -35,16 +31,7 @@ jobs:
       - name: 🔑 Login to Azure
         id : az-login
         run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
-      
-      # - name: destroy
-      #   id: destroy
-      #   run: |
-      #     cd administrators || exit 1
-      #     terraform init
-      #     terraform destroy -input=false -auto-approve
-
-
- 
+       
       - name: 🏗️ Terraform 
         id: init
         run: |
