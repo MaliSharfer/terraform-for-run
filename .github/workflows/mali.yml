@@ -1,7 +1,7 @@
 name: '🌍 Terraform Automation'
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
 
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
