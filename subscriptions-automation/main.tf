@@ -1,20 +1,20 @@
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "NetworkWatcherRG"
-    storage_account_name = "myfirsttrail"
-    container_name       = "terraformstate-subscriptions"
-    key                  = "terraform.tfstate"
-  }
-}
+# terraform {
+#   backend "azurerm" {
+#     resource_group_name  = "NetworkWatcherRG"
+#     storage_account_name = "myfirsttrail"
+#     container_name       = "terraformstate-subscriptions"
+#     key                  = "terraform.tfstate"
+#   }
+# }
 
-provider "azurerm" {
-  features {
-    resource_group {
-      prevent_deletion_if_contains_resources = false
-    }
-  }
-  subscription_id = var.subscription_id
-}
+# provider "azurerm" {
+#   features {
+#     resource_group {
+#       prevent_deletion_if_contains_resources = false
+#     }
+#   }
+#   subscription_id = var.subscription_id
+# }
 
 resource "azurerm_resource_group" "vnet_resource_group" {
   name     = var.rg_name
