@@ -1,4 +1,4 @@
-name: '🌍 Terraform Automation'
+name: '🧩 Terraform Automation'
 
 on: workflow_dispatch
     # inputs:
