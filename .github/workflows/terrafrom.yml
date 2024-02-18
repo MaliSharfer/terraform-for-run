@@ -5,7 +5,10 @@ on:
     inputs:
       branchName:
         description: 'branch name'
-        required: true
+        required: false
+        default: 'main'
+        description: 'Number of Octocats'
+
 
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}

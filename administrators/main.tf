@@ -1,11 +1,11 @@
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "NetworkWatcherRG"
-    storage_account_name = "myfirsttrail"
-    container_name       = "terraformstate-administraitors"
-    key                  = "terraform.tfstate"
-  }
-}
+# terraform {
+#   backend "azurerm" {
+#     resource_group_name  = "NetworkWatcherRG"
+#     storage_account_name = "myfirsttrail"
+#     container_name       = "terraformstate-administraitors"
+#     key                  = "terraform.tfstate"
+#   }
+# }
 
 provider "azurerm" {
   features {
