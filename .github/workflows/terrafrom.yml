@@ -7,7 +7,6 @@ on:
         description: 'branch name'
         required: false
         default: 'main'
-        description: 'Number of Octocats'
 
 
 env:
