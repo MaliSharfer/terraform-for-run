@@ -31,7 +31,6 @@ jobs:
           - func-ripo
 
 
-
     steps:
     - name: 📂 Checkout repository
       uses: actions/checkout@v4
