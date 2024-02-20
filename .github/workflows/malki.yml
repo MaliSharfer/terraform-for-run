@@ -28,31 +28,13 @@ jobs:
           # - func-emails-try
           # - func-subscriptions-list1
           # - func-subscriptions-automation1
-          - func-ripo
-
+          - func-ingagment
 
     steps:
     - name: 📂 Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-
-
-
-    # - name: 🔎 Determine modified directory
-    #   id: determine_directory
-    #   run: |
-    #     git diff --name-only HEAD~1 ${{ github.sha }} > changes.txt
-    #     if grep -q '^${{ matrix.directory }}' changes.txt; then
-    #       echo "${{ matrix.directory }} has changes"
-    #       # echo "::set-output name=directory::${{ matrix.directory }}"
-    #       echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
-    #     else
-    #       echo "No changes in ${{ matrix.directory }}"
-    #       exit 0
-    #     fi
-
-    
 
     - run: |
         echo "DIRECTORY=${{ matrix.directory }}" >> "$GITHUB_ENV"
@@ -111,7 +93,7 @@ jobs:
     - name: 🏗️ Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
-        context: ./services/subscriptions/${{ matrix.directory }}
+        context: ./services/emails/${{ matrix.directory }}
         push: true
         tags: ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}
         labels: ${{ steps.docker_meta.outputs.labels }}
@@ -131,8 +113,3 @@ jobs:
         app-name: ${{ matrix.directory }}
         image: 'ghcr.io/${{ env.REPO }}-${{ matrix.directory }}:${{ steps.get_release.outputs.tag_name }}'
       if: env.DIRECTORY == matrix.directory
-
-
-
-
-
