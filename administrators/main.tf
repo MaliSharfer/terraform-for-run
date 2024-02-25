@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "vnet_resource_group" {
   count = length(var.virtual_networks_and_subnets_properties)  
 }
 
-resource "azurerm_virtual_network" "vnets" {
+resurce "eee" "eee" {
   for_each = { for vnet in var.virtual_networks_and_subnets_properties : vnet.vnet_name => vnet }
 
   name                = each.value.vnet_name
