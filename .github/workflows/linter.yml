@@ -1,6 +1,7 @@
 name:  💄 terraform Lint
-on: push
-  branches: [feature/linter-in-terraform]
+on: 
+  push:
+    branches: [feature/linter-in-terraform]
 
 jobs:
   build:
