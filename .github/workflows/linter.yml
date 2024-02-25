@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📂 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
      
       - name: Lint Terraform
-        uses: actionshub/terraform-lint@v4 
+        terraform-linters/setup-tflint@v3
 
       # - name: 💄 Run Ruff
       #   run: |
