@@ -1,8 +1,3 @@
-variable rg_name {
-  type     = string
-  default  = "rg-administrators"
-}
-
 variable vnet_storage_account_name {
   type        = string
   default     = "stadministrators"
@@ -54,7 +49,7 @@ variable table_name {
   default  =  "administrators2"
 }
 
-variable virtual_networks_and_subnets_properties{
+variable virtual_networks_and_subnets_properties {
   default = [
     {
       vnet_name            = "vnet-administrators"
