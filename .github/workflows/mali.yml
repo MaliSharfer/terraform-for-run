@@ -34,6 +34,8 @@ jobs:
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
             terraform init -input=false
+            tertraform validate
+            terraform fmt
             # terraform plan -out=tfplan -input=false
             # terraform apply -input=false -auto-approve tfplan
             # terraform destroy -auto-approve
