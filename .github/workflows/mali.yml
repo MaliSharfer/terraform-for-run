@@ -1,7 +1,8 @@
 name: '🌍 Terraform Automation'
 
-on:
-  workflow_dispatch:
+on: 
+  push:
+    branches: [feature/change-names]
 
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
