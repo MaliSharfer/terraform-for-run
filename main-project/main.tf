@@ -1,7 +1,7 @@
 terraform {
   backend "azurerm" {
-    resource_group_name      = "NetworkWatcherRG"
-    storage_account_name     = "myfirsttrail"
+    resource_group_name      = "functionyvwow"
+    storage_account_name     = "functionyvwowdcbbfc"
     container_name           = "terraformstate-modules"
     key                      = "terraform.tfstate"
   }
