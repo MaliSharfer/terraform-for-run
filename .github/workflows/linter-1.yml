@@ -7,6 +7,10 @@ jobs:
   tflint:
     runs-on: ${{ matrix.os }}
 
+    defaults:
+      run:
+        working-directory: administrators
+
     strategy:
       matrix:
         os: [ubuntu-latest]
