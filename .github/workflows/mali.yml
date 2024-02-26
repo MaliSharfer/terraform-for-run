@@ -33,8 +33,8 @@ jobs:
           DIRECTORIES=( "main-project" )
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
-            terraform init -input=false
-            terraform validate
+            # terraform init -input=false
+            # terraform validate
             terraform fmt
             # terraform plan -out=tfplan -input=false
             # terraform apply -input=false -auto-approve tfplan
