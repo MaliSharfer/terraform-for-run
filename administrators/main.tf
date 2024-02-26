@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "vnet_resource_group" {
   name     = var.virtual_networks_and_subnets_properties[count.index].resource_group_name
   location = var.location
-  count = length(var.virtual_networks_and_subnets_properties)  
+  count = length(var.virtual_networks_and_subnets_properties)
 }
 
 resource "azurerm_virtual_network" "vnets" {

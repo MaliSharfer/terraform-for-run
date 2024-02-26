@@ -3,7 +3,7 @@ variable vnet_storage_account_name {
   default     = "stadministrators"
 }
 
-variable location {  
+variable location {
   type     = string
   default  = "West Europe"
 }

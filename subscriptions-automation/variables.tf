@@ -14,11 +14,11 @@ variable rg_name {
   type        = string
 }
 
-variable rg_location {  
+variable rg_location {
   type        = string
 }
 
-variable vnet_subnet_id {  
+variable vnet_subnet_id {
   type        = string
 }
 

@@ -46,12 +46,11 @@ resource "azurerm_linux_function_app" "linux_function_app" {
     CLIENT_ID	= " "
     CLIENT_SECRET = " "
     TENANT_ID = " "
-    DOCKER_REGISTRY_SERVER_URL                = var.DOCKER_REGISTRY_SERVER_URL 
+    DOCKER_REGISTRY_SERVER_URL                = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME           = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD           = var.DOCKER_REGISTRY_SERVER_PASSWORD 
+    DOCKER_REGISTRY_SERVER_PASSWORD           = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE       = false
   }
-  
   site_config {
     always_on         = true
     application_stack {
@@ -68,7 +67,6 @@ resource "azurerm_linux_function_app" "linux_function_app" {
   identity {
     type = "SystemAssigned"
   }
-  
 }
 
 resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {

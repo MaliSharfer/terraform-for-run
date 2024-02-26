@@ -32,7 +32,7 @@ output key_vault_name {
 }
 
 output key_vault_resource_group_name {
-  value       = azurerm_key_vault.key_vault.resource_group_name 
+  value       = azurerm_key_vault.key_vault.resource_group_name
 }
 
 output secret_administrators_name {

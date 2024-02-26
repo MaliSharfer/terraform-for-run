@@ -42,7 +42,6 @@ module emails{
 
 module subscriptions {
     source = "../subscriptions-automation/"
-    
     rg_name = module.administrators.resource_group_subscription_automation
     rg_location = module.administrators.location
     vnet_subnet_id = module.administrators.subnet_id_subscription_automation

@@ -54,9 +54,7 @@ resource "azurerm_linux_function_app" "linux_function_app" {
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   } : count.index==1 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
-    
     DOCUMENTATION_TABLE = azurerm_storage_table.storage_table[0].name
-    
     SECRET = azurerm_key_vault_secret.key_vault_secret.name
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
 
@@ -77,7 +75,6 @@ resource "azurerm_linux_function_app" "linux_function_app" {
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }: count.index==3 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
- 
     DESIRED_TIME_PERIOD_SINCE_LAST_RETRIEVAL_FOR_CHECK_LAST_FETCH = " "
     DESIRED_TIME_PERIOD_SINCE_LAST_RETRIEVAL_FOR_CHECK_USED_CAPACITY = " "
     # TIME_INDEX="days"/"weeks"/"months"/"years"
@@ -131,7 +128,7 @@ resource "azurerm_linux_function_app" "linux_function_app" {
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
     }
-  } 
+  }
 
   identity {
     type = "SystemAssigned"

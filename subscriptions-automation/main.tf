@@ -34,7 +34,7 @@ resource "azurerm_service_plan" "service_plan" {
   os_type             = "Linux"
   sku_name            = "P1v2"
 
-  count = length(var.service_plan_name)  
+  count = length(var.service_plan_name)
 }
 
 resource "azurerm_linux_function_app" "function_app" {
@@ -81,7 +81,6 @@ resource "azurerm_linux_function_app" "function_app" {
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }: {}
-  
   site_config {
     always_on         = true
     application_stack {
