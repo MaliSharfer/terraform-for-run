@@ -42,7 +42,7 @@ jobs:
             # terraform destroy -auto-approve
             cd ..  
           done 
-        continue-on-error: flase   
+        continue-on-error: false   
 
 
 
