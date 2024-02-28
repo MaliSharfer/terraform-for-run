@@ -15,7 +15,7 @@ variable rg_name{
   default ="rg-three"
 }
 
-variable rg_location {  
+variable rg_location {
   type     = string
   default  = "West Europe"
 }
@@ -71,7 +71,7 @@ variable FREQ_AUTOMATION_TEST_TYPE {
   validation {
     condition     = contains(["Month","Week","Day","Hour","Minute","Second"], var.FREQ_AUTOMATION_TEST_TYPE)
     error_message = "Valid values for var: FREQ_AUTOMATION_TEST_TYPE are (Month,Week,Day,Hour,Minute,Second)."
-  } 
+  }
 }
 
 variable FREQ_AUTOMATION_TEST_NUMBER {

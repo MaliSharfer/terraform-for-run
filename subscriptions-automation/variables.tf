@@ -23,7 +23,7 @@ variable rg_name{
   default ="rg-four"
 }
 
-variable rg_location {  
+variable rg_location {
   type     = string
   default  = "West Europe"
 }

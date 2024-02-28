@@ -30,18 +30,21 @@ jobs:
       - name: 🏗️ Terraform 
         id: init
         run: |
-          DIRECTORIES=( "main-project" )
+          DIRECTORIES=( "main-project" "administrator" "emails" "storages" "subscriptions-automation")
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
             terraform init -input=false
-            # terraform validate
-            terraform fmt -check
-            # terraform plan -out=tfplan -input=false
-            # terraform apply -input=false -auto-approve tfplan
-            # terraform destroy -auto-approve
+            terraform fmt -recursive -diff -check
             cd ..  
           done 
-        # continue-on-error: false   
+        continue-on-error: false   
+
+      - name: terraform format
+        id: fmt
+        run: |
+          cd main-project
+          terraform plan -out=tfplan -input=false
+          # terraform apply -input=false -auto-approve tfplan
 
       # - name: terraform fmt
       #   id: fmt

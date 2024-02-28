@@ -3,7 +3,7 @@ variable rg_name{
   default ="rg-one"
 }
 
-variable rg_location {  
+variable rg_location {
   type     = string
   default  = "West Europe"
 }

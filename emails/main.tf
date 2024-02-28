@@ -40,27 +40,27 @@ resource "azurerm_linux_function_app" "linux_function_app" {
   functions_extension_version = "~4"
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "python"
-    EMAILS_SECRET = azurerm_key_vault_secret.key_vault_secret.name
-    KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
-    https_only = true
-    GRAPH_URL = " "
-    CLIENT_ID	= " "
-    CLIENT_SECRET = " "
-    TENANT_ID = " "
-    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL 
-    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD 
+    FUNCTIONS_WORKER_RUNTIME            = "python"
+    EMAILS_SECRET                       = azurerm_key_vault_secret.key_vault_secret.name
+    KEYVAULT_URI                        = data.azurerm_key_vault.key_vault.vault_uri
+    https_only                          = true
+    GRAPH_URL                           = " "
+    CLIENT_ID                           = " "
+    CLIENT_SECRET                       = " "
+    TENANT_ID                           = " "
+    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
-  
+
   site_config {
     always_on = true
     application_stack {
       docker {
-        registry_url = var.DOCKER_REGISTRY_SERVER_URL
-        image_name = var.IMAGE_NAME
-        image_tag = var.IMAGE_TAG
+        registry_url      = var.DOCKER_REGISTRY_SERVER_URL
+        image_name        = var.IMAGE_NAME
+        image_tag         = var.IMAGE_TAG
         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
@@ -81,9 +81,9 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
     always_on = true
     application_stack {
       docker {
-        registry_url = var.DOCKER_REGISTRY_SERVER_URL
-        image_name = var.IMAGE_NAME
-        image_tag = var.IMAGE_TAG
+        registry_url      = var.DOCKER_REGISTRY_SERVER_URL
+        image_name        = var.IMAGE_NAME
+        image_tag         = var.IMAGE_TAG
         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
