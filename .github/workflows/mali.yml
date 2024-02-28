@@ -37,7 +37,6 @@ jobs:
             terraform fmt -recursive -diff -check
             cd ..  
           done 
-        continue-on-error: false   
 
       - name: terraform format
         id: fmt
