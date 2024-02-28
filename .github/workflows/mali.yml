@@ -34,7 +34,7 @@ jobs:
           DIRECTORIES=( "main-project" )
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
-            # terraform init -input=false
+            terraform init -input=false
             # terraform validate
             terraform fmt -check
             # terraform plan -out=tfplan -input=false
@@ -43,3 +43,19 @@ jobs:
             cd ..  
           done 
         continue-on-error: false   
+
+      # - name: terraform fmt
+      #   id: fmt
+      #   run: |
+      #     DIRECTORIES=( "main-project" )
+      #     for directory in ${DIRECTORIES[@]}; do
+      #       cd ${directory} || exit 1
+      #       # terraform init -input=false
+      #       # terraform validate
+      #       terraform fmt -check
+      #       # terraform plan -out=tfplan -input=false
+      #       # terraform apply -input=false -auto-approve tfplan
+      #       # terraform destroy -auto-approve
+      #       cd ..  
+      #     done 
+
