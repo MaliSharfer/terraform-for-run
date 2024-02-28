@@ -26,7 +26,8 @@ jobs:
       - name: 🔑 Login to Azure
         id : az-login
         run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
- 
+      
+
       - name: 🏗️ Terraform 
         id: init
         run: |
@@ -35,12 +36,13 @@ jobs:
             cd ${directory} || exit 1
             # terraform init -input=false
             # terraform validate
-            terraform fmt
+            terraform fmt -check
             # terraform plan -out=tfplan -input=false
             # terraform apply -input=false -auto-approve tfplan
             # terraform destroy -auto-approve
             cd ..  
-          done  
+          done 
+        continue-on-error: flase   
 
 
 
