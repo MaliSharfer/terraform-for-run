@@ -34,7 +34,7 @@ jobs:
           for directory in ${DIRECTORIES[@]}; do
             cd ${directory} || exit 1
             terraform init -input=false
-            terraform fmt -recursive -diff -check
+            terraform fmt -check
             cd ..  
           done 
 
