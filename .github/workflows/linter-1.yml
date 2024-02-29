@@ -9,19 +9,31 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: cd
+    # - name: cd
+    #   run: |
+    #     cd tflint
+    #     tflint --init
+    #     cd ../
+
+    # - name: Check linting of Terraform modules
+    #   uses: devops-infra/action-tflint@v0.3
+    #   with:
+    #     tflint_config: tflint/.tflint.hcl
+    #     run_init: true
+    #     dir_filter: emails
+
+
+    - name: TFLint - Setup
+      id: tflint
+      uses: terraform-linters/setup-tflint@v3
+      with:
+        tflint_wrapper_enabled: true
+    - name: TFLint - Run
       run: |
         cd tflint
+        tflint --version
         tflint --init
-        cd ../
-
-    - name: Check linting of Terraform modules
-      uses: devops-infra/action-tflint@v0.3
-      with:
-        tflint_config: tflint/.tflint.hcl
-        run_init: true
-        dir_filter: emails
-
+        tflint
 
 # name: Lint
 # on: 
