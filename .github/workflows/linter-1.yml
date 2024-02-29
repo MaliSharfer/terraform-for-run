@@ -2,22 +2,18 @@ name:  💄 terraform Lint
 on: 
   push:
     branches: [feature/linter-in-terraform]
-    
+
 jobs:
-  tflint:
-    name: TFLint
+  format-hcl:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: TFLint
-        uses: pauloconnor/tflint-action@v0.0.2 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-            tflint_recurse: true
-            tflint_changed_only: false
-            tflint_extra_options: --output json
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Check linting of Terraform modules
+      uses: devops-infra/action-tflint@v0.3
+      with:
+        tflint_config: tflint/.tflint.hcl
+        dir_filter: emails
 
 
 # name: Lint
