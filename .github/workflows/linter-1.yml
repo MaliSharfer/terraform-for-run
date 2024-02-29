@@ -9,6 +9,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: cd
+      run: |
+        cd tflint
+        tflint --init
+        cd ../
+
     - name: Check linting of Terraform modules
       uses: devops-infra/action-tflint@v0.3
       with:
