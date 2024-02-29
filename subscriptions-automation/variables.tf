@@ -1,72 +1,72 @@
-variable DOCKER_REGISTRY_SERVER_PASSWORD {
-  type        = string
+variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
+  type = string
 }
 
-variable DOCKER_REGISTRY_SERVER_USERNAME {
-  type        = string
+variable "DOCKER_REGISTRY_SERVER_USERNAME" {
+  type = string
 }
 
-variable DOCKER_REGISTRY_SERVER_URL {
-  type        = string
+variable "DOCKER_REGISTRY_SERVER_URL" {
+  type = string
 }
 
-variable rg_name {
-  type        = string
+variable "rg_name" {
+  type = string
 }
 
-variable rg_location {
-  type        = string
+variable "rg_location" {
+  type = string
 }
 
-variable vnet_subnet_id {
-  type        = string
+variable "vnet_subnet_id" {
+  type = string
 }
 
-variable vnet_storage_account_name {
+variable "vnet_storage_account_name" {
   type    = string
-  default =  "stmanageaubscriptions"
+  default = "stmanageaubscriptions"
 }
 
-variable key_vault_name {
-  type        = string
+variable "key_vault_name" {
+  type = string
 }
 
-variable key_vault_resource_group_name{
-  type        = string
+variable "key_vault_resource_group_name" {
+  type = string
 }
 
-variable service_plan_name{
+variable "service_plan_name" {
   type    = list(string)
-  default =  ["app-subscriptions-automation1","app-subscriptions-list1"]
+  default = ["app-subscriptions-automation1", "app-subscriptions-list1"]
 }
 
-variable function_app_name {
+variable "function_app_name" {
   type    = list(string)
-  default =  ["func-subscriptions-automation1" , "func-subscriptions-list1" ]
+  default = ["func-subscriptions-automation1", "func-subscriptions-list1"]
 }
 
-variable logic_app_workflow_name {
-  type        = string
+variable "logic_app_workflow_name" {
+  type    = string
   default = "logic-app-subscription-management1"
 }
 
-variable key_vault_secret_name {
-  type        = string
-  default     = "SUBSCRIPTION-SECRET"
+variable "key_vault_secret_name" {
+  type    = string
+  default = "SUBSCRIPTION-SECRET"
 }
 
-variable table_name {
+variable "table_name" {
   type    = list(string)
-  default =  ["deletedSubscriptions","subscriptionsToDelete","emails"]
+  default = ["deletedSubscriptions", "subscriptionsToDelete", "emails"]
 }
 
-variable IMAGE_NAME {
-  type     = string
-  default  = "mcr.microsoft.com/azure-functions/dotnet"
+variable "IMAGE_NAME" {
+  type    = string
+  default = "mcr.microsoft.com/azure-functions/dotnet"
 }
 
-variable IMAGE_TAG {
-  type     = string
-  default  = "4-appservice-quickstart"
+variable "IMAGE_TAG" {
+  type    = string
+  default = "4-appservice-quickstart"
 }
 

@@ -1,96 +1,96 @@
 
 
-variable rg_name {
-  type        = string
+variable "rg_name" {
+  type = string
 }
 
-variable rg_location {
-  type        = string
+variable "rg_location" {
+  type = string
 }
 
-variable key_vault_name {
-  type        = string
+variable "key_vault_name" {
+  type = string
 }
 
-variable key_vault_resource_group_name {
-  type        = string
+variable "key_vault_resource_group_name" {
+  type = string
 }
 
-variable vnet_subnet_id {
-  type        = string
-}
-
-
-variable key_vault_secret_excel_name {
-  type        = string
+variable "vnet_subnet_id" {
+  type = string
 }
 
 
-variable vnet_storage_account_name {
-  type        = string
-  default =  "ststorages"
-}
-
-variable key_vault_secret_name {
-  type        = string
-  default     = "CONNECTION-STRING-MANAGEMENT-STORAGES"
+variable "key_vault_secret_excel_name" {
+  type = string
 }
 
 
-variable app_service_plan_name{
-  type = list(string)
-  default = ["app-get-last-fetch-time-for-each-storage-account1","app-get-subscription-list1","app-get-storage-list-by-subscription1","app-test-storage1","app-send-excel-mark-delete1"]
+variable "vnet_storage_account_name" {
+  type    = string
+  default = "ststorages"
 }
 
-variable function_app_name {
-  type        = list(string)
-  default = ["func-get-last-fetch-time-for-each-storage-account1","func-get-subscription-list1","func-get-storage-list-by-subscription1","func-test-storage1","func-send-excel-mark-delete1"]
-}
-
-variable DOCKER_REGISTRY_SERVER_PASSWORD {
-  type        = string
-}
-
-variable DOCKER_REGISTRY_SERVER_USERNAME {
-  type        = string
+variable "key_vault_secret_name" {
+  type    = string
+  default = "CONNECTION-STRING-MANAGEMENT-STORAGES"
 }
 
 
-variable DOCKER_REGISTRY_SERVER_URL {
-  type        = string
+variable "app_service_plan_name" {
+  type    = list(string)
+  default = ["app-get-last-fetch-time-for-each-storage-account1", "app-get-subscription-list1", "app-get-storage-list-by-subscription1", "app-test-storage1", "app-send-excel-mark-delete1"]
+}
+
+variable "function_app_name" {
+  type    = list(string)
+  default = ["func-get-last-fetch-time-for-each-storage-account1", "func-get-subscription-list1", "func-get-storage-list-by-subscription1", "func-test-storage1", "func-send-excel-mark-delete1"]
+}
+
+variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
+  type = string
+}
+
+variable "DOCKER_REGISTRY_SERVER_USERNAME" {
+  type = string
 }
 
 
-variable IMAGE_NAME {
-  type        = string
-  default     = "mcr.microsoft.com/azure-functions/dotnet"
+variable "DOCKER_REGISTRY_SERVER_URL" {
+  type = string
 }
 
-variable IMAGE_TAG {
-  type        = string
-  default     = "4-appservice-quickstart"
+
+variable "IMAGE_NAME" {
+  type    = string
+  default = "mcr.microsoft.com/azure-functions/dotnet"
 }
 
-variable FREQ_AUTOMATION_TEST_TYPE {
-  type        = string
+variable "IMAGE_TAG" {
+  type    = string
+  default = "4-appservice-quickstart"
+}
+
+variable "FREQ_AUTOMATION_TEST_TYPE" {
+  type    = string
   default = "Week"
   validation {
-    condition     = contains(["Month","Week","Day","Hour","Minute","Second"], var.FREQ_AUTOMATION_TEST_TYPE)
+    condition     = contains(["Month", "Week", "Day", "Hour", "Minute", "Second"], var.FREQ_AUTOMATION_TEST_TYPE)
     error_message = "Valid values for var: FREQ_AUTOMATION_TEST_TYPE are (Month,Week,Day,Hour,Minute,Second)."
   }
 }
 
-variable FREQ_AUTOMATION_TEST_NUMBER {
-  type        = number
+variable "FREQ_AUTOMATION_TEST_NUMBER" {
+  type    = number
   default = 1
 }
 
-variable logic_app_workflow_name {
-  type        = string
+variable "logic_app_workflow_name" {
+  type    = string
   default = "logic-app-storage-management1"
 }
 
-variable table_name {
-  type = list(string)
-  default = [ "documentation","deletedStoragesAcounts","alertsDocumentation" ]
+variable "table_name" {
+  type    = list(string)
+  default = ["documentation", "deletedStoragesAcounts", "alertsDocumentation"]
 }

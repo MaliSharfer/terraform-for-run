@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "vnet_resource_group" {
   name     = var.virtual_networks_and_subnets_properties[count.index].resource_group_name
   location = var.location
-  count = length(var.virtual_networks_and_subnets_properties)
+  count    = length(var.virtual_networks_and_subnets_properties)
 }
 
 resource "azurerm_virtual_network" "vnets" {
@@ -33,7 +33,7 @@ locals {
 }
 
 resource "azurerm_virtual_network_peering" "vnets_peering" {
-  for_each = local.unique_pairs
+  for_each                     = local.unique_pairs
   name                         = each.value
   resource_group_name          = azurerm_virtual_network.vnets[split("_", each.value)[0]].resource_group_name
   virtual_network_name         = azurerm_virtual_network.vnets[split("_", each.value)[0]].name
@@ -48,19 +48,18 @@ resource "azurerm_storage_account" "vnet_storage_account" {
   location                 = azurerm_resource_group.vnet_resource_group[0].location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-
 }
 
 
 data "azurerm_client_config" "current_client" {}
 
 resource "azurerm_key_vault" "key_vault" {
-  name                        = var.key_vault_name
-  location                    = var.location
-  resource_group_name         = azurerm_storage_account.vnet_storage_account.resource_group_name
-  soft_delete_retention_days  = 7
-  tenant_id                   = data.azurerm_client_config.current_client.tenant_id
-  sku_name                    = var.key_vault_sku_name
+  name                       = var.key_vault_name
+  location                   = var.location
+  resource_group_name        = azurerm_storage_account.vnet_storage_account.resource_group_name
+  soft_delete_retention_days = 7
+  tenant_id                  = data.azurerm_client_config.current_client.tenant_id
+  sku_name                   = var.key_vault_sku_name
 
   access_policy {
     tenant_id = data.azurerm_client_config.current_client.tenant_id
@@ -88,18 +87,18 @@ resource "azurerm_storage_table" "storage_table" {
 
   depends_on = [
     azurerm_storage_account.vnet_storage_account
- ]
+  ]
 
 }
 
 resource "azurerm_storage_account_network_rules" "network_rules" {
-  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
+  storage_account_id         = azurerm_storage_account.vnet_storage_account.id
   default_action             = "Deny"
   virtual_network_subnet_ids = [azurerm_subnet.vnet_subnet[var.virtual_networks_and_subnets_properties[0].snet_name].id]
   ip_rules                   = ["84.110.136.18"]
 
   depends_on = [
     azurerm_storage_table.storage_table
- ]
+  ]
 
 }

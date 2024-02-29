@@ -35,61 +35,61 @@ resource "azurerm_linux_function_app" "linux_function_app" {
   resource_group_name = azurerm_storage_account.vnet_storage_account.resource_group_name
   location            = azurerm_storage_account.vnet_storage_account.location
 
-  storage_account_name       = azurerm_storage_account.vnet_storage_account.name
-  storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
-  service_plan_id            = azurerm_service_plan.service_plan[count.index].id
+  storage_account_name        = azurerm_storage_account.vnet_storage_account.name
+  storage_account_access_key  = azurerm_storage_account.vnet_storage_account.primary_access_key
+  service_plan_id             = azurerm_service_plan.service_plan[count.index].id
   functions_extension_version = "~4"
 
-  app_settings = count.index==0 ? {
+  app_settings = count.index == 0 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
 
-    DESIRED_TIME_PERIOD_SINCE_LAST_RETRIEVAL_FOR_CHECK_LAST_FETCH=""
-    TIME_INDEX_FOR_CHECK_LAST_FETCH= ""
-    WORKSPACE_ID=" "
+    DESIRED_TIME_PERIOD_SINCE_LAST_RETRIEVAL_FOR_CHECK_LAST_FETCH = ""
+    TIME_INDEX_FOR_CHECK_LAST_FETCH                               = ""
+    WORKSPACE_ID                                                  = " "
 
     https_only                          = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-  } : count.index==1 ? {
+    } : count.index == 1 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
-    DOCUMENTATION_TABLE = azurerm_storage_table.storage_table[0].name
-    SECRET = azurerm_key_vault_secret.key_vault_secret.name
-    KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
+    DOCUMENTATION_TABLE      = azurerm_storage_table.storage_table[0].name
+    SECRET                   = azurerm_key_vault_secret.key_vault_secret.name
+    KEYVAULT_URI             = data.azurerm_key_vault.key_vault.vault_uri
 
     https_only                          = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-  } : count.index==2 ? {
+    } : count.index == 2 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
 
-    ESSENTIAL_TAG=" "
+    ESSENTIAL_TAG = " "
 
     https_only                          = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-  }: count.index==3 ? {
-    FUNCTIONS_WORKER_RUNTIME = "python"
-    DESIRED_TIME_PERIOD_SINCE_LAST_RETRIEVAL_FOR_CHECK_LAST_FETCH = " "
+    } : count.index == 3 ? {
+    FUNCTIONS_WORKER_RUNTIME                                         = "python"
+    DESIRED_TIME_PERIOD_SINCE_LAST_RETRIEVAL_FOR_CHECK_LAST_FETCH    = " "
     DESIRED_TIME_PERIOD_SINCE_LAST_RETRIEVAL_FOR_CHECK_USED_CAPACITY = " "
     # TIME_INDEX="days"/"weeks"/"months"/"years"
-    TIME_INDEX_FOR_CHECK_LAST_FETCH = " "
+    TIME_INDEX_FOR_CHECK_LAST_FETCH    = " "
     TIME_INDEX_FOR_CHECK_USED_CAPACITY = " "
-    HTTP_TRIGGER_URL = " "
+    HTTP_TRIGGER_URL                   = " "
 
-    FREQ_AUTOMATION_TEST_TYPE=var.FREQ_AUTOMATION_TEST_TYPE
-    FREQ_AUTOMATION_TEST_NUMBER=var.FREQ_AUTOMATION_TEST_NUMBER
+    FREQ_AUTOMATION_TEST_TYPE   = var.FREQ_AUTOMATION_TEST_TYPE
+    FREQ_AUTOMATION_TEST_NUMBER = var.FREQ_AUTOMATION_TEST_NUMBER
 
-    DOCUMENTATION_TABLE = azurerm_storage_table.storage_table[0].name
-    ALERTS_DOCUMENTATION = azurerm_storage_table.storage_table[2].name
-    DOCUMENTATION_STORAGE_NAME= azurerm_storage_account.vnet_storage_account.name
+    DOCUMENTATION_TABLE        = azurerm_storage_table.storage_table[0].name
+    ALERTS_DOCUMENTATION       = azurerm_storage_table.storage_table[2].name
+    DOCUMENTATION_STORAGE_NAME = azurerm_storage_account.vnet_storage_account.name
 
-    SECRET = azurerm_key_vault_secret.key_vault_secret.name
+    SECRET       = azurerm_key_vault_secret.key_vault_secret.name
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
 
     https_only                          = true
@@ -97,17 +97,17 @@ resource "azurerm_linux_function_app" "linux_function_app" {
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-  } : count.index==4 ? {
+    } : count.index == 4 ? {
     FUNCTIONS_WORKER_RUNTIME = "python"
 
-    HTTP_TRIGGER_URL=" "
-    MAIN_MANAGER=" "
+    HTTP_TRIGGER_URL = " "
+    MAIN_MANAGER     = " "
 
-    DOCUMENTATION_TABLE = azurerm_storage_table.storage_table[0].name
+    DOCUMENTATION_TABLE    = azurerm_storage_table.storage_table[0].name
     DELETED_ACCOUNTS_TABLE = azurerm_storage_table.storage_table[1].name
 
     KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
-    SECRET = azurerm_key_vault_secret.key_vault_secret.name
+    SECRET       = azurerm_key_vault_secret.key_vault_secret.name
     SECRET_EXCEL = var.key_vault_secret_excel_name
 
     https_only                          = true
@@ -115,15 +115,15 @@ resource "azurerm_linux_function_app" "linux_function_app" {
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-  }: {}
+  } : {}
 
   site_config {
-    always_on         = true
+    always_on = true
     application_stack {
       docker {
-        registry_url = var.DOCKER_REGISTRY_SERVER_URL
-        image_name = var.IMAGE_NAME
-        image_tag = var.IMAGE_TAG
+        registry_url      = var.DOCKER_REGISTRY_SERVER_URL
+        image_name        = var.IMAGE_NAME
+        image_tag         = var.IMAGE_TAG
         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
@@ -133,7 +133,7 @@ resource "azurerm_linux_function_app" "linux_function_app" {
   identity {
     type = "SystemAssigned"
   }
-  count= length(var.function_app_name)
+  count = length(var.function_app_name)
 }
 
 resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
@@ -142,12 +142,12 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
   storage_account_name       = azurerm_storage_account.vnet_storage_account.name
   storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
   site_config {
-    always_on         = true
+    always_on = true
     application_stack {
       docker {
-        registry_url = var.DOCKER_REGISTRY_SERVER_URL
-        image_name = var.IMAGE_NAME
-        image_tag = var.IMAGE_TAG
+        registry_url      = var.DOCKER_REGISTRY_SERVER_URL
+        image_name        = var.IMAGE_NAME
+        image_tag         = var.IMAGE_TAG
         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
@@ -164,14 +164,14 @@ resource "azurerm_logic_app_workflow" "logic_app_workflow" {
 
   workflow_parameters = {
     "workflows_logic_app_name" : "{ \"defaultValue\":\"${var.logic_app_workflow_name}\", \"type\" : \"string\"}"
-    "sites_func_get_last_fetch_time_for_each_storage_account_externalid": "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[0].id}\",\"type\": \"string\"}"
-    "sites_func_get_subscription_list_externalid": "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[1].id}\", \"type\": \"string\"}"
-    "sites_func_get_storage_list_by_subscription_externalid": "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[2].id}\",\"type\": \"string\" }"
-    "sites_func_test_storage_externalid": "{ \"defaultValue\":\"${azurerm_linux_function_app.linux_function_app[3].id}\", \"type\": \"string\"}"
-    "sites_func_sending_excel_by_email_and_mark_storages_for_deletion_externalid": "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[4].id}\",\"type\": \"string\" }"
-    "location":"{\"defaultValue\": \"${var.rg_location}\",\"type\": \"string\" }"
-    "frequency":"{\"defaultValue\": \"${var.FREQ_AUTOMATION_TEST_TYPE}\",\"type\": \"string\",\"allowedValues\": [\"Month\",\"Week\",\"Day\",\"Hour\",\"Minute\",\"Second\"]}"
-    "interval": "{ \"defaultValue\": ${var.FREQ_AUTOMATION_TEST_NUMBER}, \"type\": \"int\" }"
+    "sites_func_get_last_fetch_time_for_each_storage_account_externalid" : "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[0].id}\",\"type\": \"string\"}"
+    "sites_func_get_subscription_list_externalid" : "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[1].id}\", \"type\": \"string\"}"
+    "sites_func_get_storage_list_by_subscription_externalid" : "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[2].id}\",\"type\": \"string\" }"
+    "sites_func_test_storage_externalid" : "{ \"defaultValue\":\"${azurerm_linux_function_app.linux_function_app[3].id}\", \"type\": \"string\"}"
+    "sites_func_sending_excel_by_email_and_mark_storages_for_deletion_externalid" : "{\"defaultValue\": \"${azurerm_linux_function_app.linux_function_app[4].id}\",\"type\": \"string\" }"
+    "location" : "{\"defaultValue\": \"${var.rg_location}\",\"type\": \"string\" }"
+    "frequency" : "{\"defaultValue\": \"${var.FREQ_AUTOMATION_TEST_TYPE}\",\"type\": \"string\",\"allowedValues\": [\"Month\",\"Week\",\"Day\",\"Hour\",\"Minute\",\"Second\"]}"
+    "interval" : "{ \"defaultValue\": ${var.FREQ_AUTOMATION_TEST_NUMBER}, \"type\": \"int\" }"
   }
 }
 
@@ -208,7 +208,7 @@ resource "azurerm_storage_table" "storage_table" {
 
 
 resource "azurerm_storage_account_network_rules" "network_rules" {
-  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
+  storage_account_id         = azurerm_storage_account.vnet_storage_account.id
   default_action             = "Deny"
   virtual_network_subnet_ids = [var.vnet_subnet_id]
   ip_rules                   = ["84.110.136.18"]

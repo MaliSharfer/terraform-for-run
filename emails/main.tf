@@ -29,35 +29,35 @@ resource "azurerm_service_plan" "service_plan" {
 }
 
 resource "azurerm_linux_function_app" "linux_function_app" {
-  name                       = var.function_app_name
-  location                   = azurerm_storage_account.vnet_storage_account.location
-  resource_group_name        = azurerm_storage_account.vnet_storage_account.resource_group_name
-  service_plan_id        = azurerm_service_plan.service_plan.id
-  storage_account_name       = azurerm_storage_account.vnet_storage_account.name
-  storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
+  name                        = var.function_app_name
+  location                    = azurerm_storage_account.vnet_storage_account.location
+  resource_group_name         = azurerm_storage_account.vnet_storage_account.resource_group_name
+  service_plan_id             = azurerm_service_plan.service_plan.id
+  storage_account_name        = azurerm_storage_account.vnet_storage_account.name
+  storage_account_access_key  = azurerm_storage_account.vnet_storage_account.primary_access_key
   functions_extension_version = "~4"
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "python"
-    EMAILS_SECRET = azurerm_key_vault_secret.key_vault_secret.name
-    KEYVAULT_URI = data.azurerm_key_vault.key_vault.vault_uri
-    https_only                                = true
-    GRAPH_URL = " "
-    CLIENT_ID	= " "
-    CLIENT_SECRET = " "
-    TENANT_ID = " "
-    DOCKER_REGISTRY_SERVER_URL                = var.DOCKER_REGISTRY_SERVER_URL
-    DOCKER_REGISTRY_SERVER_USERNAME           = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD           = var.DOCKER_REGISTRY_SERVER_PASSWORD
-    WEBSITES_ENABLE_APP_SERVICE_STORAGE       = false
+    FUNCTIONS_WORKER_RUNTIME            = "python"
+    EMAILS_SECRET                       = azurerm_key_vault_secret.key_vault_secret.name
+    KEYVAULT_URI                        = data.azurerm_key_vault.key_vault.vault_uri
+    https_only                          = true
+    GRAPH_URL                           = " "
+    CLIENT_ID                           = " "
+    CLIENT_SECRET                       = " "
+    TENANT_ID                           = " "
+    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
   site_config {
-    always_on         = true
+    always_on = true
     application_stack {
       docker {
-        registry_url = var.DOCKER_REGISTRY_SERVER_URL
-        image_name = var.IMAGE_NAME
-        image_tag = var.IMAGE_TAG
+        registry_url      = var.DOCKER_REGISTRY_SERVER_URL
+        image_name        = var.IMAGE_NAME
+        image_tag         = var.IMAGE_TAG
         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
@@ -74,13 +74,13 @@ resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
   function_app_id            = azurerm_linux_function_app.linux_function_app.id
   storage_account_name       = azurerm_storage_account.vnet_storage_account.name
   storage_account_access_key = azurerm_storage_account.vnet_storage_account.primary_access_key
-   site_config {
-    always_on         = true
+  site_config {
+    always_on = true
     application_stack {
       docker {
-        registry_url = var.DOCKER_REGISTRY_SERVER_URL
-        image_name = var.IMAGE_NAME
-        image_tag = var.IMAGE_TAG
+        registry_url      = var.DOCKER_REGISTRY_SERVER_URL
+        image_name        = var.IMAGE_NAME
+        image_tag         = var.IMAGE_TAG
         registry_username = var.DOCKER_REGISTRY_SERVER_USERNAME
         registry_password = var.DOCKER_REGISTRY_SERVER_PASSWORD
       }
@@ -106,7 +106,7 @@ resource "azurerm_key_vault_access_policy" "principal" {
 }
 
 resource "azurerm_storage_account_network_rules" "network_rules" {
-  storage_account_id    = azurerm_storage_account.vnet_storage_account.id
+  storage_account_id         = azurerm_storage_account.vnet_storage_account.id
   default_action             = "Deny"
   virtual_network_subnet_ids = [var.vnet_subnet_id]
   ip_rules                   = ["84.110.136.18"]
