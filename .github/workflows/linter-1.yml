@@ -1,81 +1,81 @@
-name:  💄 terraform Lint
-on: 
-  push:
-    branches: [feature/linter-in-terraform]
-
-jobs:
-  format-hcl:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    # - name: cd
-    #   run: |
-    #     cd tflint
-    #     tflint --init
-    #     cd ../
-
-
-
-    - name: TFLint - Setup
-      id: tflint
-      uses: terraform-linters/setup-tflint@v3
-      with:
-        tflint_wrapper_enabled: true
-
-    - name: TFLint - Run
-      run: |
-        # cd tflint
-        tflint --version
-        tflint --init
-        tflint
-
-    - name: Check linting of Terraform modules
-      uses: devops-infra/action-tflint@v0.3
-      with:
-        run_init: true
-        dir_filter: emails
-
-# name: Lint
+# name:  💄 terraform Lint
 # on: 
 #   push:
 #     branches: [feature/linter-in-terraform]
 
 # jobs:
-#   tflint:
-#     runs-on: ${{ matrix.os }}
-
-#     # defaults:
-#     #   run:
-#     #     working-directory: administrators
-
-#     strategy:
-#       matrix:
-#         os: [ubuntu-latest]
-
+#   format-hcl:
+#     runs-on: ubuntu-latest
 #     steps:
-#     - uses: actions/checkout@v3
-#       name: Checkout source code
+#     - name: Checkout
+#       uses: actions/checkout@v2
+#     # - name: cd
+#     #   run: |
+#     #     cd tflint
+#     #     tflint --init
+#     #     cd ../
 
-#     - uses: actions/cache@v3
-#       name: Cache plugin dir
+
+
+#     - name: TFLint - Setup
+#       id: tflint
+#       uses: terraform-linters/setup-tflint@v3
 #       with:
-#         path: ~/.tflint.d/plugins
-#         key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+#         tflint_wrapper_enabled: true
 
-#     - uses: terraform-linters/setup-tflint@v3
-#       name: Setup TFLint
+#     - name: TFLint - Run
+#       run: |
+#         # cd tflint
+#         tflint --version
+#         tflint --init
+#         tflint
+
+#     - name: Check linting of Terraform modules
+#       uses: devops-infra/action-tflint@v0.3
 #       with:
-#         tflint_version: v0.44.1
+#         run_init: true
+#         dir_filter: emails
 
-#     - name: Show version
-#       run: tflint --version
+name: Lint
+on: 
+  push:
+    branches: [feature/linter-in-terraform]
 
-#     - name: Init TFLint
-#       run: tflint --init
-#       env:
-#         GITHUB_TOKEN: ${{ github.token }}
+jobs:
+  tflint:
+    runs-on: ${{ matrix.os }}
 
-#     - name: Run TFLint
-#       run: tflint -f compact
+    # defaults:
+    #   run:
+    #     working-directory: administrators
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+      name: Checkout source code
+
+    - uses: actions/cache@v3
+      name: Cache plugin dir
+      with:
+        path: ~/.tflint.d/plugins
+        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+    - uses: terraform-linters/setup-tflint@v3
+      name: Setup TFLint
+      with:
+        tflint_version: v0.44.1
+
+    - name: Show version
+      run: tflint --version
+
+    - name: Init TFLint
+      run: tflint --init
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Run TFLint
+      run: tflint -f compact
       
