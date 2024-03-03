@@ -70,7 +70,7 @@ jobs:
 
     - uses: terraform-linters/tflint-load-config-action@v1
       with:
-        source-repo:./tflint
+        source-repo: tflint/tflint.hcl
     - run: tflint -f compact
 
     - name: Show version
