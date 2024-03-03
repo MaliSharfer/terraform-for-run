@@ -47,7 +47,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: administrators
+        working-directory: main-project
 
     strategy:
       matrix:
