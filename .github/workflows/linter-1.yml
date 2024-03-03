@@ -32,10 +32,9 @@ jobs:
     - name: Check linting of Terraform modules
       uses: devops-infra/action-tflint@v0.3
       with:
-        tflint_config: tflint/.tflint.hcl
         run_init: true
         dir_filter: emails
-        
+
 # name: Lint
 # on: 
 #   push:
