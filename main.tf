@@ -5,6 +5,12 @@ terraform {
     container_name       = "terraformstate-modules"
     key                  = "terraform.tfstate"
   }
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
 }
 
 
