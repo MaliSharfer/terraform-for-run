@@ -22,12 +22,13 @@ jobs:
       uses: terraform-linters/setup-tflint@v3
       with:
         tflint_wrapper_enabled: true
-    - name: TFLint - Run
-      run: |
-        cd tflint
-        tflint --version
-        tflint --init
-        tflint
+
+    # - name: TFLint - Run
+    #   run: |
+    #     cd tflint
+    #     tflint --version
+    #     tflint --init
+    #     tflint
 
     - name: Check linting of Terraform modules
       uses: devops-infra/action-tflint@v0.3
