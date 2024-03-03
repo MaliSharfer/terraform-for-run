@@ -36,7 +36,7 @@
 #         run_init: true
 #         dir_filter: emails
 
-name:💄 Lint
+name:  Lint
 on: 
   push:
     branches: [feature/linter-in-terraform]
