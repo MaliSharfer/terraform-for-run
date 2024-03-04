@@ -1,42 +1,5 @@
-# name:  💄 terraform Lint
-# on: 
-#   push:
-#     branches: [feature/linter-in-terraform]
 
-# jobs:
-#   format-hcl:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Checkout
-#       uses: actions/checkout@v2
-#     # - name: cd
-#     #   run: |
-#     #     cd tflint
-#     #     tflint --init
-#     #     cd ../
-
-
-
-#     - name: TFLint - Setup
-#       id: tflint
-#       uses: terraform-linters/setup-tflint@v3
-#       with:
-#         tflint_wrapper_enabled: true
-
-#     - name: TFLint - Run
-#       run: |
-#         # cd tflint
-#         tflint --version
-#         tflint --init
-#         tflint
-
-#     - name: Check linting of Terraform modules
-#       uses: devops-infra/action-tflint@v0.3
-#       with:
-#         run_init: true
-#         dir_filter: emails
-
-name:  Lint
+name: 💄Terraform Linter 
 on: 
   push:
     branches: [feature/linter-in-terraform]
@@ -67,12 +30,7 @@ jobs:
       name: Setup TFLint
       with:
         tflint_version: v0.44.1
-
-    # - uses: terraform-linters/tflint-load-config-action@v1
-    #   with:
-    #     source-repo: ./tflint/tflint.hcl
-    # - run: tflint -f compact
-
+        
     - name: Show version
       run: tflint --version
 
