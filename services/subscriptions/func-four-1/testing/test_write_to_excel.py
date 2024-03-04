@@ -1,6 +1,11 @@
 import pytest
-from unittest.mock import Mock, patch
 import project
+from unittest.mock import patch, Mock
+from project.write_to_excel import download_blob
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 class MockSheet:
@@ -64,3 +69,34 @@ def test_write_to_excel(
     }
     result = project.write_to_excel.write_to_excel(subscription_obj)
     assert result is None
+
+
+class MockContainer:
+    def get_container_client(self, container_name):
+        return MockBlob()
+
+
+class MockBlob:
+    def get_blob_client(self, blob_name):
+        return MockBlobData()
+
+
+class MockBlobData:
+    def download_blob(self):
+        return MockDownloadedBlob()
+
+
+class MockDownloadedBlob:
+    def readall(self):
+        return "readall"
+
+
+@patch("project.get_connection_string.get_connection_string_from_keyvault")
+@patch(
+    "project.write_to_excel.BlobServiceClient.from_connection_string",
+    Mock(return_value=MockContainer()),
+)
+def test_download_blob(get_connection_string_from_keyvault):
+    result = download_blob("container_name", "blob_name")
+    get_connection_string_from_keyvault.assert_called()
+    assert result == "readall"

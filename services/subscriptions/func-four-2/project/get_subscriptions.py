@@ -6,11 +6,10 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import config.config_variables
 
-credentials = DefaultAzureCredential()
-
 
 def get_subscriptions():
     try:
+        credentials = DefaultAzureCredential()
         subscription_client = SubscriptionClient(credentials)
         subscriptions = list(subscription_client.subscriptions.list())
         tagged_subscriptions = []

@@ -5,14 +5,16 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from project.get_connection_string import get_connection_string_from_keyvault
+import project.get_connection_string
 import config.config_variables
 
 
 def create_excel_blob():
     try:
         secret = config.config_variables.email_secret
-        connection_string = get_connection_string_from_keyvault(secret)
+        connection_string = (
+            project.get_connection_string.get_connection_string_from_keyvault(secret)
+        )
         blob_name = "file_subscription.xlsx"
         workbook = Workbook()
         sheet = workbook.active
@@ -37,7 +39,9 @@ def create_excel_blob():
 def get_last_row():
     try:
         secret = config.config_variables.email_secret
-        connection_string = get_connection_string_from_keyvault(secret)
+        connection_string = (
+            project.get_connection_string.get_connection_string_from_keyvault(secret)
+        )
         blob_service_client = BlobServiceClient.from_connection_string(
             connection_string
         )

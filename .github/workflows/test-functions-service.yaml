@@ -8,14 +8,8 @@ on:
       - feature/*
     paths: 
       - services/**
-  pull_request:
-    branches: 
-      - main
-      - development
-      - feature/*
-    paths: 
-      - services/**
-
+      - '.github/workflows/test-functions-service.yaml'
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +22,7 @@ jobs:
         
     steps:
     - name: 📂 Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: 🐍 Set up Python 3.10.13
       uses: actions/setup-python@v3
@@ -46,6 +40,8 @@ jobs:
 
     - name: ✅ Run tests
       run: |
-        pytest emails/func-emails
-        pytest subscriptions/func-subscriptions-list
-        pytest subscriptions/func-subscriptions-automation
+        DIRS=($(ls -d */*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]' | jq -r '.[]'))
+        for dir in "${DIRS[@]}"
+        do
+         pytest $dir
+        done
