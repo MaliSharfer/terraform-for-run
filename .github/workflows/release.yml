@@ -1,5 +1,3 @@
-name: 🐍 Create Python Release  
-
 on:
   workflow_dispatch:
     inputs:
@@ -20,6 +18,11 @@ jobs:
       - name: 📂 Checkout code
         uses: actions/checkout@v4
 
+      - name: create tag
+        run: |
+          git tag ${{ github.event.inputs.tag }}
+          git push origin ${{ github.event.inputs.tag }}
+
       - name: 🔵 Set up Python
         uses: actions/setup-python@v5
         with:
@@ -27,18 +30,20 @@ jobs:
           
       - name: ⏬ Install Dependencies
         run: |
-          cd services
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          cd ../ 
-  
+          pip install -r requirements.txt 
 
       - name: 📁 Create ZIP Archive
         run: |
           zip -r repository.zip .
-
+          
       - name: 🔖 Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: ./repository.zip
           tag: ${{ github.event.inputs.tag }}
+          artifacts: ./repository.zip
+
+
+
+
+
