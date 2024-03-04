@@ -41,6 +41,7 @@ def send_email_function(req: func.HttpRequest) -> func.HttpResponse:
         data=email_data,
     )
     logging.info("The email was sent")
+    logging.info("this is my checking")
     return func.HttpResponse(
         "This HTTP triggered function executed successfully.", status_code=200
     )
