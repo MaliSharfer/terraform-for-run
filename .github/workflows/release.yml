@@ -1,3 +1,5 @@
+name: 🐍 Create Python Release  
+
 on:
   workflow_dispatch:
     inputs:
@@ -36,14 +38,9 @@ jobs:
       - name: 📁 Create ZIP Archive
         run: |
           zip -r repository.zip .
-          
+
       - name: 🔖 Create Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.event.inputs.tag }}
           artifacts: ./repository.zip
-
-
-
-
-
