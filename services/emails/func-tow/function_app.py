@@ -18,6 +18,8 @@ app = func.FunctionApp()
 def send_email_function(req: func.HttpRequest) -> func.HttpResponse:
     req_body = req.get_json()
     logging.info(req_body.get("excel"))
+    # logging.info(req_body.get("excel"))
+# ****************************
     message = build_email_message(
         req_body.get("recipient_email"),
         req_body.get("subject"),
