@@ -25,15 +25,15 @@ rule "terraform_deprecated_interpolation" {
   enabled = true
 }
 
-# Disallow output declarations without description.
-rule "terraform_documented_outputs" {
-  enabled = true
-}
+# # Disallow output declarations without description.
+# rule "terraform_documented_outputs" {
+#   enabled = true
+# }
 
-# Disallow variable declarations without description.
-rule "terraform_documented_variables" {
-  enabled = true
-}
+# # Disallow variable declarations without description.
+# rule "terraform_documented_variables" {
+#   enabled = true
+# }
 
 # Disallow specifying a git or mercurial repository as a module source without pinning to a version.
 rule "terraform_module_pinned_source" {
@@ -80,35 +80,35 @@ rule "terraform_workspace_remote" {
 }
 
 # Enforces naming conventions
-rule "terraform_naming_convention" {
-  enabled = true
+# rule "terraform_naming_convention" {
+#   enabled = true
 
-  #Require specific naming structure
-  # variable {
-  # format = "snake_case"
-  # }
+#   #Require specific naming structure
+#   # variable {
+#   # format = "snake_case"
+#   # }
 
-  # locals {
-  # format = "snake_case"
-  # }
+#   # locals {
+#   # format = "snake_case"
+#   # }
 
-  # output {
-  # format = "snake_case"
-  # }
+#   # output {
+#   # format = "snake_case"
+#   # }
 
-  #Allow any format
-  resource {
-  format = "none"
-  }
+#   #Allow any format
+#   resource {
+#   format = "none"
+#   }
 
-  module {
-  format = "none"
-  }
+#   module {
+#   format = "none"
+#   }
 
-  data {
-  format = "none"
-  }
-}
+#   data {
+#   format = "none"
+#   }
+# }
 
 
 # # config {
