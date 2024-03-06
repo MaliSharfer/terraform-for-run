@@ -20,14 +20,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Init TFLint
-      run: tflint --init
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+    # - name: Init TFLint
+    #   run: tflint --init
+    #   env:
+    #     GITHUB_TOKEN: ${{ github.token }}
 
     - name: Check linting of Terraform modules
       uses: devops-infra/action-tflint@v0.3
       with:
-        tflint_init: "true"
+        tflint_init: true
         tflint_config: tflint/.tflint.hcl
         dir_filter: main-project,administrators,emails
