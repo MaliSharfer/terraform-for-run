@@ -8,9 +8,9 @@ jobs:
   tflint:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: main-project
+    # defaults:
+    #   run:
+    #     working-directory: main-project
 
     steps:
     - uses: actions/checkout@v3
