@@ -9,7 +9,7 @@
 
 
 config {
-    module = true
+    module = false
     force = false
 }
 
