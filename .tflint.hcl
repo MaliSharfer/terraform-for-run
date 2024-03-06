@@ -77,11 +77,11 @@ plugin "azurerm" {
  }
  # Disallow terraform declarations without require_version.
  rule "terraform_required_version" {
- enabled = false
+ enabled = true
  }
  # Require that all providers have version constraints through required_providers.
  rule "terraform_required_providers" {
- enabled = false
+ enabled = true
  }
  # Ensure that a module complies with the Terraform Standard Module Structure
  rule "terraform_standard_module_structure" {
