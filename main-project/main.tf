@@ -23,8 +23,7 @@ provider "azurerm" {
   subscription_id = var.subscription_id
 }
 
-module "administrators" {
-  source = "../administrators/"
+modul source = "../administrators/"
 }
 
 module "emails" {
