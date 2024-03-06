@@ -6,15 +6,11 @@ on:
 
 jobs:
   tflint:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     defaults:
       run:
         working-directory: main-project
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -24,16 +20,19 @@ jobs:
       name: Cache plugin dir
       with:
         path: ~/.tflint.d/plugins
-        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+        key: ${{ runner.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
     - uses: terraform-linters/setup-tflint@v3
       name: Setup TFLint
       with:
         tflint_version: v0.44.1
-        
-    - name: Show version
-      run: tflint --version
 
+    - uses: terraform-linters/setup-tflint@v4
+    - uses: terraform-linters/tflint-load-config-action@v1
+      with:
+        source-path: ./tflint.hcl
+      - run: tflint -f compact    
+        
     - name: Init TFLint
       run: tflint --init
       env:

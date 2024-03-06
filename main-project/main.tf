@@ -25,7 +25,6 @@ provider "azurerm" {
 
 module "administrators" {
   source = "../administrators/"
-
 }
 
 module "emails" {

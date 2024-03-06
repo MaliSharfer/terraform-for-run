@@ -4,7 +4,6 @@ resource "azurerm_storage_account" "vnet_storage_account" {
   location                 = var.rg_location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-
 }
 
 
