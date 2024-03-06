@@ -8,23 +8,23 @@ jobs:
   tflint:
     runs-on: ubuntu-latest
 
-    # defaults:
-    #   run:
-    #     working-directory: main-project
+    defaults:
+      run:
+        working-directory: main-project
 
     steps:
     - uses: actions/checkout@v3
       name: Checkout source code
 
-    # - uses: actions/cache@v3
-    #   name: Cache plugin dir
-    #   with:
-    #     path: ~/.tflint.d/plugins
-    #     key: ${{ runner.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+    - uses: actions/cache@v3
+      name: Cache plugin dir
+      with:
+        path: ~/.tflint.d/plugins
+        key: ${{ runner.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
     - uses: terraform-linters/tflint-load-config-action@v1
       with:
-        source-path: tflint/.tflint.hcl
+        source-path: ./tflint/.tflint.hcl
     
     - uses: terraform-linters/setup-tflint@v3
       name: Setup TFLint
