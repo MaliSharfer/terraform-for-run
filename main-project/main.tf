@@ -1,10 +1,10 @@
 terraform {
-  backend "azurerm" {
-    resource_group_name  = "functionyvwow"
-    storage_account_name = "functionyvwowdcbbfc"
-    container_name       = "terraformstate-modules"
-    key                  = "terraform.tfstate"
-  }
+  # backend "azurerm" {
+  #   resource_group_name  = "functionyvwow"
+  #   storage_account_name = "functionyvwowdcbbfc"
+  #   container_name       = "terraformstate-modules"
+  #   key                  = "terraform.tfstate"
+  # }
   required_version = ">= 1.0.0"
   required_providers {
     azurerm = {
