@@ -1,5 +1,5 @@
 config {
-  module              = true
+  module              = false
   disabled_by_default = false
 #   varfile = ["dev.tfvars", "prod.tfvars"]
 }
