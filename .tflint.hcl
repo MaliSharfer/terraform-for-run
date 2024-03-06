@@ -84,17 +84,17 @@ rule "terraform_naming_convention" {
   enabled = true
 
   #Require specific naming structure
-  variable {
-  format = "snake_case"
-  }
+  # variable {
+  # format = "snake_case"
+  # }
 
-  locals {
-  format = "snake_case"
-  }
+  # locals {
+  # format = "snake_case"
+  # }
 
-  output {
-  format = "snake_case"
-  }
+  # output {
+  # format = "snake_case"
+  # }
 
   #Allow any format
   resource {
