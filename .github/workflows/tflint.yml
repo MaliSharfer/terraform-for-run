@@ -29,7 +29,6 @@ jobs:
       run: |
         cd tflint
         tflint --init
-        cd ../
       env:
         GITHUB_TOKEN: ${{ github.token }}
    
