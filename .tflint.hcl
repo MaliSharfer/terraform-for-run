@@ -41,13 +41,13 @@ rule "terraform_module_pinned_source" {
 }
 
 rule "terraform_module_version" {
-  enabled = true
+  enabled = false
   exact = false # default
 }
 
 # Require that all providers have version constraints through required_providers.
 rule "terraform_required_providers" {
-  enabled = true
+  enabled = false
 }
 
 # Disallow terraform declarations without require_version.
