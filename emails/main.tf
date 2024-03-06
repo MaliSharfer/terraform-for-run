@@ -7,7 +7,7 @@ resource "azurerm_storage_account" "vnet_storage_account" {
 }
 
 
-data "azurerm_key_vault" "key_vault" {
+d_key_vault" "key_vault" {
   name                = var.key_vault_name
   resource_group_name = var.key_vault_resource_group_name
 }
