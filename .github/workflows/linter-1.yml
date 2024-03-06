@@ -35,6 +35,11 @@ jobs:
       run: tflint --version
 
     - name: Init TFLint
+      run: tflint --init
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        
+    - name: Init TFLint
       run: tflint --config ../.tflint.hcl
       env:
         GITHUB_TOKEN: ${{ github.token }}
