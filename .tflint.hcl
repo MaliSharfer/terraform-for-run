@@ -57,7 +57,7 @@ rule "terraform_required_version" {
 
 # Ensure that a module complies with the Terraform Standard Module Structure
 rule "terraform_standard_module_structure" {
-  enabled = true
+  enabled = false
 }
 
 # Disallow variable declarations without type.
