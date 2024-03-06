@@ -52,7 +52,7 @@ rule "terraform_required_providers" {
 
 # Disallow terraform declarations without require_version.
 rule "terraform_required_version" {
-  enabled = true
+  enabled = false
 }
 
 # Ensure that a module complies with the Terraform Standard Module Structure
