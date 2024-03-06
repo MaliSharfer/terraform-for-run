@@ -28,7 +28,7 @@ jobs:
     - name: Init TFLint
       run: |
         cd tflint
-        tflint --init
+        tflint --init azurerm
       env:
         GITHUB_TOKEN: ${{ github.token }}
    
@@ -36,6 +36,7 @@ jobs:
     - name: Check linting of Terraform modules
       uses: devops-infra/action-tflint@v0.3
       with:
-        tflint_config: tflint/.tflint.hcl
         tflint_init: true
+        tflint_config: tflint/.tflint.hcl
         dir_filter: main-project,administrators,emails
+        
