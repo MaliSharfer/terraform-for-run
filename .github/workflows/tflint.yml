@@ -1,0 +1,33 @@
+name: Check TFLint with custom config
+on: 
+  push:
+    branches: [feature/linter-in-terraform]
+
+env:
+   ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+  ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+  ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+
+jobs:
+  format-hcl:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🔑 Login to Azure
+      id : az-login
+      run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID 
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Init TFLint
+      run: tflint --init
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Check linting of Terraform modules
+      uses: devops-infra/action-tflint@v0.3
+      with:
+        tflint_init: "true"
+        tflint_config: tflint/.tflint.hcl
+        dir_filter: main-project,administrators,emails

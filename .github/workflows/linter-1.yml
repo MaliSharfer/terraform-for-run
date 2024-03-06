@@ -1,41 +1,44 @@
 
-name: 💄Terraform Linter 
-on: 
-  push:
-    branches: [feature/linter-in-terraform]
+# name: 💄Terraform Linter 
+# on: 
+#   push:
+#     branches: [feature/linter-in-terraform]
 
-jobs:
-  tflint:
-    runs-on: ubuntu-latest
+# jobs:
+#   tflint:
+#     runs-on: ${{ matrix.os }}
 
-    defaults:
-      run:
-        working-directory: main-project
+#     defaults:
+#       run:
+#         working-directory: main-project
 
-    steps:
-    - uses: actions/checkout@v3
-      name: Checkout source code
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest]
 
-    - uses: actions/cache@v3
-      name: Cache plugin dir
-      with:
-        path: ~/.tflint.d/plugins
-        key: ${{ runner.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+#     steps:
+#     - uses: actions/checkout@v3
+#       name: Checkout source code
 
-    - uses: terraform-linters/tflint-load-config-action@v1
-      with:
-        source-path: ./tflint/.tflint.hcl
-    
-    - uses: terraform-linters/setup-tflint@v3
-      name: Setup TFLint
-      with:
-        tflint_version: v0.44.1
+#     - uses: actions/cache@v3
+#       name: Cache plugin dir
+#       with:
+#         path: ~/.tflint.d/plugins
+#         key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
-    - name: Init TFLint
-      run: tflint --init
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+#     - uses: terraform-linters/setup-tflint@v3
+#       name: Setup TFLint
+#       with:
+#         tflint_version: v0.44.1
+        
+#     - name: Show version
+#       run: tflint --version
 
-    - name: Run TFLint
-      run: tflint -f compact
+#     - name: Init TFLint
+#       run: tflint --init
+#       env:
+#         GITHUB_TOKEN: ${{ github.token }}
+
+#     - name: Run TFLint
+#       run: tflint -f compact
       

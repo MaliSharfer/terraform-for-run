@@ -203,16 +203,16 @@ enabled = true
 #   output {
 #   format = "snake_case"
 #   }
-  
+
 #   #Allow any format
 #   resource {
 #   format = "none"
 #   }
-  
+
 #   module {
 #   format = "none"
 #   }
-  
+
 #   data {
 #   format = "none"
 #   }
