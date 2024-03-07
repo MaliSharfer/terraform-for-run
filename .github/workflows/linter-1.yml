@@ -3,7 +3,7 @@ name: 💄Terraform Linter
 on: 
   push:
     branches: [feature/linter-in-terraform]
-    
+
 env:
   TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
   TF_VAR_DOCKER_REGISTRY_SERVER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
@@ -33,8 +33,7 @@ jobs:
             cd main-project || exit 1
             terraform init -input=false
             cd ..  
-          done  
-
+  
   tflint:
     runs-on: ${{ matrix.os }}
  
