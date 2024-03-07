@@ -45,3 +45,7 @@ rule "terraform_unused_declarations" {
 rule "terraform_unused_required_providers" {
   enabled = true
 }
+
+rule "terraform_module_version" {
+  enabled = true
+}
