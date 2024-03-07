@@ -7,7 +7,8 @@ resource "azurerm_storage_account" "vnet_storage_account" {
 }
 
 
-data "a         = var.key_vault_name
+data "azurerm_key_vault" "key_vault" {
+  name                = var.key_vault_name
   resource_group_name = var.key_vault_resource_group_name
 }
 
@@ -18,9 +19,7 @@ resource "azurerm_key_vault_secret" "key_vault_secret" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
-resource "azurerm_service_plan" "service_plan" {
-  name                = var.service_plan_name
-  location            = azurerm_storage_account.vnet_storage_account.location
+resource "a          = azurerm_storage_account.vnet_storage_account.location
   resource_group_name = azurerm_storage_account.vnet_storage_account.resource_group_name
   os_type             = "Linux"
   sku_name            = "P1v2"
