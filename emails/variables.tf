@@ -61,3 +61,7 @@ variable "IMAGE_TAG" {
   type    = string
   default = "4-appservice-quickstart"
 }
+
+variable "hello" {
+  type = string
+}
