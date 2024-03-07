@@ -1,6 +1,6 @@
 config {
   module = true
-  force = true
+  force = false
   disabled_by_default = true
 }
 
