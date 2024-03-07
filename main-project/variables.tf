@@ -12,3 +12,7 @@ variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
 variable "subscription_id" {
   type = string
 }
+
+variable "mali" {
+  type = string
+}
