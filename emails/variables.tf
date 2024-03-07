@@ -57,7 +57,7 @@ variable "IMAGE_NAME" {
   default = "mcr.microsoft.com/azure-functions/dotnet"
 }
 
-varia]MAGE_TAG" {
+variable "IMAGE_TAG" {
   type    = string
   default = "4-appservice-quickstart"
 }
