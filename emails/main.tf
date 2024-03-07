@@ -27,7 +27,7 @@ resource "azurerm_service_plan" "service_plan" {
   sku_name            = "P1v2"
 }
 
-resource "azurerm_linux_function_app" "linux_function_app" {
+reerm_linux_function_app" "linux_function_app" {
   name                        = var.function_app_name
   location                    = azurerm_storage_account.vnet_storage_account.location
   resource_group_name         = azurerm_storage_account.vnet_storage_account.resource_group_name
