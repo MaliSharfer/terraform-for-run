@@ -15,56 +15,56 @@ env:
   ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
 
 jobs:
-  # terraform:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - name: 🧩 HashiCorp - Setup Terraform
-  #       uses: hashicorp/setup-terraform@v2.0.0
-      
-  #     - name: 🔑 Login to Azure
-  #       id : az-login
-  #       run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
- 
-  #     - name: 🏗️ Terraform 
-  #       id: init
-  #       run: |
-  #           cd main-project || exit 1
-  #           terraform init -input=false
-  #           cd ..  
-  
-  tflint:
-    runs-on: ${{ matrix.os }}
- 
-    defaults:
-      run:
-        working-directory: main-project
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-
+  terraform:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Cache plugin dir
-      uses: actions/cache@v3
-      with:
-        path: ~/.tflint.d/plugins
-        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+      - name: 🧩 HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.0
+      
+      - name: 🔑 Login to Azure
+        id : az-login
+        run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
+ 
+      - name: 🏗️ Terraform 
+        id: init
+        run: |
+            cd main-project || exit 1
+            terraform init -input=false
+            cd ..  
+  
+  # tflint:
+  #   runs-on: ${{ matrix.os }}
+ 
+  #   defaults:
+  #     run:
+  #       working-directory: main-project
 
-    - name: Setup TFLint
-      uses: terraform-linters/setup-tflint@v3
-      with:
-        tflint_version: v0.44.1
+  #   strategy:
+  #     matrix:
+  #       os: [ubuntu-latest]
 
-    - name: Init TFLint
-      run: tflint --config ../.tflint.hcl --init 
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+  #   steps:
+  #   - name: Checkout source code
+  #     uses: actions/checkout@v3
 
-    - name: Run TFLint
-      run: tflint  --config ../.tflint.hcl -f compact
+  #   - name: Cache plugin dir
+  #     uses: actions/cache@v3
+  #     with:
+  #       path: ~/.tflint.d/plugins
+  #       key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+  #   - name: Setup TFLint
+  #     uses: terraform-linters/setup-tflint@v3
+  #     with:
+  #       tflint_version: v0.44.1
+
+  #   - name: Init TFLint
+  #     run: tflint --config ../.tflint.hcl --init 
+  #     env:
+  #       GITHUB_TOKEN: ${{ github.token }}
+
+  #   - name: Run TFLint
+  #     run: tflint  --config ../.tflint.hcl -f compact
       
