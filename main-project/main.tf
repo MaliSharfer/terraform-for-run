@@ -1,8 +1,8 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "functionyvwow"
-    storage_account_name = "functionyvwowdcbbfc"
-    container_name       = "terraformstate-modules"
+    resource_group_name  = "NetworkWatcherRG"
+    storage_account_name = "myfirsttrail"
+    container_name       = "tflint"
     key                  = "terraform.tfstate"
   }
   # required_version = ">= 1.0.0"

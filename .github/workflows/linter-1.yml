@@ -15,24 +15,24 @@ env:
   ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
 
 jobs:
-  terraform:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+  # terraform:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: 🧩 HashiCorp - Setup Terraform
-        uses: hashicorp/setup-terraform@v2.0.0
+  #     - name: 🧩 HashiCorp - Setup Terraform
+  #       uses: hashicorp/setup-terraform@v2.0.0
       
-      - name: 🔑 Login to Azure
-        id : az-login
-        run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
+  #     - name: 🔑 Login to Azure
+  #       id : az-login
+  #       run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
  
-      - name: 🏗️ Terraform 
-        id: init
-        run: |
-            cd main-project || exit 1
-            terraform init -input=false
-            cd ..  
+  #     - name: 🏗️ Terraform 
+  #       id: init
+  #       run: |
+  #           cd main-project || exit 1
+  #           terraform init -input=false
+  #           cd ..  
   
   tflint:
     runs-on: ${{ matrix.os }}
