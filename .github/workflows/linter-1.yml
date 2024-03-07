@@ -1,61 +1,28 @@
-
 name: 💄Terraform Linter 
 on: 
   push:
     branches: [feature/linter-in-terraform]
 
-env:
-  TF_VAR_subscription_id: ${{secrets.SUBSCRIPTION_ID}}
-  TF_VAR_DOCKER_REGISTRY_SERVER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-  TF_VAR_DOCKER_REGISTRY_SERVER_USERNAME: ${{ github.actor }}
-  TF_VAR_DOCKER_REGISTRY_SERVER_URL: https://ghcr.io
-  ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID}}
-  ARM_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
-  ARM_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-  ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
-
 jobs:
-  # terraform:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - name: 🧩 HashiCorp - Setup Terraform
-  #       uses: hashicorp/setup-terraform@v2.0.0
-      
-  #     - name: 🔑 Login to Azure
-  #       id : az-login
-  #       run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID  
- 
-  #     - name: 🏗️ Terraform 
-  #       id: init
-  #       run: |
-  #           cd main-project || exit 1
-  #           terraform init -input=false
-  #           terraform get --update
-  #           cd ..  
-  
-  tflint:
-    runs-on: ubuntu-latest
-    
+  build:
+    runs-on: ubuntu-latest 
     defaults:
       run:
         working-directory: main-project
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v3
+    - name: 📂 Checkout 
+      uses: actions/checkout@v4
 
-    - name: Setup TFLint
+    - name: 🛠️ Setup TFLint
       uses: terraform-linters/setup-tflint@v3
       with:
         tflint_version: v0.50.0
 
-    - name: Init TFLint
+    - name: 🔵 Init TFLint
       run: tflint --config ../.tflint.hcl --init 
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
-    - name: Run TFLint
+    - name: 💄 Run TFLint
       run: tflint  --config ../.tflint.hcl -f compact
-      
