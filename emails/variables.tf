@@ -51,7 +51,6 @@ variable "function_app_name" {
   default = "func-emails-try"
 }
 
-
 variable "IMAGE_NAME" {
   type    = string
   default = "mcr.microsoft.com/azure-functions/dotnet"
@@ -60,8 +59,4 @@ variable "IMAGE_NAME" {
 variable "IMAGE_TAG" {
   type    = string
   default = "4-appservice-quickstart"
-}
-
-variable "hello" {
-  type = string
 }
